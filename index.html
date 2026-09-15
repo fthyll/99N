@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CoC War Stats</title>
     
     <!-- External Dependencies -->
@@ -17,10 +17,11 @@
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-    // Every color resolves to the theme tokens in css/style.css via
-    // <html data-theme>, so no dark: variants needed — the attribute flips
-    // everything, including Chart.js (js/charts.js reads the same vars).
-    // 'white' is deliberately a token: day mode renders it as ink, not #fff.
+    // "War Room" palette: navy night + Clash gold. All colors are theme tokens
+    // in css/style.css keyed off <html data-theme>, so no dark: variants are
+    // needed — one attribute flips the app, Chart.js included (js/charts.js
+    // reads the same vars). 'white' is a token on purpose: day mode renders
+    // it as ink, not #fff.
     tailwind.config = {
         theme: { extend: {
             colors: {
@@ -43,11 +44,11 @@
                 card: 'rgb(var(--s-card))',
                 raise: 'rgb(var(--s-hover))',
             },
-            fontFamily: { medieval: ['Cinzel', 'serif'], body: ['Inter', 'sans-serif'] },
+            fontFamily: { body: ['Outfit', 'sans-serif'], display: ['Fredoka', 'sans-serif'] },
         } }
     };
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -56,293 +57,297 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="p-3 md:p-10">
-    <!-- Header Section -->
-    <div class="w-full mb-6 flex flex-col items-center text-center relative">
-        <button id="themeToggle" aria-label="Switch day/night theme" title="Toggle day / night"
-                class="absolute top-0 right-0 control-base !h-8 !px-2 gap-1 text-gold hover:text-gold-bright">
-            <svg class="icon-moon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-            <svg class="icon-sun w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        </button>
-        <div id="headerContent" class="flex items-center gap-3 md:gap-4">
-            <img id="clanBadge" class="w-10 h-10 md:w-16 md:h-16 hidden" alt="Clan Badge">
-            <h1 id="pageTitle" class="text-2xl md:text-5xl font-bold gold medieval uppercase tracking-tighter">Dashboard</h1>
+<body>
+<div class="app-shell">
+
+    <!-- ============ Sidebar (lg) / top bar (mobile) ============ -->
+    <aside class="sidebar">
+        <div class="brand">
+            <img id="clanBadge" class="brand-badge hidden" alt="Clan Badge">
+            <h1 id="pageTitle" class="display gold brand-title uppercase tracking-tight">Dashboard</h1>
+            <button id="themeToggle" class="theme-toggle" aria-label="Switch day/night theme" title="Toggle day / night">
+                <svg class="icon-moon w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+                <svg class="icon-sun w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </button>
         </div>
-        <div class="hairline-gold w-24 mt-3"></div>
-    </div>
+        <div class="brand-rule"></div>
 
-    <!-- Main Navigation Tabs -->
-    <div class="flex mb-6 rounded-t-lg overflow-hidden border border-gray-800">
-        <button id="tab-about" class="tab-btn medieval uppercase tracking-widest">About</button>
-        <button id="tab-members" class="tab-btn medieval uppercase tracking-widest">Members</button>
-        <button id="tab-war" class="tab-btn medieval uppercase tracking-widest">Wars</button>
-        <button id="tab-raids" class="tab-btn medieval uppercase tracking-widest">Raids</button>
-        <button id="tab-stats" class="tab-btn medieval uppercase tracking-widest">Stats</button>
-    </div>
+        <nav class="nav">
+            <button id="tab-about" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Overview</button>
+            <button id="tab-members" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6-4a3 3 0 11-3-3"/></svg>Members</button>
+            <button id="tab-war" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.12 5.07l5.66 5.66-2.83 2.83-5.66-5.66m-1.41 1.41L4.22 4.22m0 0l2.83-2.83 2.12 2.12M4.22 4.22l2.12 2.12m9.9 9.9l5.66 5.66m0 0l-2.83 2.83-2.12-2.12m4.95-.71l-2.12-2.12M9.88 18.93l-5.66-5.66 2.83-2.83 5.66 5.66"/></svg>Wars</button>
+            <button id="tab-raids" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Raids</button>
+            <button id="tab-stats" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 20V10m5.5 10V4m5.5 16v-8m5 8l.01-12"/></svg>Stats</button>
+        </nav>
 
-    <div class="w-full">
-        <!-- Section: About -->
-        <div id="section-about" class="lg:col-span-12 hidden-section">
-            <div id="aboutContent"></div>
-        </div>
+        <p class="sidebar-note">Auto-refresh<br>every 15 minutes</p>
+    </aside>
 
-        <!-- Section: Members -->
-        <div id="section-members" class="lg:col-span-12 hidden-section">
-            <div class="panel p-3 md:p-6">
-                <!-- Shared Members Header -->
-                <div class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
-                    <div class="flex items-center gap-3">
-                        <h2 id="memberTitle" class="medieval text-base md:text-lg font-bold uppercase">Members</h2>
-                        <span id="memberCount" class="text-[9px] md:text-[10px] font-mono text-gray-500">0 / 50</span>
-                    </div>                    
-                    <!-- Sub-tabs Row (Mobile: 2nd, Desktop: bottom) -->
-                    <div class="w-full order-2 lg:order-3 lg:mt-2">
-                        <div class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
-                            <button data-role="all" class="sub-tab-btn active uppercase tracking-wider">All</button>
-                            <button data-role="leader" class="sub-tab-btn uppercase tracking-wider">Leader</button>
-                            <button data-role="coLeader" class="sub-tab-btn uppercase tracking-wider">Co-Leader</button>
-                            <button data-role="admin" class="sub-tab-btn uppercase tracking-wider">Elder</button>
-                            <button data-role="member" class="sub-tab-btn uppercase tracking-wider">Member</button>
-                        </div>
-                    </div>
-
-                    <!-- Header Controls (Mobile: 3rd, Desktop: top-right) -->
-                    <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto order-3 lg:order-2">
-                        <div class="flex flex-col gap-1">
-                            <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Date</span>
-                            <input type="text" id="memberDate" class="control-base w-24 sm:w-32 font-mono text-center" placeholder="Select...">
-                        </div>
-                        <div class="flex flex-col gap-1">
-                            <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Sort</span>
-                            <select id="sortBy" class="control-base h-8 w-28 sm:min-w-[140px]">
-                                <option value="league" selected>League + Trophies</option>
-                                <option value="trophies">Trophies Only</option>
-                                <option value="townHallLevel">Town Hall</option>
-                                <option value="expLevel">XP Level</option>
-                                <option value="donations">Donated</option>
-                                <option value="donationsReceived">Received</option>
-                                <option value="role">Role</option>
-                            </select>
-                        </div>
-                        <button id="resetMembersFilters" class="btn-reset h-8">Reset</button>
-                    </div>
-                </div>
-                <div id="memberList" class="space-y-2"></div>
+    <!-- ============ Content ============ -->
+    <main class="content">
+        <div class="w-full">
+            <!-- Section: About (Overview) -->
+            <div id="section-about" class="hidden-section">
+                <div id="aboutContent"></div>
             </div>
-        </div>
 
-        <!-- Section: War -->
-        <div id="section-war" class="lg:col-span-12 hidden-section">
-            <div class="panel p-3 md:p-6">
-                <!-- Shared War Header -->
-                <div id="warMainHeader" class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
-                    <div class="flex items-center gap-3">
-                        <h2 class="medieval text-base md:text-lg font-bold uppercase">Wars</h2>
-                        <span id="warCount" class="text-[9px] md:text-[10px] font-mono text-gray-500">0 / 0</span>
-                        <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                        </button>
+            <!-- Section: Members -->
+            <div id="section-members" class="hidden-section">
+                <div class="panel p-3 md:p-6">
+                    <!-- Shared Members Header -->
+                    <div class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
+                        <div class="flex items-center gap-3">
+                            <h2 id="memberTitle" class="display text-base md:text-lg font-semibold uppercase">Members</h2>
+                            <span id="memberCount" class="text-[9px] md:text-[10px] font-mono text-gray-500">0 / 50</span>
+                        </div>                    
+                        <!-- Sub-tabs Row (Mobile: 2nd, Desktop: bottom) -->
+                        <div class="w-full order-2 lg:order-3 lg:mt-2">
+                            <div class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
+                                <button data-role="all" class="sub-tab-btn active">All</button>
+                                <button data-role="leader" class="sub-tab-btn uppercase">Leader</button>
+                                <button data-role="coLeader" class="sub-tab-btn uppercase">Co-Leader</button>
+                                <button data-role="admin" class="sub-tab-btn uppercase">Elder</button>
+                                <button data-role="member" class="sub-tab-btn uppercase">Member</button>
+                            </div>
+                        </div>
+
+                        <!-- Header Controls (Mobile: 3rd, Desktop: top-right) -->
+                        <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto order-3 lg:order-2">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Date</span>
+                                <input type="text" id="memberDate" class="control-base w-24 sm:w-32 font-mono text-center" placeholder="Select...">
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Sort</span>
+                                <select id="sortBy" class="control-base h-8 w-28 sm:min-w-[140px]">
+                                    <option value="league" selected>League + Trophies</option>
+                                    <option value="trophies">Trophies Only</option>
+                                    <option value="townHallLevel">Town Hall</option>
+                                    <option value="expLevel">XP Level</option>
+                                    <option value="donations">Donated</option>
+                                    <option value="donationsReceived">Received</option>
+                                    <option value="role">Role</option>
+                                </select>
+                            </div>
+                            <button id="resetMembersFilters" class="btn-reset h-8">Reset</button>
+                        </div>
+                    </div>
+                    <div id="memberList" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <!-- Section: War -->
+            <div id="section-war" class="hidden-section">
+                <div class="panel p-3 md:p-6">
+                    <!-- Shared War Header -->
+                    <div id="warMainHeader" class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
+                        <div class="flex items-center gap-3">
+                            <h2 class="display text-base md:text-lg font-semibold uppercase">Wars</h2>
+                            <span id="warCount" class="text-[9px] md:text-[10px] font-mono text-gray-500">0 / 0</span>
+                            <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                            </button>
+                        </div>
+
+                        <!-- Header Controls (Mobile: 3rd, Desktop: top-right) -->
+                        <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto order-3 lg:order-2">
+                            <!-- Controls for History -->
+                            <div id="warHistoryControls" class="flex flex-row items-end gap-2 sm:gap-3">
+                                <div class="flex flex-col gap-1">
+                                    <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Date Range</span>
+                                    <div class="flex items-center gap-1">
+                                        <input type="text" id="warStartDate" class="control-base w-20 sm:w-32 font-mono text-center" placeholder="Start Date">
+                                        <span class="text-gray-600 text-[10px]">-</span>
+                                        <input type="text" id="warEndDate" class="control-base w-20 sm:w-32 font-mono text-center" placeholder="End Date">
+                                    </div>
+                                </div>
+                                <button id="resetWarFilters" class="btn-reset h-8">Reset</button>
+                            </div>
+                        </div>
+
+                        <!-- Sub-tabs Row (Mobile: 2nd, Desktop: bottom) -->
+                        <div class="w-full order-2 lg:order-3 lg:mt-2">
+                            <div class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
+                                <button data-war-filter="all" class="sub-tab-btn active">All</button>
+                                <button data-war-filter="victory" class="sub-tab-btn uppercase">Victory</button>
+                                <button data-war-filter="loss" class="sub-tab-btn uppercase">Defeat</button>
+                                <button data-war-filter="draw" class="sub-tab-btn uppercase">Draw</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Header Controls (Mobile: 3rd, Desktop: top-right) -->
-                    <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto order-3 lg:order-2">
-                        <!-- Controls for History -->
-                        <div id="warHistoryControls" class="flex flex-row items-end gap-2 sm:gap-3">
-                            <div class="flex flex-col gap-1">
-                                <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Date Range</span>
-                                <div class="flex items-center gap-1">
-                                    <input type="text" id="warStartDate" class="control-base w-20 sm:w-32 font-mono text-center" placeholder="Start Date">
-                                    <span class="text-gray-600 text-[10px]">-</span>
-                                    <input type="text" id="warEndDate" class="control-base w-20 sm:w-32 font-mono text-center" placeholder="End Date">
+                    <!-- View: War History List -->
+                    <div id="warListView">
+                        <div id="warHistoryList" class="space-y-4"></div>
+                    </div>
+
+                    <!-- View: War Details (Hidden by default) -->
+                    <div id="warDetailView" class="hidden">
+                        <button id="backToWarList" class="mb-4 text-xs gold hover:underline flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg> Go Back</button>
+                        
+                        <div id="warDetailHeader" class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
+                            <div class="flex items-center gap-3">
+                                <h2 class="display text-base md:text-lg font-semibold uppercase whitespace-nowrap">War Details</h2>
+                                <button id="syncDetailBtn" onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                                </button>
+                            </div>
+                            
+                            <!-- Sub-navigation row -->
+                            <div class="w-full order-2 lg:order-3 lg:mt-2">
+                                <div class="flex flex-col lg:flex-row lg:items-center gap-4 w-full">
+                                    <div id="warDetailToggles" class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit shrink-0"></div>
+                                    <div id="warMetrics" class="flex flex-wrap lg:flex-nowrap items-center gap-2 flex-1"></div>
                                 </div>
                             </div>
-                            <button id="resetWarFilters" class="btn-reset h-8">Reset</button>
                         </div>
-                    </div>
 
-                    <!-- Sub-tabs Row (Mobile: 2nd, Desktop: bottom) -->
-                    <div class="w-full order-2 lg:order-3 lg:mt-2">
-                        <div class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
-                            <button data-war-filter="all" class="sub-tab-btn active uppercase tracking-wider">All</button>
-                            <button data-war-filter="victory" class="sub-tab-btn uppercase tracking-wider">Victory</button>
-                            <button data-war-filter="loss" class="sub-tab-btn uppercase tracking-wider">Defeat</button>
-                            <button data-war-filter="draw" class="sub-tab-btn uppercase tracking-wider">Draw</button>
-                        </div>
+                        <!-- War Summary Card will be injected here by renderWarDetail -->
+                        <div id="warDetailSummaryCard" class="my-6"></div>
+                        
+                        <!-- Dynamic Controls Container (Clan Toggle, Filters, Reset) -->
+                        <div id="warDetailControls" class="flex flex-col lg:flex-row lg:flex-wrap items-start lg:items-center gap-4 mb-6 p-4 bg-inset rounded-xl border border-gray-800"></div>
+
+                        <!-- Attacks/Map container -->
+                        <div id="warResults" class="space-y-4 mt-8"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- View: War History List -->
-                <div id="warListView">
-                    <div id="warHistoryList" class="space-y-4"></div>
-                </div>
-
-                <!-- View: War Details (Hidden by default) -->
-                <div id="warDetailView" class="hidden">
-                    <button id="backToWarList" class="mb-4 text-xs gold hover:underline flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg> Go Back</button>
-                    
-                    <div id="warDetailHeader" class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
+            <!-- Section: Stats -->
+            <div id="section-stats" class="hidden-section">
+                <div class="panel p-3 md:p-6">
+                    <!-- Shared Stats Header -->
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
                         <div class="flex items-center gap-3">
-                            <h2 class="medieval text-base md:text-lg font-bold uppercase whitespace-nowrap">War Details</h2>
-                            <button id="syncDetailBtn" onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
+                            <h2 class="display text-base md:text-lg font-semibold uppercase whitespace-nowrap">Stats</h2>
+                            <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                            </button>
+                        </div>
+
+                        <!-- Header Controls -->
+                        <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Time Range</span>
+                                <select id="statsTimeRange" class="control-base h-8 w-32">
+                                    <option value="month">This Month</option>
+                                    <option value="week">This Week</option>
+                                    <option value="prev">Previous War</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="bg-inset p-4 rounded-xl border border-gray-800">
+                            <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">War Stars Achieved (%)</h3>
+                            <div id="starsTrendContainer" style="height: 180px;">
+                                <canvas id="starsTrendChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div class="bg-inset p-4 rounded-xl border border-gray-800">
+                                <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Stars Earned Breakdown</h3>
+                                <div id="topPerformersContainer" class="overflow-x-auto"></div>
+                            </div>
+                            <div class="bg-inset p-4 rounded-xl border border-gray-800">
+                                <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Stars Conversion Rates</h3>
+                                <div id="efficiencyContainer">
+                                    <canvas id="efficiencyChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Raids -->
+            <div id="section-raids" class="hidden-section">
+                <div class="panel p-3 md:p-6">
+                    <div class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
+                        <div class="flex items-center gap-3">
+                            <h2 class="display text-base md:text-lg font-semibold uppercase whitespace-nowrap">Raids</h2>
+                            <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
                             </button>
                         </div>
                         
-                        <!-- Sub-navigation row -->
+                        <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto order-3 lg:order-2">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Date</span>
+                                <input type="text" id="raidWeekendCalendar" class="control-base h-8 w-32 sm:w-40 font-mono text-center" placeholder="Select Date...">
+                            </div>
+                            <button id="resetRaidSort" class="btn-reset h-8">Reset</button>
+                        </div>
+
+
                         <div class="w-full order-2 lg:order-3 lg:mt-2">
-                            <div class="flex flex-col lg:flex-row lg:items-center gap-4 w-full">
-                                <div id="warDetailToggles" class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit shrink-0"></div>
-                                <div id="warMetrics" class="flex flex-wrap lg:flex-nowrap items-center gap-2 flex-1"></div>
+                            <div class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
+                                <button id="raid-subtab-summary" class="sub-tab-btn active">Summary</button>
+                                <button id="raid-subtab-attacks" class="sub-tab-btn uppercase">Attacks</button>
+                                <button id="raid-subtab-defenses" class="sub-tab-btn uppercase">Defenses</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- War Summary Card will be injected here by renderWarDetail -->
-                    <div id="warDetailSummaryCard" class="my-6"></div>
-                    
-                    <!-- Dynamic Controls Container (Clan Toggle, Filters, Reset) -->
-                    <div id="warDetailControls" class="flex flex-col lg:flex-row lg:flex-wrap items-start lg:items-center gap-4 mb-6 p-4 bg-inset rounded-xl border border-gray-800"></div>
-
-                    <!-- Attacks/Map container -->
-                    <div id="warResults" class="space-y-4 mt-8"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section: Stats -->
-        <div id="section-stats" class="lg:col-span-12 hidden-section">
-            <div class="panel p-3 md:p-6">
-                <!-- Shared Stats Header -->
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
-                    <div class="flex items-center gap-3">
-                        <h2 class="medieval text-base md:text-lg font-bold uppercase whitespace-nowrap">Stats</h2>
-                        <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                        </button>
-                    </div>
-
-                    <!-- Header Controls -->
-                    <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto">
-                        <div class="flex flex-col gap-1">
-                            <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Time Range</span>
-                            <select id="statsTimeRange" class="control-base h-8 w-32">
-                                <option value="month">This Month</option>
-                                <option value="week">This Week</option>
-                                <option value="prev">Previous War</option>
-                            </select>
+                    <!-- View: Raid Summary -->
+                    <div id="raidSummaryView">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-inset text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-800">
+                                        <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="name" data-table="summary">
+                                            <div class="flex items-center">
+                                                Player
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                                            </div>
+                                        </th>
+                                        <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="attacks" data-table="summary">
+                                            <div class="flex items-center justify-center">
+                                                Attacks
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                                            </div>
+                                        </th>
+                                        <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="loot" data-table="summary">
+                                            <div class="flex items-center justify-center">
+                                                Capital Gold
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                                            </div>
+                                        </th>
+                                        <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="stars" data-table="summary">
+                                            <div class="flex items-center justify-center">
+                                                Total Stars
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                                            </div>
+                                        </th>
+                                        <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="damage" data-table="summary">
+                                            <div class="flex items-center justify-center">
+                                                Total Damage
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                                            </div>
+                                        </th>
+                                        <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="avgStars" data-table="summary">
+                                            <div class="flex items-center justify-center">
+                                                Avg Stars
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="raidSummaryTableBody" class="text-xs md:text-sm">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
 
-                <div class="space-y-8">
-                    <div class="bg-inset p-4 rounded-xl border border-gray-800">
-                        <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">War Stars Achieved (%)</h3>
-                        <div id="starsTrendContainer" style="height: 180px;">
-                            <canvas id="starsTrendChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-inset p-4 rounded-xl border border-gray-800">
-                            <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Stars Earned Breakdown</h3>
-                            <div id="topPerformersContainer" class="overflow-x-auto"></div>
-                        </div>
-                        <div class="bg-inset p-4 rounded-xl border border-gray-800">
-                            <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Stars Conversion Rates</h3>
-                            <div id="efficiencyContainer">
-                                <canvas id="efficiencyChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section: Raids -->
-        <div id="section-raids" class="lg:col-span-12 hidden-section">
-            <div class="panel p-3 md:p-6">
-                <div class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-start lg:items-center gap-y-4 mb-6 px-1">
-                    <div class="flex items-center gap-3">
-                        <h2 class="medieval text-base md:text-lg font-bold uppercase whitespace-nowrap">Raids</h2>
-                        <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-                        </button>
-                    </div>
-                    
-                    <div class="flex flex-row items-end gap-2 lg:gap-4 lg:ml-auto order-3 lg:order-2">
-                        <div class="flex flex-col gap-1">
-                            <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Date</span>
-                            <input type="text" id="raidWeekendCalendar" class="control-base h-8 w-32 sm:w-40 font-mono text-center" placeholder="Select Date...">
-                        </div>
-                        <button id="resetRaidSort" class="btn-reset h-8">Reset</button>
-                    </div>
-
-
-                    <div class="w-full order-2 lg:order-3 lg:mt-2">
-                        <div class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
-                            <button id="raid-subtab-summary" class="sub-tab-btn active uppercase tracking-wider">Summary</button>
-                            <button id="raid-subtab-attacks" class="sub-tab-btn uppercase tracking-wider">Attacks</button>
-                            <button id="raid-subtab-defenses" class="sub-tab-btn uppercase tracking-wider">Defenses</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- View: Raid Summary -->
-                <div id="raidSummaryView">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-inset text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-800">
-                                    <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="name" data-table="summary">
-                                        <div class="flex items-center">
-                                            Player
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
-                                        </div>
-                                    </th>
-                                    <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="attacks" data-table="summary">
-                                        <div class="flex items-center justify-center">
-                                            Attacks
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
-                                        </div>
-                                    </th>
-                                    <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="loot" data-table="summary">
-                                        <div class="flex items-center justify-center">
-                                            Capital Gold
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
-                                        </div>
-                                    </th>
-                                    <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="stars" data-table="summary">
-                                        <div class="flex items-center justify-center">
-                                            Total Stars
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
-                                        </div>
-                                    </th>
-                                    <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="damage" data-table="summary">
-                                        <div class="flex items-center justify-center">
-                                            Total Damage
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
-                                        </div>
-                                    </th>
-                                    <th class="p-3 text-center cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="avgStars" data-table="summary">
-                                        <div class="flex items-center justify-center">
-                                            Avg Stars
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody id="raidSummaryTableBody" class="text-xs md:text-sm">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- View: Raid Attacks -->
-                <div id="raidAttacksView" class="hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-inset text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-800">
-                                                                        <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="index" data-table="attacks">
+                    <!-- View: Raid Attacks -->
+                    <div id="raidAttacksView" class="hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-inset text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-800">
+                                                                            <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="index" data-table="attacks">
                                         <div class="flex items-center">Raid # <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg></div>
                                     </th>
                                     <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="clan" data-table="attacks">
@@ -362,16 +367,16 @@
                             <tbody id="raidAttacksTableBody" class="text-xs md:text-sm">
                             </tbody>
                         </table>
+                        </div>
                     </div>
-                </div>
 
-                <!-- View: Raid Defenses -->
-                <div id="raidDefensesView" class="hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-inset text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-800">
-                                                                        <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="index" data-table="defenses">
+                    <!-- View: Raid Defenses -->
+                    <div id="raidDefensesView" class="hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-inset text-[10px] font-bold text-gray-500 uppercase tracking-widest border-b border-gray-800">
+                                                                            <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="index" data-table="defenses">
                                         <div class="flex items-center">Raid # <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 ml-1 opacity-20 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg></div>
                                     </th>
                                     <th class="p-3 cursor-pointer hover:text-gold transition-colors raid-sort-btn group" data-sort="clan" data-table="defenses">
@@ -395,7 +400,9 @@
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+    </main>
+</div>
 
     <!-- Main Entry Point -->
     <script type="module" src="js/app.js"></script>

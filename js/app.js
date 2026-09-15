@@ -2,7 +2,7 @@
  * Main Application Module
  * Orchestrates the data loading flow, global event listeners, and view switching.
  */
-import { roleWeight, parseCoCDate } from './constants.js';
+import { roleWeight, parseCoCDate, esc } from './constants.js';
 import { 
     fetchClanData, 
     fetchMembersIndex, 
@@ -85,6 +85,45 @@ function updateWarCount(filtered, total) {
  */
 function isWarDecided(w) {
     return w.state === 'warEnded';
+}
+
+/*
+ * KPI strip on Overview — the dashboard's focal numbers. Every value is
+ * derived from data already fetched by init(); nothing here hits the network.
+ * ponytail: donations are the API's weekly-reset totals; upgrade path is a
+ * diff against the 7-day-old snapshot for a real delta.
+ */
+function renderKpis(clan) {
+    const host = document.getElementById('aboutContent');
+    if (!host || !clan) return;
+    const members = clan.memberList || clan.members || [];
+    const totalTrophies = members.reduce((s, m) => s + (m.trophies || 0), 0);
+    const avgTrophy = members.length ? Math.round(totalTrophies / members.length) : 0;
+    const donations = members.reduce((s, m) => s + (m.donations || 0), 0);
+    const decided = fullWarHistory.filter(isWarDecided);
+    const wins = decided.filter(w => {
+        const cs = w.clan.stars || 0, os = w.opponent.stars || 0;
+        return cs > os || (cs === os && (w.clan.destructionPercentage || 0) > (w.opponent.destructionPercentage || 0));
+    }).length;
+    const winRate = decided.length ? Math.round((wins / decided.length) * 100) : null;
+    const raid = fullRaidHistory[0];
+    const kpis = [
+        ['Members', `${members.length} / 50`, clan.clanLevel ? `Clan level ${clan.clanLevel}` : ''],
+        ['War Win Rate', winRate === null ? '—' : `${winRate}%`, decided.length ? `${wins}W / ${decided.length - wins} in ${decided.length} wars` : 'no decided wars yet'],
+        ['Total Trophies', totalTrophies.toLocaleString(), `avg ${avgTrophy.toLocaleString()}`],
+        ['Donations', donations.toLocaleString(), 'this week (API reset weekly)'],
+        ['Last Raid', raid ? (raid.raidsCompleted ?? '—') : '—', raid ? `${(raid.capitalTotalLoot ?? 0).toLocaleString()} gold · ${raid.enemyDistrictsDestroyed ?? 0} districts` : 'no raids logged'],
+        ['TH Average', (members.length ? (members.reduce((s, m) => s + (m.townHallLevel || 0), 0) / members.length) : 0).toFixed(1), `max TH${members.reduce((x, m) => Math.max(x, m.townHallLevel || 0), 0)}`],
+    ];
+    const grid = document.createElement('div');
+    grid.className = 'kpi-grid';
+    grid.innerHTML = kpis.map(([label, value, sub]) => `
+        <div class="kpi">
+            <p class="kpi-label">${esc(label)}</p>
+            <p class="kpi-value">${esc(String(value))}</p>
+            <p class="kpi-sub">${esc(sub)}</p>
+        </div>`).join('');
+    host.insertBefore(grid, host.firstChild);
 }
 
 function updateHeader(name, badgeUrl) {
@@ -263,6 +302,7 @@ function setupWarHistoryPickers() {
 }
 
 function handleInitialRoute() {
+    if (latestClanData) renderKpis(latestClanData);
     const hash = window.location.hash.replace('#', '');
     if (!hash || hash === 'about') { switchView('about', false); return; }
     if (hash === 'members') { switchView(hash, false); }
@@ -391,7 +431,7 @@ window.loadWarDetail = loadWarDetail;
 
 document.addEventListener('DOMContentLoaded', () => {
     preRoute(); init();
-    document.getElementById('tab-about')?.addEventListener('click', () => { switchView('about'); if (latestClanData) renderAbout(latestClanData); bindAboutPageEvents(); });
+    document.getElementById('tab-about')?.addEventListener('click', () => { switchView('about'); if (latestClanData) { renderAbout(latestClanData); renderKpis(latestClanData); } bindAboutPageEvents(); });
     document.getElementById('tab-members')?.addEventListener('click', () => {
         switchView('members');
         currentRoleFilter = 'all';
