@@ -1,25 +1,130 @@
 /* 
- * Dashboard Global Styles
- * Medieval-Modern aesthetic for CoC Stats
+ * Dashboard Global Styles — Champagne-on-Onyx, dual theme
+ * Theme is chosen by <html data-theme="night|day"> (boot script in index.html).
+ * Every color is a token below; Tailwind utilities (see index.html config) and
+ * Chart.js (js/charts.js) read the SAME variables, so one attribute flip
+ * restyles the whole app.
+ * Token values are "R G B" triplets so Tailwind can apply /opacity modifiers.
  */
 
+html[data-theme="night"] {
+    --s-base: 19 16 9;
+    --s-nav: 23 19 13;
+    --s-panel: 28 23 16;
+    --s-card: 36 29 20;
+    --s-hover: 43 35 24;
+    --s-inset: 27 22 14;
+    --s-line: 74 61 38;
+    --s-line-dim: 46 39 24;
+    --gold: 224 189 99;
+    --gold-bright: 243 223 160;
+    --gold-deep: 166 124 31;
+    --t-white: 255 255 255;
+    --g300: 216 207 188;
+    --g400: 182 169 141;
+    --g500: 156 139 107;
+    --g600: 125 113 89;
+    --g700: 74 66 52;
+    --g800: 46 39 24;
+    --g900: 23 19 13;
+    --ink: #e7e0d1;
+    --ink-soft: #d8cfbc;
+    --muted: #9c8b6b;
+    --aura-1: radial-gradient(1100px 500px at 50% -10%, rgba(224,189,99,0.07), transparent 60%);
+    --aura-2: radial-gradient(900px 600px at 100% 110%, rgba(166,124,31,0.05), transparent 55%);
+    --panel-edge: rgba(224,189,99,0.28);
+    --chip-a: rgba(224,189,99,0.16);
+    --chip-b: rgba(224,189,99,0.05);
+    --sel-bg: rgba(224,189,99,0.25);
+    --lift: rgba(0,0,0,0.35);
+    --sel-fg: #f3dfa0;
+    --bar3: 63 191 127;
+    --bar2: 224 189 99;
+    --bar1: 194 91 78;
+    --bar0: 125 113 89;
+    --panel-tint: rgba(166,124,31,0.06);
+    color-scheme: dark;
+}
+
+/* Day: parchment-and-brass. Scales invert semantically — gray-300 stays
+   "primary-ish text", gray-800 stays "border", so markup needs no changes. */
+html[data-theme="day"] {
+    --s-base: 245 241 230;
+    --s-nav: 238 232 216;
+    --s-panel: 251 248 240;
+    --s-card: 255 253 247;
+    --s-hover: 243 236 219;
+    --s-inset: 240 234 220;
+    --s-line: 205 186 140;
+    --s-line-dim: 226 217 192;
+    --gold: 138 103 15;
+    --gold-bright: 112 82 10;
+    --gold-deep: 176 140 60;
+    --t-white: 36 29 20;
+    --g300: 44 37 23;
+    --g400: 74 63 40;
+    --g500: 110 95 62;
+    --g600: 117 104 76;  /* 5.4:1 on card for 7-9px labels */
+    --g700: 180 166 136;
+    --g800: 221 211 182;
+    --g900: 239 233 218;
+    --ink: #241d14;
+    --ink-soft: #3c3323;
+    --muted: #6e6046;
+    --aura-1: radial-gradient(1100px 500px at 50% -10%, rgba(166,124,31,0.10), transparent 60%);
+    --aura-2: radial-gradient(900px 600px at 100% 110%, rgba(205,186,140,0.25), transparent 55%);
+    --panel-edge: rgba(138,103,15,0.45);
+    --chip-a: rgba(138,103,15,0.14);
+    --chip-b: rgba(138,103,15,0.05);
+    --sel-bg: rgba(138,103,15,0.20);
+    --lift: rgba(120,100,50,0.14);
+    --sel-fg: #241d14;
+    --bar3: 47 158 99;
+    --bar2: 176 140 60;
+    --bar1: 176 74 62;
+    --bar0: 141 126 96;
+    --panel-tint: rgba(205,186,140,0.30);
+    color-scheme: light;
+}
+
 body { 
-    background: #121212; 
-    color: #e5e5e5; 
+    background: rgb(var(--s-base)); 
+    background-image: var(--aura-1), var(--aura-2);
+    background-attachment: fixed;
+    color: var(--ink); 
     font-family: 'Inter', sans-serif; 
     -webkit-tap-highlight-color: transparent; 
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
+
+::selection { background: var(--sel-bg); color: var(--sel-fg); }
+
+/* Scrollbar: quiet brass rail */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgb(var(--s-nav)); }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(rgb(var(--s-line)), rgb(var(--gold-deep)));
+    border-radius: 8px; border: 2px solid rgb(var(--s-nav));
+}
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--gold-deep)); }
+
+/* Theme toggle: only the actionable icon shows */
+html[data-theme="night"] .icon-sun { display: none; }
+html[data-theme="day"] .icon-moon { display: none; }
 
 /* Medieval header font */
 .medieval { 
     font-family: 'Cinzel', serif; 
+    letter-spacing: 0.04em;
 }
 
-/* Main content panels */
+/* Main content panels — raised lacquer with a single gold hairline */
 .panel { 
-    background: #1e1e1e; 
-    border: 1px solid #333; 
-    border-radius: 12px; 
+    background: linear-gradient(180deg, var(--panel-tint), rgba(0,0,0,0) 14%), rgb(var(--s-panel));
+    border: 1px solid rgb(var(--s-line-dim));
+    border-top-color: var(--panel-edge);
+    border-radius: 14px;
+    box-shadow: 0 24px 48px -24px var(--lift), inset 0 1px 0 rgb(var(--t-white) / 0.04);
 }
 
 /* Town Hall icon scaling */
@@ -34,7 +139,18 @@ body {
 }
 
 .gold { 
-    color: #d4af37; 
+    background: linear-gradient(105deg, rgb(var(--gold-bright)) 15%, rgb(var(--gold)) 45%, rgb(var(--gold-deep)) 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: rgb(var(--gold));
+    -webkit-text-fill-color: transparent;
+}
+
+/* Chrome strip: thin brass rule under the title bar */
+.hairline-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(var(--gold-deep)) 30%, rgb(var(--gold)) 50%, rgb(var(--gold-deep)) 70%, transparent);
+    box-shadow: 0 0 12px rgb(var(--gold) / 0.30);
 }
 
 /* Main Navigation Tabs */
@@ -44,10 +160,11 @@ body {
     padding: 12px 8px; 
     font-size: 10px; 
     font-weight: bold; 
-    color: #666; 
-    border-bottom: 2px solid #222; 
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    border-bottom: 2px solid rgb(var(--s-line-dim));
     transition: 0.3s; 
-    background: #1a1a1a; 
+    background: rgb(var(--s-nav));
     cursor: pointer; 
     white-space: nowrap; 
 }
@@ -56,10 +173,14 @@ body {
     .tab-btn { padding: 14px; font-size: 12px; } 
 }
 
+.tab-btn:hover { color: rgb(var(--g400)); background: rgb(var(--s-panel)); }
+
 .tab-btn.active { 
-    color: #d4af37; 
-    border-bottom-color: #d4af37; 
-    background: #222; 
+    color: rgb(var(--gold-bright));
+    border-bottom-color: transparent;
+    border-image: linear-gradient(90deg, rgb(var(--gold-deep)), rgb(var(--gold)), rgb(var(--gold-deep))) 1;
+    background: linear-gradient(180deg, var(--chip-a), var(--chip-b) 60%, transparent);
+    text-shadow: 0 0 18px rgb(var(--gold) / 0.30);
 }
 
 /* Internal sub-navigation (History/Stats) */
@@ -67,17 +188,21 @@ body {
     padding: 8px 12px; 
     font-size: 10px; 
     font-weight: bold; 
-    color: #555; 
-    border-radius: 6px; 
+    letter-spacing: 0.08em;
+    color: rgb(var(--g600));
+    border-radius: 8px; 
     transition: 0.2s; 
     cursor: pointer; 
     border: 1px solid transparent; 
 }
 
+.sub-tab-btn:hover { color: rgb(var(--g400)); }
+
 .sub-tab-btn.active { 
-    color: #d4af37; 
-    background: rgba(212, 175, 55, 0.1); 
-    border-color: rgba(212, 175, 55, 0.3); 
+    color: rgb(var(--gold-bright));
+    background: linear-gradient(180deg, var(--chip-a), var(--chip-b));
+    border-color: rgb(var(--gold) / 0.4);
+    box-shadow: 0 0 16px var(--chip-b), inset 0 1px 0 rgb(var(--gold-bright) / 0.18);
 }
 
 .hidden-section { 
@@ -86,13 +211,13 @@ body {
 
 /* Standard UI Controls (Selects/Inputs) */
 .control-base { 
-    background: #252525; 
-    border: 1px solid #333; 
-    border-radius: 6px; 
+    background: rgb(var(--s-card)); 
+    border: 1px solid rgb(var(--s-line-dim));
+    border-radius: 8px; 
     padding: 6px 10px; 
     font-size: 10px; 
     font-weight: 600; 
-    color: #ccc; 
+    color: var(--ink-soft);
     outline: none; 
     transition: all 0.2s; 
     height: 32px; 
@@ -100,20 +225,23 @@ body {
     align-items: center; 
 }
 
+.control-base:hover { border-color: rgb(var(--s-line)); }
+
 .control-base:focus { 
-    border-color: #d4af37; 
+    border-color: rgb(var(--gold));
+    box-shadow: 0 0 0 3px var(--chip-a);
 }
 
 /* Role Filter Buttons */
 .btn-role { 
     font-size: 9px; 
     font-weight: bold; 
-    border: 1px solid #333; 
-    border-radius: 6px; 
+    border: 1px solid rgb(var(--s-line-dim));
+    border-radius: 8px; 
     padding: 0 10px; 
     cursor: pointer; 
-    color: #777; 
-    background: #1e1e1e; 
+    color: rgb(var(--g500));
+    background: rgb(var(--s-panel));
     height: 32px; 
     transition: 0.2s; 
     white-space: nowrap; 
@@ -124,15 +252,16 @@ body {
 }
 
 .btn-role.active { 
-    border-color: #d4af37; 
-    color: #d4af37; 
-    background: rgba(212, 175, 55, 0.1); 
+    border-color: rgb(var(--gold));
+    color: rgb(var(--gold-bright));
+    background: linear-gradient(180deg, var(--chip-a), var(--chip-b));
 }
 
 /* Labels and value styling for cards */
 .stat-label { 
     font-size: 8px; 
-    color: #777; 
+    color: var(--muted);  /* AA on card bg (5:1) */
+    letter-spacing: 0.16em;
     text-transform: uppercase; 
     font-weight: bold; 
 }
@@ -140,13 +269,13 @@ body {
 .stat-value { 
     font-size: 10px; 
     font-weight: 600; 
-    color: #ccc; 
+    color: var(--ink-soft);
 }
 
 select.control-base { 
     appearance: none; 
     padding-right: 24px; 
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23777'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a4977c'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); 
     background-repeat: no-repeat; 
     background-position: right 8px center; 
     background-size: 12px; 
@@ -161,14 +290,15 @@ select.control-base {
     left: 50%;
     transform: translateX(-50%);
     width: 180px;
-    background: #2a2a2a;
-    border: 1px solid #444;
+    background: rgb(var(--s-card));
+    border: 1px solid rgb(var(--s-line));
+    border-top-color: var(--panel-edge);
     padding: 8px 10px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 9px;
     line-height: 1.4;
-    color: #bbb;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    color: var(--ink-soft);
+    box-shadow: 0 12px 32px -8px var(--lift), 0 0 20px rgb(var(--gold) / 0.05);
     z-index: 999;
     pointer-events: none;
     opacity: 0;
@@ -191,7 +321,7 @@ select.control-base {
     transform: translateX(-50%);
     border-width: 6px;
     border-style: solid;
-    border-color: #2a2a2a transparent transparent transparent;
+    border-color: rgb(var(--s-card)) transparent transparent transparent;
 }
 
 .info-tooltip::before {
@@ -202,11 +332,13 @@ select.control-base {
     transform: translateX(-50%);
     border-width: 7px;
     border-style: solid;
-    border-color: #444 transparent transparent transparent;
+    border-color: rgb(var(--s-line)) transparent transparent transparent;
     margin-top: 1px;
 }
 
 /* Sync Button Animation */
+.sync-btn { cursor: pointer; }
+.sync-btn:hover { color: rgb(var(--gold)) !important; filter: drop-shadow(0 0 6px rgb(var(--gold) / 0.4)); }
 .syncing svg {
     animation: spin 1s linear infinite;
 }
@@ -220,12 +352,13 @@ select.control-base {
 /* Enhanced Reset Buttons */
 .btn-reset {
     font-size: 10px;
+    letter-spacing: 0.08em;
     font-weight: bold;
-    color: #6b7280;
+    color: var(--muted);
     text-transform: uppercase;
     padding: 2px 8px;
-    border: 1px solid #333;
-    border-radius: 6px;
+    border: 1px solid rgb(var(--s-line-dim));
+    border-radius: 8px;
     background: transparent;
     transition: all 0.2s;
     cursor: pointer;
@@ -235,18 +368,32 @@ select.control-base {
 }
 
 .btn-reset:hover {
-    color: #d4af37;
-    border-color: #d4af37;
-    background: rgba(212, 175, 55, 0.1);
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+    color: rgb(var(--gold-bright));
+    border-color: rgb(var(--gold));
+    background: var(--chip-a);
+    box-shadow: 0 0 14px rgb(var(--gold) / 0.15);
 }
 
 .btn-reset:active {
-    background: rgba(212, 175, 55, 0.2);
+    background: var(--chip-a);
     transform: scale(0.96);
+}
+
+/* War cards pinned/live: faint brass edge */
+.hover\:border-gold:hover, .border-gold {
+    border-color: rgb(var(--gold)) !important;
 }
 
 /* Prevent table text wrapping on mobile */
 table th, table td {
     white-space: nowrap;
 }
+
+/* flatpickr: inherits the active theme through the same tokens */
+.flatpickr-calendar { background: rgb(var(--s-panel)) !important; border: 1px solid rgb(var(--s-line-dim)) !important; box-shadow: 0 16px 40px -12px var(--lift) !important; }
+.flatpickr-day.selected, .flatpickr-day.selected:hover { background: rgb(var(--gold)) !important; border-color: rgb(var(--gold)) !important; color: rgb(var(--s-base)) !important; }
+.flatpickr-months .flatpickr-month, .flatpickr-current-month .flatpickr-monthDropdown-months, .flatpickr-current-month input.cur-year, .flatpickr-weekdays, span.flatpickr-weekday, .flatpickr-day, .flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month { color: var(--ink) !important; fill: var(--ink) !important; background: transparent !important; }
+.flatpickr-day:hover { background: var(--chip-a) !important; }
+.flatpickr-day.flatpickr-disabled { color: rgb(var(--g700)) !important; }
+.numInputWrapper span svg path { fill: rgb(var(--g500)) !important; }
+.flatpickr-hour, .flatpickr-minute { color: var(--ink) !important; }

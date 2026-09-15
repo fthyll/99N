@@ -4,6 +4,17 @@
  */
 import { parseCoCDate, esc } from './constants.js';
 
+// Resolve theme tokens (css/style.css) at draw time so charts flip with
+// day/night. Triplet vars need rgb(); --ink etc. are ready-made colors.
+const tok = (n) => {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    return v.includes(' ') ? `rgb(${v})` : v;
+};
+const chartTheme = () => ({
+    gold: tok('--gold'), line: tok('--g800'), tick: tok('--muted'), name: tok('--g300'),
+    bar3: tok('--bar3'), bar2: tok('--bar2'), bar1: tok('--bar1'), bar0: tok('--bar0'),
+});
+
 let starsChart = null;      
 let efficiencyChart = null; 
 
@@ -73,6 +84,7 @@ function renderStarsTrend(warHistory) {
         return totalPossibleStars === 0 ? 0 : ((w.clan.stars / totalPossibleStars) * 100).toFixed(1);
     });
 
+    const th = chartTheme();
     if (starsChart) starsChart.destroy();
     starsChart = new Chart(ctx, {
         type: 'line',
@@ -81,8 +93,8 @@ function renderStarsTrend(warHistory) {
             datasets: [{
                 label: 'Stars Won (%)',
                 data: data,
-                borderColor: '#d4af37',
-                backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                borderColor: th.gold,
+                backgroundColor: 'rgba(224, 189, 99, 0.10)',
                 fill: true,
                 tension: 0.4
             }]
@@ -91,8 +103,8 @@ function renderStarsTrend(warHistory) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: { beginAtZero: true, max: 100, grid: { color: '#333' }, ticks: { color: '#777', font: { size: 9 } } },
-                x: { grid: { color: '#333' }, ticks: { color: '#777', font: { size: 9 } } }
+                y: { beginAtZero: true, max: 100, grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9 } } },
+                x: { grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9 } } }
             },
             plugins: { legend: { display: false } }
         }
@@ -158,12 +170,13 @@ function renderEfficiencyChart(warHistory) {
     const top25 = Object.values(statsMap).filter(p => p.total > 0).sort((a, b) => (b.s3/b.total) - (a.s3/a.total) || b.total - a.total).slice(0, 25);
     if (top25.length === 0) { if (efficiencyChart) efficiencyChart.destroy(); return; }
 
+    const th = chartTheme();
     const labels = top25.map(p => p.name);
     const datasets = [
-        { label: '3-Star %', data: top25.map(p => (p.s3/p.total*100).toFixed(1)), backgroundColor: '#4ade80' },
-        { label: '2-Star %', data: top25.map(p => (p.s2/p.total*100).toFixed(1)), backgroundColor: '#facc15' },
-        { label: '1-Star %', data: top25.map(p => (p.s1/p.total*100).toFixed(1)), backgroundColor: '#ef4444' },
-        { label: 'Fail %', data: top25.map(p => (p.s0/p.total*100).toFixed(1)), backgroundColor: '#9ca3af' }
+        { label: '3-Star %', data: top25.map(p => (p.s3/p.total*100).toFixed(1)), backgroundColor: th.bar3 },
+        { label: '2-Star %', data: top25.map(p => (p.s2/p.total*100).toFixed(1)), backgroundColor: th.bar2 },
+        { label: '1-Star %', data: top25.map(p => (p.s1/p.total*100).toFixed(1)), backgroundColor: th.bar1 },
+        { label: 'Fail %', data: top25.map(p => (p.s0/p.total*100).toFixed(1)), backgroundColor: th.bar0 }
     ];
 
     if (efficiencyChart) efficiencyChart.destroy();
@@ -173,11 +186,11 @@ function renderEfficiencyChart(warHistory) {
         options: {
             indexAxis: 'y', responsive: true, maintainAspectRatio: false,
             scales: {
-                x: { stacked: true, beginAtZero: true, max: 100, grid: { color: '#333' }, ticks: { color: '#777', font: { size: 9 }, callback: (v) => v + '%' } },
-                y: { stacked: true, grid: { display: false }, ticks: { color: '#ccc', font: { size: 10, weight: 'bold' } } }
+                x: { stacked: true, beginAtZero: true, max: 100, grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9 }, callback: (v) => v + '%' } },
+                y: { stacked: true, grid: { display: false }, ticks: { color: th.name, font: { size: 10, weight: 'bold' } } }
             },
             plugins: {
-                legend: { position: 'bottom', labels: { color: '#777', font: { size: 9 }, boxWidth: 10, padding: 15 } },
+                legend: { position: 'bottom', labels: { color: th.tick, font: { size: 9 }, boxWidth: 10, padding: 15 } },
                 tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}%` } }
             }
         }

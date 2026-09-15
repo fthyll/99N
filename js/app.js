@@ -463,4 +463,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     document.addEventListener('click', () => { document.querySelectorAll('.info-tooltip').forEach(t => t.classList.remove('active')); });
+
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+        const html = document.documentElement;
+        const next = html.dataset.theme === 'day' ? 'night' : 'day';
+        html.dataset.theme = next;
+        localStorage.setItem('coc-theme', next);
+        // Chart.js colors are computed once at build time — re-render them.
+        renderCharts(fullWarHistory, document.getElementById('statsTimeRange')?.value || 'month');
+    });
 });
