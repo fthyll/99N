@@ -14,7 +14,10 @@ if RAW_TAG is None:
     raise ValueError("ERROR: CLAN_TAG not found.")
 
 CLAN_TAG = RAW_TAG.replace("#", "%23")
-BASE_URL = "https://cocproxy.royaleapi.dev/v1"
+# Default is the RoyaleAPI proxy (needed on GitHub Actions, whose IPs rotate).
+# Locally the token is whitelisted to this machine's IP, so .env can point
+# straight at the official API: COC_API_BASE_URL=https://api.clashofclans.com/v1
+BASE_URL = os.getenv("COC_API_BASE_URL", "https://cocproxy.royaleapi.dev/v1")
 
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}",
