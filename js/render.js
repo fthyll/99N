@@ -2,7 +2,7 @@
  * Rendering Module
  * Responsible for generating all dynamic HTML content for the dashboard.
  */
-import { roleMap, getTHImage, parseCoCDate } from './constants.js';
+import { roleMap, getTHImage, parseCoCDate, esc } from './constants.js';
 
 /**
  * Renders the member roster list with league icons and donation stats.
@@ -21,7 +21,7 @@ export function renderMembers(list) {
             <img src="${getTHImage(m.townHallLevel)}" class="th-icon">
             <div class="flex-1 min-w-0">
                 <div class="flex items-baseline gap-1 md:gap-2 truncate">
-                    <span class="font-bold text-[11px] md:text-xs text-white">${m.name}</span>
+                    <span class="font-bold text-[11px] md:text-xs text-white">${esc(m.name)}</span>
                     <span class="text-[7px] md:text-[8px] text-gray-500 font-mono">XP ${m.expLevel}</span>
                 </div>
                 <span class="text-[7px] md:text-[8px] gold font-bold uppercase block">${roleMap[m.role]}</span>
@@ -31,7 +31,7 @@ export function renderMembers(list) {
                 </div>
             </div>
             <div class="flex flex-col items-center justify-center min-w-[50px] md:min-w-[60px]">
-                ${leagueIcon ? `<img src="${leagueIcon}" class="w-5 h-5 md:w-6 md:h-6 object-contain mb-1" title="${m.leagueTier?.name || m.league?.name || 'Unranked'}">` : ''}
+                ${leagueIcon ? `<img src="${esc(leagueIcon)}" class="w-5 h-5 md:w-6 md:h-6 object-contain mb-1" title="${esc(m.leagueTier?.name || m.league?.name || 'Unranked')}">` : ''}
                 <p class="text-[11px] md:text-xs font-bold text-[#d4af37]">${m.trophies.toLocaleString()}</p>
                 <p class="text-[7px] md:text-[8px] text-gray-600 uppercase font-bold tracking-tighter">Trophies</p>
             </div>
@@ -88,7 +88,7 @@ export function renderAtkSmall(atk, infoMap, isDefense = false, memberTH = "?", 
                     <span class="text-[9px] font-mono text-gray-500">#${info.pos}</span>
                     <img src="${getTHImage(info.th)}" class="w-6 h-6 object-contain">
                     <div class="flex-1 min-w-0">
-                        <p class="text-[9px] text-white font-bold truncate">${info.name} (TH${info.th})</p>
+                        <p class="text-[9px] text-white font-bold truncate">${esc(info.name)} (TH${info.th})</p>
                     </div>
                     <span class="text-[10px] gold leading-none font-mono">${stars}</span>
                 </div>
@@ -172,9 +172,9 @@ function getWarSummaryHtml(war, now) {
         </div>
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-2 md:gap-3 w-1/3 text-left">
-                <img src="${war.clan.badgeUrls.small}" class="w-7 h-7 md:w-9 md:h-9">
+                <img src="${esc(war.clan.badgeUrls.small)}" class="w-7 h-7 md:w-9 md:h-9">
                 <div class="min-w-0">
-                    <p class="text-[10px] md:text-xs font-bold text-white truncate">${war.clan.name}</p>
+                    <p class="text-[10px] md:text-xs font-bold text-white truncate">${esc(war.clan.name)}</p>
                     <p class="text-[7px] md:text-[8px] text-gray-500">${clanAttacks}/${totalPossibleAttacks} Atks</p>
                 </div>
             </div>
@@ -186,10 +186,10 @@ function getWarSummaryHtml(war, now) {
             </div>
             <div class="flex items-center gap-2 md:gap-3 text-right justify-end w-1/3">
                 <div class="min-w-0">
-                    <p class="text-[10px] md:text-xs font-bold text-white truncate">${war.opponent.name}</p>
+                    <p class="text-[10px] md:text-xs font-bold text-white truncate">${esc(war.opponent.name)}</p>
                     <p class="text-[7px] md:text-[8px] text-gray-500">${opponentAttacks}/${totalPossibleAttacks} Atks</p>
                 </div>
-                <img src="${war.opponent.badgeUrls.small}" class="w-7 h-7 md:w-9 md:h-9">
+                <img src="${esc(war.opponent.badgeUrls.small)}" class="w-7 h-7 md:w-9 md:h-9">
             </div>
         </div>
     </div>`;
@@ -214,7 +214,7 @@ export function renderWarHistory(warHistory) {
     if (countdownInterval) clearInterval(countdownInterval);
     
     container.innerHTML = sorted.map(war => `
-        <div onclick="window.loadWarDetail('${war.filename}')" class="cursor-pointer hover:border-gold group">
+        <div onclick="window.loadWarDetail('${esc(war.filename)}')" class="cursor-pointer hover:border-gold group">
             ${getWarSummaryHtml(war, now)}
         </div>
     `).join('');
@@ -249,7 +249,7 @@ function renderMemberCard(m, infoMap, totalAttacks, warAttacksMap = {}) {
                     <span class="text-xs font-mono text-gray-600">#${m.mapPosition}</span>
                     <img src="${getTHImage(m.townhallLevel || m.townHallLevel)}" class="w-8 h-8">
                     <div class="min-w-0">
-                        <p class="font-bold text-[11px] text-white truncate">${m.name}</p>
+                        <p class="font-bold text-[11px] text-white truncate">${esc(m.name)}</p>
                         <p class="text-[9px] gold font-bold uppercase tracking-tighter">TH${m.townhallLevel || m.townHallLevel}</p>
                     </div>
                 </div>
@@ -470,10 +470,10 @@ export function renderWarDetail(warData, history = []) {
             <span class="text-[9px] font-bold text-gray-500 uppercase pl-1">Side</span>
             <div class="flex items-center gap-1.5 w-full">
                 <button id="toggleClan" class="flex flex-1 items-center justify-center gap-1.5 px-2 py-1 rounded-lg border ${currentWarFilters.selectedClan === 'clan' ? 'border-gold bg-gold/10 text-gold' : 'border-gray-700 text-gray-500 hover:border-gray-500'} transition-all h-8 min-w-0">
-                    <img src="${warData.clan.badgeUrls.small}" class="w-4 h-4 shrink-0"><span class="text-[9px] font-bold uppercase truncate">${warData.clan.name}</span>
+                    <img src="${esc(warData.clan.badgeUrls.small)}" class="w-4 h-4 shrink-0"><span class="text-[9px] font-bold uppercase truncate">${esc(warData.clan.name)}</span>
                 </button>
                 <button id="toggleOpponent" class="flex flex-1 items-center justify-center gap-1.5 px-2 py-1 rounded-lg border ${currentWarFilters.selectedClan === 'opponent' ? 'border-gold bg-gold/10 text-gold' : 'border-gray-700 text-gray-500 hover:border-gray-500'} transition-all h-8 min-w-0">
-                    <img src="${warData.opponent.badgeUrls.small}" class="w-4 h-4 shrink-0"><span class="text-[9px] font-bold uppercase truncate">${warData.opponent.name}</span>
+                    <img src="${esc(warData.opponent.badgeUrls.small)}" class="w-4 h-4 shrink-0"><span class="text-[9px] font-bold uppercase truncate">${esc(warData.opponent.name)}</span>
                 </button>
             </div>
         </div>
@@ -574,23 +574,23 @@ export function renderWarDetail(warData, history = []) {
 
 export function renderAbout(clanData) {
     const container = document.getElementById('aboutContent'); if (!container || !clanData) return;
-    const labelsHtml = (clanData.labels || []).map(l => `<div class="flex items-center gap-1.5 bg-[#252525] px-2 py-1 rounded border border-gray-800"><img src="${l.iconUrls.small}" class="w-3.5 h-3.5"><span class="text-[8px] md:text-[9px] font-bold text-gray-400 uppercase">${l.name}</span></div>`).join('');
+    const labelsHtml = (clanData.labels || []).map(l => `<div class="flex items-center gap-1.5 bg-[#252525] px-2 py-1 rounded border border-gray-800"><img src="${esc(l.iconUrls.small)}" class="w-3.5 h-3.5"><span class="text-[8px] md:text-[9px] font-bold text-gray-400 uppercase">${esc(l.name)}</span></div>`).join('');
     container.innerHTML = `<div class="panel p-4 md:p-6 space-y-6 md:space-y-8">
         <div class="bg-[#1a1a1a] p-4 md:p-6 rounded-xl border border-gray-800">
             <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
                 <div class="flex-1 space-y-4 w-full">
                     <div class="flex items-center gap-4">
-                        <img src="${clanData.badgeUrls.medium}" class="w-16 h-16 md:w-20 md:h-20">
+                        <img src="${esc(clanData.badgeUrls.medium)}" class="w-16 h-16 md:w-20 md:h-20">
                         <div>
-                            <h2 class="medieval text-xl md:text-2xl font-bold gold">${clanData.name}</h2>
-                            <div class="flex items-center gap-2 mt-1"><span class="text-[10px] md:text-xs font-mono text-gray-500">${clanData.tag}</span></div>
+                            <h2 class="medieval text-xl md:text-2xl font-bold gold">${esc(clanData.name)}</h2>
+                            <div class="flex items-center gap-2 mt-1"><span class="text-[10px] md:text-xs font-mono text-gray-500">${esc(clanData.tag)}</span></div>
                         </div>
                     </div>
-                    <p class="text-[11px] md:text-sm text-gray-300 leading-relaxed italic">${clanData.description}</p>
+                    <p class="text-[11px] md:text-sm text-gray-300 leading-relaxed italic">${esc(clanData.description)}</p>
                 </div>
                 <div class="grid grid-cols-2 gap-x-4 md:gap-x-8 gap-y-4 w-full md:w-auto md:min-w-[350px]">
-                    <div><p class="stat-label">Location</p><p class="stat-value text-[11px] md:text-xs">${clanData.location?.name || 'Unknown'}</p></div>
-                    <div><p class="stat-label">Language</p><p class="stat-value text-[11px] md:text-xs">${clanData.chatLanguage?.name || 'English'}</p></div>
+                    <div><p class="stat-label">Location</p><p class="stat-value text-[11px] md:text-xs">${esc(clanData.location?.name || 'Unknown')}</p></div>
+                    <div><p class="stat-label">Language</p><p class="stat-value text-[11px] md:text-xs">${esc(clanData.chatLanguage?.name || 'English')}</p></div>
                     <div><p class="stat-label">Clan Level</p><p class="stat-value text-gold text-[11px] md:text-xs">${clanData.clanLevel}</p></div>
                     <div><p class="stat-label">Family Friendly</p><p class="stat-value text-[11px] md:text-xs">${clanData.isFamilyFriendly ? 'Yes' : 'No'}</p></div>
                     <div class="col-span-2"><p class="stat-label mb-2">Clan Labels</p><div class="flex flex-wrap gap-2">${labelsHtml}</div></div>
@@ -605,7 +605,7 @@ export function renderAbout(clanData) {
                         War Performance
                     </h3>
                     <div class="space-y-3 md:space-y-4 flex-1">
-                        <div class="p-3 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">War League</p><p class="stat-value text-white text-[11px] md:text-xs">${clanData.warLeague?.name || 'Unranked'}</p></div>
+                        <div class="p-3 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">War League</p><p class="stat-value text-white text-[11px] md:text-xs">${esc(clanData.warLeague?.name || 'Unranked')}</p></div>
                         <div class="grid grid-cols-3 gap-2">
                             <div class="text-center p-2 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">Victories</p><p class="text-green-500 font-bold text-[11px] md:text-xs">${clanData.warWins}</p></div>
                             <div class="text-center p-2 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">Defeats</p><p class="text-red-500 font-bold text-[11px] md:text-xs">${clanData.warLosses}</p></div>
@@ -622,7 +622,7 @@ export function renderAbout(clanData) {
                         Clan Capital
                     </h3>
                     <div class="space-y-3 md:space-y-4">
-                        <div class="p-3 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">Capital League</p><p class="stat-value text-white text-[11px] md:text-xs">${clanData.capitalLeague?.name || 'Unranked'}</p></div>
+                        <div class="p-3 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">Capital League</p><p class="stat-value text-white text-[11px] md:text-xs">${esc(clanData.capitalLeague?.name || 'Unranked')}</p></div>
                         <div class="p-3 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">Capital Hall Level</p><p class="stat-value text-white text-[11px] md:text-xs">Level ${clanData.clanCapital?.capitalHallLevel || 'Unknown'}</p></div>
                         <div class="p-3 bg-[#252525] rounded-lg h-[58px] flex flex-col justify-center"><p class="stat-label">Districts Unlocked</p><p class="stat-value text-white text-[11px] md:text-xs">${(clanData.clanCapital?.districts || []).length} Districts</p></div>
                     </div>
@@ -742,7 +742,7 @@ export function renderRaidSummary(raidData, membersLookup = []) {
                     <div class="flex items-center gap-3">
                         <img src="${getTHImage(thLevel)}" class="w-8 h-8">
                         <div class="min-w-0">
-                            <p class="font-bold text-[11px] text-white truncate">${member.name}</p>
+                            <p class="font-bold text-[11px] text-white truncate">${esc(member.name)}</p>
                             <p class="text-[9px] gold font-bold uppercase tracking-tighter">TH${thLevel}</p>
                         </div>
                     </div>
@@ -785,7 +785,7 @@ export function renderRaidAttacks(raidData) {
     tableBody.innerHTML = log.map(r => `
         <tr class="border-b border-gray-800/50 hover:bg-[#1a1a1a] transition-colors">
             <td class="p-3 text-gray-500 font-mono">#${r.index}</td>
-            <td class="p-3"><div class="flex items-center gap-2"><img src="${r.defender.badgeUrls.small}" class="w-5 h-5"><span class="font-bold text-white">${r.defender.name}</span></div></td>
+            <td class="p-3"><div class="flex items-center gap-2"><img src="${esc(r.defender.badgeUrls.small)}" class="w-5 h-5"><span class="font-bold text-white">${esc(r.defender.name)}</span></div></td>
             <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${r.status === 'Defeated' ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}">${r.status}</span></td>
             <td class="p-3 text-center text-gray-400">${r.attackCount}</td>
             <td class="p-3 text-center text-gold font-bold">${r.districtsDestroyed} / ${r.districtCount}</td>
@@ -821,7 +821,7 @@ export function renderRaidDefenses(raidData) {
     tableBody.innerHTML = log.map(r => `
         <tr class="border-b border-gray-800/50 hover:bg-[#1a1a1a] transition-colors">
             <td class="p-3 text-gray-500 font-mono">#${r.index}</td>
-            <td class="p-3"><div class="flex items-center gap-2"><img src="${r.attacker.badgeUrls.small}" class="w-5 h-5"><span class="font-bold text-white">${r.attacker.name}</span></div></td>
+            <td class="p-3"><div class="flex items-center gap-2"><img src="${esc(r.attacker.badgeUrls.small)}" class="w-5 h-5"><span class="font-bold text-white">${esc(r.attacker.name)}</span></div></td>
             <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${r.status === 'Defeated' ? 'bg-red-500/10 text-red-500' : 'bg-yellow-500/10 text-yellow-500'}">${r.status}</span></td>
             <td class="p-3 text-center text-gray-400">${r.attackCount}</td>
             <td class="p-3 text-center text-red-400 font-bold">${r.districtsDestroyed} / ${r.districtCount}</td>

@@ -18,6 +18,13 @@ export const roleWeight = {
     "member": 1 
 };
 
+// Escapes untrusted Supercell strings (player/clan names, descriptions, tags,
+// URLs) before they reach innerHTML. Player names are user input and may
+// contain <, so every ${} in the render modules goes through this.
+export const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+));
+
 // Generates the local path for Town Hall images
 export const getTHImage = (lv) => `assets/Town_Hall${lv}.webp`;
 

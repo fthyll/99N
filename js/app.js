@@ -52,18 +52,6 @@ function switchView(viewId, updateHash = true) {
     if (updateHash) window.location.hash = viewId;
 }
 
-function switchSubView(subviewId, updateHash = true) {
-    const isHistory = subviewId === 'history';
-    document.getElementById('warListView')?.classList.toggle('hidden', !isHistory);
-    document.getElementById('warStatsView')?.classList.toggle('hidden', isHistory);
-    document.getElementById('warDetailView')?.classList.add('hidden');
-    document.getElementById('warHistoryControls')?.classList.toggle('hidden', !isHistory);
-    document.getElementById('warStatsControls')?.classList.toggle('hidden', isHistory);
-    document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(`subtab-${subviewId}`)?.classList.add('active');
-    if (updateHash) window.location.hash = `war/${subviewId}`;
-}
-
 function switchRaidSubView(subviewId, updateHash = true) {
     document.getElementById('raidSummaryView')?.classList.toggle('hidden', subviewId !== 'summary');
     document.getElementById('raidAttacksView')?.classList.toggle('hidden', subviewId !== 'attacks');
@@ -382,7 +370,6 @@ async function loadWarDetail(filename, updateHash = true) {
         activeWarFilename = filename;
         document.getElementById('warMainHeader')?.classList.add('hidden');
         document.getElementById('warListView')?.classList.add('hidden');
-        document.getElementById('warStatsView')?.classList.add('hidden');
         document.getElementById('warDetailView')?.classList.remove('hidden');
         document.getElementById('warHistoryControls')?.classList.add('hidden');
         renderWarDetail(warData, fullWarHistory);

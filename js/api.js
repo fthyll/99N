@@ -52,12 +52,3 @@ export async function fetchRaidIndex() {
 export async function fetchRaidData(filename) {
     return await fetchData(`data/raid_stats/${filename}`);
 }
-
-/**
- * Global Sync Trigger
- * Notifies the scrapers to update data (via Github Actions typically, but here simulated)
- */
-export async function syncData() {
-    // In this environment, we just wait a bit and re-fetch the index
-    return new Promise(resolve => setTimeout(resolve, 1000));
-}
