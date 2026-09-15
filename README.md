@@ -8,19 +8,18 @@ Fork of [cstreit03/CoC-Stats](https://github.com/cstreit03/CoC-Stats) (live demo
 - **Escaped rendering**: player/clan names, descriptions, tags, and badge URLs go through `esc()` before reaching `innerHTML` (`js/xss.test.mjs` proves it).
 - **Smarter scraper**: skips unarchivable war states, skips no-change writes (no empty commits every 15 min), exits non-zero on API errors so Actions turns red instead of failing silently.
 - **Local run support**: `COC_API_BASE_URL` env override (`.env`), useful when your token is whitelisted to your own IP.
+- **"War Room" UI remake**: sidebar dashboard (desktop) / top bar (mobile) with a 6-card KPI strip on Overview — win rate, trophies, donations, last raid. Dark navy + Clash-gold night theme and a cool-paper day theme; see [Theme system](#theme-system).
 - Regression harnesses for all of the above.
 
 ## Tabs
 
 | Tab | What it shows | Data source |
 |---|---|---|
-| About | Clan overview, war/capital league, join requirements | latest member snapshot |
+| Overview | KPI strip + clan card, war/capital league, join requirements | latest member snapshot + indices |
 | Members | Roster with donations, trophies, role filters, **any historical date** | daily snapshots |
 | Wars | War list + per-player attack/defense breakdown, win probability, cleanup needed | war snapshots |
 | Raids | Capital raid weekends: attacks, defenses, loot per player | raid logs |
 | Stats | Stars-trend line, top-25 star breakdown, conversion-rate bars (finished wars only) | war snapshots |
-
-![Members tracking](demo-images/clan_members_tracking.png)
 
 ## How it works
 
@@ -40,6 +39,17 @@ data/
 ```
 
 **War history starts from the day you install this** — the CoC API only exposes full per-player attack data on the `currentwar` endpoint while a war is live; `warlog` has results but no attacks, so older wars cannot be backfilled.
+
+## Theme system
+
+The UI ("War Room") is one palette contract with two value sets, selected by `<html data-theme="night|day">`:
+
+- Every color is a CSS custom property in `css/style.css` (night = navy onyx + Clash gold, day = cool paper + bronze). Token *names* are stable; only values swap, so no `dark:` variants exist anywhere in the markup.
+- Tailwind utilities (`text-gold`, `bg-gray-800`, even `text-white`) resolve to those vars through `tailwind.config` in `index.html`; Chart.js resolves them at draw time via `chartTheme()` in `js/charts.js` and re-renders when you toggle.
+- The toggle (sidebar/top bar) persists to `localStorage.coc-theme`; a boot script in `<head>` applies the stored theme — or the OS `prefers-color-scheme` — before first paint, so there is no flash.
+- Contrast is WCAG-checked per theme (≥4.5:1 for all text pairs).
+
+**Layout**: 236px sticky sidebar ≥1024px, collapsing to a scrollable top bar on mobile. The Overview KPI strip (`renderKpis` in `js/app.js`) is derived entirely from data the app already fetched — nothing extra hits the network; the win-rate card is governed by the same `warEnded` guard as the Wars tab.
 
 ## Setup
 
@@ -64,8 +74,8 @@ Settings → Secrets and variables → Actions:
 ### 3. Permissions & Pages
 
 - Settings → Actions → General → Workflow permissions → **Read and write** (the bots commit back).
-- Settings → Pages → Deploy from a branch → `main`, root folder.
-- Private repos need GitHub Premium for Pages; on the free plan, make a separate public repo for the rendered site (never commit `.env` or tokens there).
+- Settings → Pages → Deploy from a branch → `main`, root folder. This repo is public, so Pages is free; a private repo needs GitHub Premium, or a separate public repo for the rendered site (never commit `.env` or tokens there).
+- Live here: https://fthyll.github.io/99N/
 - `CNAME` (optional): put your own domain there and point DNS at GitHub Pages.
 
 ### 4. Automation
