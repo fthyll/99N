@@ -15,8 +15,12 @@ let efficiencyChart = null;
 export function renderCharts(warHistory, range = 'month') {
     if (!warHistory || warHistory.length === 0) return;
 
+    // Undecided snapshots have partial star counts; averaging them into a
+    // trend line reports an unfinished war as a low-scoring one.
+    const decidedHistory = warHistory.filter(w => w.state === 'warEnded');
+
     // Filter history based on range
-    const filteredHistory = filterHistoryByRange(warHistory, range);
+    const filteredHistory = filterHistoryByRange(decidedHistory, range);
     
     renderStarsTrend(filteredHistory);
     renderTopPerformers(filteredHistory);

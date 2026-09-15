@@ -137,10 +137,16 @@ function getWarSummaryHtml(war, now) {
     const formattedDate = `${d.substring(0,4)}-${d.substring(4,6)}-${d.substring(6,8)}`;
     const start = parseCoCDate(war.startTime);
     const end = parseCoCDate(war.endTime);
+    // Only the API's own 'warEnded' verdict makes a score authoritative. A
+    // snapshot frozen mid-war is incomplete, not a draw.
+    const isPinned = war.state !== 'warEnded';
     let statusLabel = "";
     let countdownTarget = null;
-    let isPinned = now < end;
-    if (now < start) { statusLabel = "Preparation Day"; countdownTarget = war.startTime; }
+    if (isPinned) {
+        if (war.state === 'preparation' && now < start) { statusLabel = "Preparation Day"; countdownTarget = war.startTime; }
+        else if (now < end) { statusLabel = "War Day"; countdownTarget = war.endTime; }
+        else { statusLabel = "Incomplete"; }
+    } else if (now < start) { statusLabel = "Preparation Day"; countdownTarget = war.startTime; }
     else if (now < end) { statusLabel = "War Day"; countdownTarget = war.endTime; }
     const pinnedClass = isPinned ? 'border-gold bg-[#2a2618]' : 'border-gray-700 bg-[#252525]';
     const clanStars = war.clan.stars || 0;
@@ -291,6 +297,8 @@ function calculateWinProbability(warData, history) {
 
     const playerMTDMap = {};
     history.forEach(w => {
+        // Partial snapshots would drag a player's MTD average down mid-war.
+        if (w.state !== 'warEnded') return;
         w.clan.members.forEach(m => {
             if (!playerMTDMap[m.tag]) playerMTDMap[m.tag] = { sum: 0, count: 0 };
             (m.attacks || []).forEach(a => {

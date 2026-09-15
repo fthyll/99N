@@ -89,6 +89,16 @@ function updateWarCount(filtered, total) {
     if (el) el.innerText = `${filtered} / ${total}`;
 }
 
+/**
+ * A war result is only authoritative once the API has archived it as
+ * 'warEnded'. Files frozen at 'inWar'/'preparation' are stale partial
+ * snapshots from the old scraper and must never be scored or aggregated.
+ * ponytail: read-only guard; upgrade path is a one-off purge of dead files.
+ */
+function isWarDecided(w) {
+    return w.state === 'warEnded';
+}
+
 function updateHeader(name, badgeUrl) {
     const title = document.getElementById('pageTitle');
     const badge = document.getElementById('clanBadge');
@@ -313,6 +323,9 @@ function filterWarHistory() {
         if (endVal && warDate > endVal) return false;
         
         if (currentWarFilter !== 'all') {
+            // Victory/Defeat/Draw filters describe outcomes; an undecided
+            // snapshot has no outcome and must not appear under any of them.
+            if (!isWarDecided(w)) return false;
             const clanStars = w.clan.stars || 0;
             const oppStars = w.opponent.stars || 0;
             const clanDest = w.clan.destructionPercentage || 0;
