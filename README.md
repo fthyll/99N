@@ -1,116 +1,104 @@
 # CoC War Stats Dashboard
 
-A sophisticated dashboard for tracking Clash of Clans performance with advanced analytics and real-time win probability calculations. This project uses a Python scraper and GitHub Actions to automatically update data on a recurring schedule.
+Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on GitHub Actions, commits JSON snapshots to this repo, and the static frontend (GitHub Pages) renders them — no backend needed.
 
-See live example: https://clash.kenaz.dev
+Fork of [cstreit03/CoC-Stats](https://github.com/cstreit03/CoC-Stats) (live demo of the original: https://clash.kenaz.dev), with these changes:
 
-## Features
+- **State-aware war data**: only `warEnded` snapshots are scored, charted, or used for win-probability averages. `preparation`/stale snapshots show as *Incomplete* instead of fake draws (see `docs` note in `js/app.js:isWarDecided`).
+- **Escaped rendering**: player/clan names, descriptions, tags, and badge URLs go through `esc()` before reaching `innerHTML` (`js/xss.test.mjs` proves it).
+- **Smarter scraper**: skips unarchivable war states, skips no-change writes (no empty commits every 15 min), exits non-zero on API errors so Actions turns red instead of failing silently.
+- **Local run support**: `COC_API_BASE_URL` env override (`.env`), useful when your token is whitelisted to your own IP.
+- Regression harnesses for all of the above.
 
-### About Tab
-View comprehensive clan overview with war performance metrics, league standings, and join requirements.
+## Tabs
 
-![Dashboard About Page](demo-images/clan_about_page.png)
+| Tab | What it shows | Data source |
+|---|---|---|
+| About | Clan overview, war/capital league, join requirements | latest member snapshot |
+| Members | Roster with donations, trophies, role filters, **any historical date** | daily snapshots |
+| Wars | War list + per-player attack/defense breakdown, win probability, cleanup needed | war snapshots |
+| Raids | Capital raid weekends: attacks, defenses, loot per player | raid logs |
+| Stats | Stars-trend line, top-25 star breakdown, conversion-rate bars (finished wars only) | war snapshots |
 
-### Members Tab
-Track all clan members with dynamic filtering by role (Leader, Co-Leader, Elder, Member). View donation history and trophy counts with date-based historical snapshots.
+![Members tracking](demo-images/clan_members_tracking.png)
 
-![Members Page](demo-images/clan_members_tracking.png)
+## How it works
 
-### ⚔️ Wars Tab
-Deep-dive war analysis with:
-- **Advanced Win Probability** - Sophisticated algorithm analyzing:
-  - Player Month-to-Date (MTD) star averages
-  - Town Hall ceiling caps and hard-cap logic (TH14 vs TH18 = 1-2 star max)
-  - Defense insurance calculations
-  - Late-war volatility sensitivity
-  - Score gap vs remaining potential stars
-- War roster comparison (attacks & defenses)
-- Metrics: Avg Stars, Avg %, Win Prob., and Cleanup Needed
-- Full historical archive of past wars (war history will only show wars that take place after you start using this tool due to API restrictions)
+```
+Supercell API ──(proxy)──► GitHub Actions (cron) ──► commit JSON to data/ ──► Pages serves js/ + data/
+```
 
-![War Details Page](demo-images/clan_wars_live_reporting.png)
+The browser never calls the API — it only reads committed JSON. That's why the API token lives solely in Actions secrets.
 
-### 🏆 Raids Tab
-Seasonal raid tracking with comprehensive player performance metrics:
-- Attacks completed and gold earned
-- Total damage and destruction percentage
-- Average stars per attack
-- Summary, Attacks, and Defenses breakdowns
+### Data layout
 
-![Raids Page](demo-images/clan_raid_weekends.png)
+```
+data/
+  clan_stats/members_YYYYMMDD.json   + clan_stats_index.json   # daily roster
+  war_stats/war_<startTime>.json     + war_stats_index.json    # live war, finalised on warEnded
+  raid_stats/raid_<startTime>.json   + raid_stats_index.json   # per raid weekend
+```
 
-### 📈 Stats Tab
-Month-to-date statistical analysis with three key visualizations:
-- **War Stars Achieved (%)** - Trend line showing clan star performance over time
-- **Stars Earned Breakdown** - Top 25 players with 3★ / 2★ / 1★ / 0★ counts
-- **Stars Conversion Rates** - Star conversion efficiency for top 25 players
+**War history starts from the day you install this** — the CoC API only exposes full per-player attack data on the `currentwar` endpoint while a war is live; `warlog` has results but no attacks, so older wars cannot be backfilled.
 
-Time range filtering available (This Month, Week, Previous War).
+## Setup
 
-![Stats Page](demo-images/clan_wars_statistics.png)
+### 1. API token
 
-## Setup Instructions
+Register at [developer.clashofclans.com](https://developer.clashofclans.com) and create a key. One key = one allowed IP:
 
-### 1. API Credentials
-Note: We are using the [RoyalAPI](https://docs.royaleapi.com/proxy.html) proxy but you still need the API token from Clash of Clans.
-* Register for an account at [developer.clashofclans.com](https://developer.clashofclans.com).
-* Create a new API key. 
-* Copy your API Token.
+| Where scrapers run | Base URL | IP to **include** when creating the key |
+|---|---|---|
+| GitHub Actions | `https://cocproxy.royaleapi.dev/v1` (default) | `45.79.218.79` (the RoyaleAPI proxy) |
+| Your laptop | `COC_API_BASE_URL=https://api.clashofclans.com/v1` | your own IP ([ifconfig.me](https://ifconfig.me)) |
 
-### 2. GitHub Secrets Configuration
-To keep your credentials secure, do not place them in a .env file within the repository. Instead, configure them in GitHub:
-* Navigate to your repository on GitHub.
-* Go to Settings > Secrets and variables > Actions.
-* Click New repository secret and add the following:
-    * COC_API_TOKEN: Paste your secret API token.
-    * CLAN_TAG: Enter your clan tag including the # symbol.
+These can be two separate keys; the proxy key is only for Actions.
 
-### 3. Workflow Permissions
-The automation requires permission to commit the updated JSON data back to your repository.
-* Go to Settings > Actions > General.
-* Scroll to the Workflow permissions section.
-* Select Read and write permissions.
-* Click Save.
+### 2. GitHub secrets
 
-### 4. Deployment
-* Go to Settings > Pages.
-* Under Build and deployment, set Source to Deploy from a branch.
-* Select the main branch and the /(root) folder.
-* Click Save. Your dashboard will be live at the URL provided by GitHub.
+Settings → Secrets and variables → Actions:
 
-## Automation and Manual Updates
-The dashboard is automatically kept up-to-date via GitHub Actions:
+- `COC_API_TOKEN` — the proxy-whitelisted key
+- `CLAN_TAG` — e.g. `#2J0YP2LQL`
 
-- **Wars & Raids**: Refreshed every **15 minutes** to provide real-time tactical reporting.
-- **Clan Members**: Refreshed every **24 hours** to track long-term trends and donation stats.
+### 3. Permissions & Pages
 
-To trigger an update manually:
-* Navigate to the Actions tab in your repository.
-* Select the desired Update workflow from the left sidebar.
-* Click the Run workflow dropdown and select Run workflow.
+- Settings → Actions → General → Workflow permissions → **Read and write** (the bots commit back).
+- Settings → Pages → Deploy from a branch → `main`, root folder.
+- Private repos need GitHub Premium for Pages; on the free plan, make a separate public repo for the rendered site (never commit `.env` or tokens there).
+- `CNAME` (optional): put your own domain there and point DNS at GitHub Pages.
 
-## Technical Requirements
-* Python 3.x
-* Requests library
-* Python-dotenv library
-* GitHub Actions enabled
+### 4. Automation
 
-## Advanced Analytics
+| Workflow | Schedule | What |
+|---|---|---|
+| `update_war.yml` | every 15 min | live war snapshots; finalises each war once |
+| `update_raid.yml` | every 15 min | current raid weekend; new file each weekend |
+| `update_clan.yml` | daily 09:00 UTC | roster snapshot for the Members history |
 
-### Win Probability Algorithm
-The dashboard features a sophisticated win probability calculator that goes beyond simple star counting:
+Manual trigger: Actions tab → *Run workflow*.
 
-- **Terminal Conditions**: Immediate 100% or 0% when war outcomes are mathematically decided
-- **Player-Specific Expected Values**: Uses each attacker's historical MTD star average for their specific matchup
-- **Opponent Sampling**: Calculates opponent threat level based on their average stars per attack
-- **TH Ceiling Caps**: Models realistic star potential based on attacker/target TH level gaps
-  - 4+ TH levels below target: 1-2 star max
-  - 3 TH levels below: 2-3 star realistic
-- **Defense Insurance**: Increases win probability when ahead if opponent lacks high-level threats remaining
-- **Late-War Volatility**: Amplifies sensitivity as attacks decrease (late failures cause larger swings)
-- **Score Gap vs Potential**: Weighs current star difference against total possible remaining stars
+### Local run (optional)
 
-### Data Persistence
-- Automatic data snapshots stored in your repository
-- Historical member rosters stored for trend analysis
-- Complete war history maintained for statistical aggregation
+```bash
+cd scrapers && pip install requests python-dotenv
+cp ../.env.example ../.env   # fill COC_API_TOKEN, CLAN_TAG (+COC_API_BASE_URL)
+PYTHONPATH=$PWD python3 ../scrapers/clan_scraper.py
+```
+
+Files land in `scrapers/data/` when run from that directory — run them from the repo root (like the workflows do) to write `data/` directly.
+
+## Tests
+
+No dependencies beyond Node and Python; run from the repo root:
+
+```bash
+node js/xss.test.mjs            # 24 checks: weaponised names render inert in every view
+node js/warstate.test.mjs       # only warEnded wars get a Victory/Loss/Draw label
+node js/importsmoke.test.mjs    # all modules parse without a DOM
+python3 scrapers/war_scraper_test.py   # 9 scenarios against a stubbed HTTP layer
+```
+
+## Win probability — what it actually is
+
+`calculateWinProbability` in `js/render.js` projects the remaining attacks of both sides from each attacker's month-to-date star average, with town-hall gap caps (4+ TH levels below target ≈ 1–2 stars max), a defense-insurance bonus when ahead, and volatility that grows as attacks run out. It uses finished wars only for the MTD input. Treat it as a weighted heuristic, not a calibrated model — no backtest exists.
