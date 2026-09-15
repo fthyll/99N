@@ -34,10 +34,24 @@ const poison = (o) => {
   return o;
 };
 
-const war = poison(JSON.parse(fs.readFileSync(path.join(dir, '..', 'data', 'war_stats', 'war_20260417T011933.000Z.json'), 'utf8')));
+const latest = (idxFile) => {
+  const list = JSON.parse(fs.readFileSync(path.join(dir, '..', 'data', idxFile), 'utf8'));
+  return list[0];
+};
+const clan = poison(JSON.parse(fs.readFileSync(path.join(dir, '..', 'data', 'clan_stats', latest('clan_stats_index.json')), 'utf8')));
+const raid = poison(JSON.parse(fs.readFileSync(path.join(dir, '..', 'data', 'raid_stats', latest('raid_stats_index.json')), 'utf8')));
+// Synthetic currentwar payload: war archives may legitimately be empty (fresh
+// clan), but the XSS-prone war render paths must stay covered by this test.
+const atk = { attackerTag: '#A1', defenderTag: '#B1', stars: 2, destructionPercentage: 90, order: 1, duration: 120 };
+const war = poison({
+  state: 'warEnded', teamSize: 2, attacksPerMember: 2, battleModifier: 'none',
+  preparationStartTime: '20260914T030000.000Z', startTime: '20260915T020000.000Z', endTime: '20260916T020000.000Z',
+  clan: { tag: '#C', name: 'n', badgeUrls: { small: 'u' }, clanLevel: 1, attacks: 2, stars: 4, destructionPercentage: 90,
+          members: [{ tag: '#A1', name: 'n', townhallLevel: 16, mapPosition: 1, attacks: [atk], opponentAttacks: [atk], bestOpponentAttack: atk }] },
+  opponent: { tag: '#O', name: 'n', badgeUrls: { small: 'u' }, clanLevel: 1, attacks: 1, stars: 2, destructionPercentage: 60,
+          members: [{ tag: '#B1', name: 'n', townhallLevel: 15, mapPosition: 1, attacks: [atk], opponentAttacks: [atk], bestOpponentAttack: atk }] },
+});
 war.filename = 'x.json';
-const clan = poison(JSON.parse(fs.readFileSync(path.join(dir, '..', 'data', 'clan_stats', 'members_20260720.json'), 'utf8')));
-const raid = poison(JSON.parse(fs.readFileSync(path.join(dir, '..', 'data', 'raid_stats', 'raid_20260417T070000.000Z.json'), 'utf8')));
 
 const bodies = [
   ['getWarSummaryHtml', R.getWarSummaryHtml ? R.getWarSummaryHtml(war, new Date()) : ''],
