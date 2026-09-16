@@ -307,8 +307,8 @@ function calculateWinProbability(warData, history) {
 
     const playerMTDMap = {};
     history.forEach(w => {
-        // Partial snapshots would drag a player's MTD average down mid-war.
-        if (w.state !== 'warEnded') return;
+        // Only finished snapshots with player rosters can supply attack averages.
+        if (w.state !== 'warEnded' || w.summaryOnly || !Array.isArray(w.clan?.members)) return;
         w.clan.members.forEach(m => {
             if (!playerMTDMap[m.tag]) playerMTDMap[m.tag] = { sum: 0, count: 0 };
             (m.attacks || []).forEach(a => {

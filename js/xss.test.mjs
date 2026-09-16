@@ -70,6 +70,20 @@ R.renderMembers(clan.memberList.slice(0, 5));
 R.renderWarHistory([war]);
 R.renderAbout(clan);
 R.renderWarDetail(war, [war]);
+
+// Live details must tolerate result-only warlog history without player rosters.
+const liveWar = { ...war, state: 'inWar', endTime: '20990101T000000.000Z' };
+R.renderWarDetail(liveWar, [war]);
+const detailIds = ['warDetailSummaryCard', 'warMetrics', 'warResults'];
+const baseline = detailIds.map(id => els[id].innerHTML);
+const summary = { ...war, summaryOnly: true, clan: { ...war.clan }, opponent: { ...war.opponent } };
+delete summary.clan.members;
+delete summary.opponent.members;
+R.renderWarDetail(liveWar, [war, summary]);
+for (const [i, id] of detailIds.entries()) {
+  t(`live #${id} stays populated with summary-only history`, baseline[i].length > 0 && els[id].innerHTML === baseline[i]);
+}
+
 R.renderRaidSummary(raid, clan.memberList);
 R.renderRaidAttacks(raid);
 R.renderRaidDefenses(raid);
