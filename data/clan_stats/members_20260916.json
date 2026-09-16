@@ -61,7 +61,7 @@
             "builderBaseTrophies": 2796,
             "clanRank": 1,
             "previousClanRank": 1,
-            "donations": 1713,
+            "donations": 1835,
             "donationsReceived": 1544,
             "playerHouse": {
                 "elements": [
@@ -93,7 +93,7 @@
             "name": "HIMAWARI",
             "role": "leader",
             "townHallLevel": 16,
-            "expLevel": 187,
+            "expLevel": 188,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -114,7 +114,7 @@
             "builderBaseTrophies": 2467,
             "clanRank": 2,
             "previousClanRank": 2,
-            "donations": 11850,
+            "donations": 12091,
             "donationsReceived": 849,
             "playerHouse": {
                 "elements": [
@@ -146,7 +146,7 @@
             "name": "Pikiii",
             "role": "coLeader",
             "townHallLevel": 15,
-            "expLevel": 165,
+            "expLevel": 166,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -163,11 +163,11 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/uizNRh8glQZuAbLdCa-EQSf3oJnge3nqoXHjtQ6O8pw.png"
                 }
             },
-            "trophies": 27,
+            "trophies": 49,
             "builderBaseTrophies": 2736,
             "clanRank": 3,
             "previousClanRank": 3,
-            "donations": 1036,
+            "donations": 1143,
             "donationsReceived": 616,
             "playerHouse": {
                 "elements": [
@@ -216,7 +216,7 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/GeLamlTvRYNnZp5lEW64pyaORN30rCdrxTjU7oJoTN8.png"
                 }
             },
-            "trophies": 34,
+            "trophies": 62,
             "builderBaseTrophies": 3129,
             "clanRank": 4,
             "previousClanRank": 4,
@@ -252,7 +252,7 @@
             "name": "R I P C U R L",
             "role": "coLeader",
             "townHallLevel": 13,
-            "expLevel": 152,
+            "expLevel": 153,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -269,12 +269,12 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/6BwmbzkNm6p2unZonTauFQ_683uNl4NYtoOXJmEs78c.png"
                 }
             },
-            "trophies": 0,
+            "trophies": 93,
             "builderBaseTrophies": 1972,
             "clanRank": 5,
             "previousClanRank": 5,
             "donations": 179,
-            "donationsReceived": 201,
+            "donationsReceived": 400,
             "playerHouse": {
                 "elements": [
                     {
@@ -358,7 +358,7 @@
             "name": "DIORx99N",
             "role": "member",
             "townHallLevel": 10,
-            "expLevel": 59,
+            "expLevel": 60,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -375,12 +375,12 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
                 }
             },
-            "trophies": 60,
+            "trophies": 89,
             "builderBaseTrophies": 0,
             "clanRank": 7,
             "previousClanRank": 7,
             "donations": 0,
-            "donationsReceived": 1087,
+            "donationsReceived": 1118,
             "playerHouse": {
                 "elements": [
                     {
@@ -394,6 +394,59 @@
                     {
                         "type": "roof",
                         "id": 82000126
+                    },
+                    {
+                        "type": "decoration",
+                        "id": 82000127
+                    }
+                ]
+            },
+            "builderBaseLeague": {
+                "id": 44000000,
+                "name": "Wood League V"
+            }
+        },
+        {
+            "tag": "#GQCYYGRC0",
+            "name": "YSLx99N",
+            "role": "member",
+            "townHallLevel": 10,
+            "expLevel": 61,
+            "league": {
+                "id": 29000000,
+                "name": "Unranked",
+                "iconUrls": {
+                    "small": "https://api-assets.clashofclans.com/leagues/72/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png",
+                    "tiny": "https://api-assets.clashofclans.com/leagues/36/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png"
+                }
+            },
+            "leagueTier": {
+                "id": 105000005,
+                "name": "Barbarian League 5",
+                "iconUrls": {
+                    "small": "https://api-assets.clashofclans.com/leaguetiers/125/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png",
+                    "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
+                }
+            },
+            "trophies": 54,
+            "builderBaseTrophies": 0,
+            "clanRank": 8,
+            "previousClanRank": 8,
+            "donations": 0,
+            "donationsReceived": 1064,
+            "playerHouse": {
+                "elements": [
+                    {
+                        "type": "ground",
+                        "id": 82000164
+                    },
+                    {
+                        "type": "walls",
+                        "id": 82000163
+                    },
+                    {
+                        "type": "roof",
+                        "id": 82000010
                     },
                     {
                         "type": "decoration",
@@ -430,63 +483,10 @@
             },
             "trophies": 42,
             "builderBaseTrophies": 0,
-            "clanRank": 8,
-            "previousClanRank": 12,
+            "clanRank": 9,
+            "previousClanRank": 10,
             "donations": 0,
             "donationsReceived": 990,
-            "playerHouse": {
-                "elements": [
-                    {
-                        "type": "ground",
-                        "id": 82000164
-                    },
-                    {
-                        "type": "walls",
-                        "id": 82000163
-                    },
-                    {
-                        "type": "roof",
-                        "id": 82000010
-                    },
-                    {
-                        "type": "decoration",
-                        "id": 82000127
-                    }
-                ]
-            },
-            "builderBaseLeague": {
-                "id": 44000000,
-                "name": "Wood League V"
-            }
-        },
-        {
-            "tag": "#GQCYYGRC0",
-            "name": "YSLx99N",
-            "role": "member",
-            "townHallLevel": 10,
-            "expLevel": 61,
-            "league": {
-                "id": 29000000,
-                "name": "Unranked",
-                "iconUrls": {
-                    "small": "https://api-assets.clashofclans.com/leagues/72/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png",
-                    "tiny": "https://api-assets.clashofclans.com/leagues/36/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png"
-                }
-            },
-            "leagueTier": {
-                "id": 105000005,
-                "name": "Barbarian League 5",
-                "iconUrls": {
-                    "small": "https://api-assets.clashofclans.com/leaguetiers/125/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png",
-                    "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
-                }
-            },
-            "trophies": 39,
-            "builderBaseTrophies": 0,
-            "clanRank": 9,
-            "previousClanRank": 11,
-            "donations": 0,
-            "donationsReceived": 1064,
             "playerHouse": {
                 "elements": [
                     {
@@ -537,7 +537,7 @@
             "trophies": 30,
             "builderBaseTrophies": 0,
             "clanRank": 10,
-            "previousClanRank": 13,
+            "previousClanRank": 9,
             "donations": 0,
             "donationsReceived": 1161,
             "playerHouse": {
@@ -590,9 +590,9 @@
             "trophies": 27,
             "builderBaseTrophies": 0,
             "clanRank": 11,
-            "previousClanRank": 9,
+            "previousClanRank": 12,
             "donations": 0,
-            "donationsReceived": 962,
+            "donationsReceived": 1028,
             "playerHouse": {
                 "elements": [
                     {
@@ -643,9 +643,9 @@
             "trophies": 25,
             "builderBaseTrophies": 0,
             "clanRank": 12,
-            "previousClanRank": 8,
+            "previousClanRank": 11,
             "donations": 20,
-            "donationsReceived": 1050,
+            "donationsReceived": 1116,
             "playerHouse": {
                 "elements": [
                     {
@@ -696,9 +696,9 @@
             "trophies": 0,
             "builderBaseTrophies": 0,
             "clanRank": 13,
-            "previousClanRank": 10,
+            "previousClanRank": 13,
             "donations": 0,
-            "donationsReceived": 1025,
+            "donationsReceived": 1055,
             "playerHouse": {
                 "elements": [
                     {
@@ -868,7 +868,7 @@
             "name": "AQUAx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 36,
+            "expLevel": 37,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -901,7 +901,7 @@
             "name": "ZEUSx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 35,
+            "expLevel": 37,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1009,7 +1009,7 @@
             "clanRank": 20,
             "previousClanRank": 20,
             "donations": 0,
-            "donationsReceived": 101,
+            "donationsReceived": 127,
             "playerHouse": {
                 "elements": [
                     {
@@ -1232,7 +1232,7 @@
             "name": "SUBARUx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 36,
+            "expLevel": 38,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1265,7 +1265,7 @@
             "name": "MASERATIx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 35,
+            "expLevel": 36,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1298,7 +1298,7 @@
             "name": "TOKYOx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 35,
+            "expLevel": 37,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1321,6 +1321,26 @@
             "previousClanRank": 27,
             "donations": 0,
             "donationsReceived": 25,
+            "playerHouse": {
+                "elements": [
+                    {
+                        "type": "ground",
+                        "id": 82000164
+                    },
+                    {
+                        "type": "walls",
+                        "id": 82000163
+                    },
+                    {
+                        "type": "roof",
+                        "id": 82000010
+                    },
+                    {
+                        "type": "decoration",
+                        "id": 82000058
+                    }
+                ]
+            },
             "builderBaseLeague": {
                 "id": 44000000,
                 "name": "Wood League V"
@@ -1331,7 +1351,7 @@
             "name": "LUCIAx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 35,
+            "expLevel": 36,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1430,7 +1450,7 @@
             "name": "FERRARIx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 38,
+            "expLevel": 39,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1505,7 +1525,7 @@
             "clanRank": 32,
             "previousClanRank": 32,
             "donations": 0,
-            "donationsReceived": 101,
+            "donationsReceived": 127,
             "playerHouse": {
                 "elements": [
                     {
@@ -1721,7 +1741,7 @@
             "name": "VICIx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 36,
+            "expLevel": 37,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1809,7 +1829,27 @@
             "clanRank": 40,
             "previousClanRank": 40,
             "donations": 0,
-            "donationsReceived": 25,
+            "donationsReceived": 51,
+            "playerHouse": {
+                "elements": [
+                    {
+                        "type": "ground",
+                        "id": 82000164
+                    },
+                    {
+                        "type": "walls",
+                        "id": 82000163
+                    },
+                    {
+                        "type": "roof",
+                        "id": 82000010
+                    },
+                    {
+                        "type": "decoration",
+                        "id": 82000058
+                    }
+                ]
+            },
             "builderBaseLeague": {
                 "id": 44000000,
                 "name": "Wood League V"
@@ -2032,7 +2072,7 @@
             "name": "ATHENAx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 35,
+            "expLevel": 36,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -2204,7 +2244,7 @@
             "name": "MONTANAx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 35,
+            "expLevel": 36,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
