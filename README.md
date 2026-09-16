@@ -2,16 +2,6 @@
 
 Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on GitHub Actions, commits JSON snapshots to this repo, and the static frontend (GitHub Pages) renders them — no backend needed.
 
-Fork of [cstreit03/CoC-Stats](https://github.com/cstreit03/CoC-Stats) (live demo of the original: https://clash.kenaz.dev), with these changes:
-
-- **State-aware war data**: only `warEnded` snapshots are scored, charted, or used for win-probability averages. `preparation`/stale snapshots show as *Incomplete* instead of fake draws (see `docs` note in `js/app.js:isWarDecided`).
-- **Escaped rendering**: player/clan names, descriptions, tags, and badge URLs go through `esc()` before reaching `innerHTML` (`js/xss.test.mjs` proves it).
-- **Smarter scraper**: skips unarchivable war states, skips no-change writes (no empty commits every 15 min), exits non-zero on API errors so Actions turns red instead of failing silently.
-- **Local run support**: `COC_API_BASE_URL` env override (`.env`), useful when your token is whitelisted to your own IP.
-- **"War Room" UI remake**: sidebar dashboard (desktop) / top bar (mobile) with a KPI strip on Overview — win rate, trophies, donations, raid efficiency, TH spread. Dark navy + Clash-gold night theme and a cool-paper day theme; see [Theme system](#theme-system).
-- **Roster insight columns**: net donations (donated − received, signed & colored) and Builder Base trophies/league per member, with matching sort options.
-- Regression harnesses for all of the above.
-
 ## Tabs
 
 | Tab | What it shows | Data source |
