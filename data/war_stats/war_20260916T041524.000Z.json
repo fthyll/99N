@@ -15,9 +15,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
         },
         "clanLevel": 2,
-        "attacks": 11,
+        "attacks": 14,
         "stars": 29,
-        "destructionPercentage": 95.5,
+        "destructionPercentage": 99.2,
         "members": [
             {
                 "tag": "#G0V8LUY98",
@@ -156,6 +156,14 @@
                         "destructionPercentage": 100,
                         "order": 1,
                         "duration": 157
+                    },
+                    {
+                        "attackerTag": "#PU9C0L2VY",
+                        "defenderTag": "#QVG2PQC9L",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 14,
+                        "duration": 128
                     }
                 ],
                 "opponentAttacks": 0
@@ -165,6 +173,24 @@
                 "name": "Pikiii",
                 "townhallLevel": 15,
                 "mapPosition": 2,
+                "attacks": [
+                    {
+                        "attackerTag": "#LVCJJ2QGC",
+                        "defenderTag": "#YY9VRCJC0",
+                        "stars": 2,
+                        "destructionPercentage": 92,
+                        "order": 12,
+                        "duration": 159
+                    },
+                    {
+                        "attackerTag": "#LVCJJ2QGC",
+                        "defenderTag": "#L9Y9CRURV",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 13,
+                        "duration": 147
+                    }
+                ],
                 "opponentAttacks": 0
             },
             {
@@ -286,7 +312,7 @@
                 "name": "THE KING",
                 "townhallLevel": 14,
                 "mapPosition": 2,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
                     "attackerTag": "#9090VYJLJ",
                     "defenderTag": "#L9Y9CRURV",
@@ -301,7 +327,7 @@
                 "name": "K.",
                 "townhallLevel": 10,
                 "mapPosition": 4,
-                "opponentAttacks": 2,
+                "opponentAttacks": 3,
                 "bestOpponentAttack": {
                     "attackerTag": "#GQRCUR98U",
                     "defenderTag": "#QVG2PQC9L",
@@ -346,14 +372,14 @@
                 "name": "\u7236\u0645\u062f\u0650\u0631\u064d\u064a\u064e\u062f\u0650\u064a\u064e\u30c4",
                 "townhallLevel": 16,
                 "mapPosition": 1,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
-                    "attackerTag": "#9090VYJLJ",
+                    "attackerTag": "#LVCJJ2QGC",
                     "defenderTag": "#YY9VRCJC0",
                     "stars": 2,
-                    "destructionPercentage": 55,
-                    "order": 10,
-                    "duration": 62
+                    "destructionPercentage": 92,
+                    "order": 12,
+                    "duration": 159
                 }
             }
         ]
