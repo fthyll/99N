@@ -1,0 +1,197 @@
+{
+    "state": "inWar",
+    "teamSize": 10,
+    "attacksPerMember": 2,
+    "battleModifier": "none",
+    "preparationStartTime": "20260915T051524.000Z",
+    "startTime": "20260916T041524.000Z",
+    "endTime": "20260917T041524.000Z",
+    "clan": {
+        "tag": "#2J0YP2LQL",
+        "name": "99N",
+        "badgeUrls": {
+            "small": "https://api-assets.clashofclans.com/badges/70/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+            "large": "https://api-assets.clashofclans.com/badges/512/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+            "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
+        },
+        "clanLevel": 2,
+        "attacks": 1,
+        "stars": 3,
+        "destructionPercentage": 10.0,
+        "members": [
+            {
+                "tag": "#G0V8LUY98",
+                "name": "AQUAx99N",
+                "townhallLevel": 8,
+                "mapPosition": 10,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GP0L8CJ2U",
+                "name": "CHANELx99N",
+                "townhallLevel": 8,
+                "mapPosition": 9,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQRCUR98U",
+                "name": "VICTORIAx99N",
+                "townhallLevel": 10,
+                "mapPosition": 4,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQJULVGV2",
+                "name": "HERMESx99N",
+                "townhallLevel": 10,
+                "mapPosition": 6,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQRLCCUYC",
+                "name": "DIORx99N",
+                "townhallLevel": 10,
+                "mapPosition": 7,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#9090VYJLJ",
+                "name": "HIMAWARI",
+                "townhallLevel": 16,
+                "mapPosition": 1,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#PU9C0L2VY",
+                "name": "R I P C U R L",
+                "townhallLevel": 13,
+                "mapPosition": 3,
+                "attacks": [
+                    {
+                        "attackerTag": "#PU9C0L2VY",
+                        "defenderTag": "#GYRLLUVY9",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 1,
+                        "duration": 157
+                    }
+                ],
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#LVCJJ2QGC",
+                "name": "Pikiii",
+                "townhallLevel": 15,
+                "mapPosition": 2,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GG0V0JUG2",
+                "name": "OBITx99N",
+                "townhallLevel": 10,
+                "mapPosition": 5,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GG0PPPC9L",
+                "name": "GUCCIx99N",
+                "townhallLevel": 8,
+                "mapPosition": 8,
+                "opponentAttacks": 0
+            }
+        ]
+    },
+    "opponent": {
+        "tag": "#2QC20YPRL",
+        "name": "House of Dragon",
+        "badgeUrls": {
+            "small": "https://api-assets.clashofclans.com/badges/70/9eAB6S-_ELOeBKP9P9IMV0f-j9patIDv9_YCkv7nHYQ.png",
+            "large": "https://api-assets.clashofclans.com/badges/512/9eAB6S-_ELOeBKP9P9IMV0f-j9patIDv9_YCkv7nHYQ.png",
+            "medium": "https://api-assets.clashofclans.com/badges/200/9eAB6S-_ELOeBKP9P9IMV0f-j9patIDv9_YCkv7nHYQ.png"
+        },
+        "clanLevel": 9,
+        "attacks": 0,
+        "stars": 0,
+        "destructionPercentage": 0.0,
+        "members": [
+            {
+                "tag": "#GJ2C0CLUU",
+                "name": "\u0627\u0644\u0645\u0633\u062a\u0646\u0635\u0631 \u0628\u0627\u0644\u0644\u0670\u0647",
+                "townhallLevel": 8,
+                "mapPosition": 10,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#LGPVVQ22V",
+                "name": "{LEB} \u2122 KHS #4",
+                "townhallLevel": 11,
+                "mapPosition": 5,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GU2G80J22",
+                "name": "fluke",
+                "townhallLevel": 10,
+                "mapPosition": 7,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GJY9JG8LQ",
+                "name": "\u0627\u0644\u0645\u0639\u062a\u0645\u062f \u0628\u0627\u0644\u0644\u0651\u0670\u0647",
+                "townhallLevel": 8,
+                "mapPosition": 9,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GYRLLUVY9",
+                "name": "\u0645\u062d\u0645\u062f",
+                "townhallLevel": 13,
+                "mapPosition": 3,
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#PU9C0L2VY",
+                    "defenderTag": "#GYRLLUVY9",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 1,
+                    "duration": 157
+                }
+            },
+            {
+                "tag": "#L9Y9CRURV",
+                "name": "THE KING",
+                "townhallLevel": 14,
+                "mapPosition": 2,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#QVG2PQC9L",
+                "name": "K.",
+                "townhallLevel": 10,
+                "mapPosition": 4,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#Q00JPGGGL",
+                "name": "\u0627\u0644\u0627\u0645\u0628\u0631\u0637\u0648\u0631 \u062c\u0648",
+                "townhallLevel": 10,
+                "mapPosition": 8,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQQ9P9V80",
+                "name": "\u0627\u0644\u0645\u0633\u062a\u0646\u0635\u0631 \u0628\u0627\u0644\u0644\u0670\u0647",
+                "townhallLevel": 10,
+                "mapPosition": 6,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#YY9VRCJC0",
+                "name": "\u7236\u0645\u062f\u0650\u0631\u064d\u064a\u064e\u062f\u0650\u064a\u064e\u30c4",
+                "townhallLevel": 16,
+                "mapPosition": 1,
+                "opponentAttacks": 0
+            }
+        ]
+    }
+}
