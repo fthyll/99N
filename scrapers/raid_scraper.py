@@ -68,7 +68,8 @@ def update_raid_data():
             print("No new or ongoing raids found.")
             
     else:
-        print(f"Failed to fetch raid data: {res.status_code}")
+        # Fail loudly so the Actions run goes red instead of silently "succeeding".
+        raise SystemExit(f"Failed to fetch raid data: HTTP {res.status_code} {res.text[:200]}")
 
 if __name__ == "__main__":
     update_raid_data()
