@@ -1,5 +1,5 @@
 {
-    "fetchedAt": "2026-09-16T03:05:33.867399Z",
+    "fetchedAt": "2026-09-16T03:30:56.467525Z",
     "players": {
         "#88GLRP9LQ": {
             "tag": "#88GLRP9LQ",
@@ -563,7 +563,7 @@
             "tag": "#GQJC9J2Q2",
             "name": "LOEWEx99N",
             "townHallLevel": 8,
-            "expLevel": 38,
+            "expLevel": 39,
             "trophies": 0,
             "bestTrophies": 528,
             "warStars": 0,
@@ -897,7 +897,7 @@
             "bestBuilderBaseTrophies": 0,
             "donations": 0,
             "donationsReceived": 76,
-            "clanCapitalContributions": 272725,
+            "clanCapitalContributions": 275225,
             "role": "member",
             "currentLeagueGroupTag": null
         }

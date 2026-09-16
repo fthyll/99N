@@ -779,7 +779,7 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/CmM-Tihn6ojPGJstmTK_HC-QairrpYLyRhdKhQjkacQ.png"
                 }
             },
-            "trophies": 67,
+            "trophies": 227,
             "builderBaseTrophies": 0,
             "clanRank": 15,
             "previousClanRank": 16,
@@ -789,15 +789,15 @@
                 "elements": [
                     {
                         "type": "ground",
-                        "id": 82000129
+                        "id": 82000164
                     },
                     {
                         "type": "walls",
-                        "id": 82000128
+                        "id": 82000163
                     },
                     {
                         "type": "roof",
-                        "id": 82000126
+                        "id": 82000010
                     },
                     {
                         "type": "decoration",
@@ -987,7 +987,7 @@
             "name": "BALENCIAGAx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 40,
+            "expLevel": 41,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1093,7 +1093,7 @@
             "name": "ROLLSx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 38,
+            "expLevel": 39,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1483,7 +1483,7 @@
             "name": "LOEWEx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 38,
+            "expLevel": 39,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1510,15 +1510,15 @@
                 "elements": [
                     {
                         "type": "ground",
-                        "id": 82000129
+                        "id": 82000164
                     },
                     {
                         "type": "walls",
-                        "id": 82000128
+                        "id": 82000163
                     },
                     {
                         "type": "roof",
-                        "id": 82000126
+                        "id": 82000010
                     },
                     {
                         "type": "decoration",
@@ -2264,15 +2264,15 @@
                 "elements": [
                     {
                         "type": "ground",
-                        "id": 82000129
+                        "id": 82000164
                     },
                     {
                         "type": "walls",
-                        "id": 82000128
+                        "id": 82000163
                     },
                     {
                         "type": "roof",
-                        "id": 82000126
+                        "id": 82000010
                     },
                     {
                         "type": "decoration",
