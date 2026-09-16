@@ -1,4 +1,4 @@
-# CoC War Stats Dashboard
+# 99N — Clan War Stats
 
 Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on GitHub Actions, commits JSON snapshots to this repo, and the static frontend (GitHub Pages) renders them — no backend needed.
 
@@ -8,7 +8,8 @@ Fork of [cstreit03/CoC-Stats](https://github.com/cstreit03/CoC-Stats) (live demo
 - **Escaped rendering**: player/clan names, descriptions, tags, and badge URLs go through `esc()` before reaching `innerHTML` (`js/xss.test.mjs` proves it).
 - **Smarter scraper**: skips unarchivable war states, skips no-change writes (no empty commits every 15 min), exits non-zero on API errors so Actions turns red instead of failing silently.
 - **Local run support**: `COC_API_BASE_URL` env override (`.env`), useful when your token is whitelisted to your own IP.
-- **"War Room" UI remake**: sidebar dashboard (desktop) / top bar (mobile) with a 6-card KPI strip on Overview — win rate, trophies, donations, last raid. Dark navy + Clash-gold night theme and a cool-paper day theme; see [Theme system](#theme-system).
+- **"War Room" UI remake**: sidebar dashboard (desktop) / top bar (mobile) with a KPI strip on Overview — win rate, trophies, donations, raid efficiency, TH spread. Dark navy + Clash-gold night theme and a cool-paper day theme; see [Theme system](#theme-system).
+- **Roster insight columns**: net donations (donated − received, signed & colored) and Builder Base trophies/league per member, with matching sort options.
 - Regression harnesses for all of the above.
 
 ## Tabs
@@ -20,6 +21,17 @@ Fork of [cstreit03/CoC-Stats](https://github.com/cstreit03/CoC-Stats) (live demo
 | Wars | War list + per-player attack/defense breakdown, win probability, cleanup needed | war snapshots |
 | Raids | Capital raid weekends: attacks, defenses, loot per player | raid logs |
 | Stats | Stars-trend line, top-25 star breakdown, conversion-rate bars (finished wars only) | war snapshots |
+
+## Screenshots (War Room, night theme)
+
+| Overview — KPI strip + clan card | Members — roster with Net & Builder Base |
+|---|---|
+| ![Overview](demo-images/warroom_overview.png) | ![Members](demo-images/warroom_members.png) |
+| **Wars — history & results** | **Stats — trend & conversion** |
+| ![Wars](demo-images/warroom_wars.png) | ![Stats](demo-images/warroom_stats.png) |
+
+> War screenshots use a synthetic war-history fixture (the archive was empty
+> when they were captured) — the real site fills from actual 99N wars.
 
 ## How it works
 
