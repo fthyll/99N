@@ -23,6 +23,7 @@ jobs:
         env:
           COC_API_TOKEN: ${{ secrets.COC_API_TOKEN }}
           CLAN_TAG: ${{ secrets.CLAN_TAG }}
+          COC_API_BASE_URL: https://api.clashofclans.com/v1
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)/scrapers
           python scrapers/raid_scraper.py
