@@ -251,6 +251,10 @@ html[data-theme="day"] .icon-moon { display: none; }
     font-variant-numeric: tabular-nums;
 }
 .kpi-label { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+/* TH spread mini-histogram: one <i> per town-hall tier, height = share */
+.kpi-bars { display: flex; align-items: flex-end; gap: 3px; height: 34px; margin: 4px 0 2px; }
+.kpi-bars i { flex: 1; min-width: 6px; border-radius: 2px 2px 0 0; background: linear-gradient(180deg, rgb(var(--gold)), rgb(var(--gold-deep))); opacity: 0.9; }
+.kpi-bars i:hover { opacity: 1; box-shadow: 0 0 8px rgb(var(--gold) / 0.5); }
 .kpi-sub { font-size: 10px; color: rgb(var(--g500)); }
 .kpi-sub .pos { color: rgb(var(--bar3)); font-weight: 700; }
 .kpi-sub .neg { color: rgb(var(--bar1)); font-weight: 700; }

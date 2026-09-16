@@ -107,13 +107,32 @@ function renderKpis(clan) {
     }).length;
     const winRate = decided.length ? Math.round((wins / decided.length) * 100) : null;
     const raid = fullRaidHistory[0];
+    // #4 — raid efficiency: districts per attack + best attacker, straight
+    // from the weekend's attackLog (stars credited per district attack).
+    let ra = 0; const byTag = {};
+    (raid?.attackLog || []).forEach(e => (e.districts || []).forEach(d => (d.attacks || []).forEach(a => {
+        ra++;
+        byTag[a.attacker.tag] = byTag[a.attacker.tag] || { name: a.attacker.name, stars: 0, n: 0 };
+        byTag[a.attacker.tag].stars += a.stars; byTag[a.attacker.tag].n++;
+    })));
+    const destroyed = (raid?.attackLog || []).reduce((s, e) => s + (e.districtsDestroyed || 0), 0);
+    const best = Object.values(byTag).sort((a, b) => b.stars - a.stars || b.n - a.n)[0];
+    const dpa = ra ? (destroyed / ra).toFixed(2) : null;
+
+    // #3 — town hall spread: counts per TH, rendered as a mini bar chart.
+    const thCount = {};
+    members.forEach(m => { const t = m.townHallLevel || 0; thCount[t] = (thCount[t] || 0) + 1; });
+    const thMax = Math.max(1, ...Object.values(thCount));
+    const spread = Object.entries(thCount).sort((a, b) => a[0] - b[0])
+        .map(([t, c]) => `<i style="height:${Math.max(8, c / thMax * 100)}%" title="TH${t}: ${c}"></i>`).join('');
+
     const kpis = [
         ['Members', `${members.length} / 50`, clan.clanLevel ? `Clan level ${clan.clanLevel}` : ''],
-        ['War Win Rate', winRate === null ? '—' : `${winRate}%`, decided.length ? `${wins}W / ${decided.length - wins} in ${decided.length} wars` : 'no decided wars yet'],
+        ['War Win Rate', winRate === null ? '—' : `${winRate}%`, decided.length ? `${wins}W of ${decided.length} decided wars` : 'no decided wars yet'],
         ['Total Trophies', totalTrophies.toLocaleString(), `avg ${avgTrophy.toLocaleString()}`],
         ['Donations', donations.toLocaleString(), 'this week (API reset weekly)'],
-        ['Last Raid', raid ? (raid.raidsCompleted ?? '—') : '—', raid ? `${(raid.capitalTotalLoot ?? 0).toLocaleString()} gold · ${raid.enemyDistrictsDestroyed ?? 0} districts` : 'no raids logged'],
-        ['TH Average', (members.length ? (members.reduce((s, m) => s + (m.townHallLevel || 0), 0) / members.length) : 0).toFixed(1), `max TH${members.reduce((x, m) => Math.max(x, m.townHallLevel || 0), 0)}`],
+        ['Last Raid', destroyed ? `${destroyed} districts` : (raid?.raidsCompleted ?? '—'), raid ? `${(raid.capitalTotalLoot ?? 0).toLocaleString()} gold looted` : 'no raids logged'],
+        ['Raid Efficiency', dpa === null ? '—' : `${dpa} d/a`, best ? `top: ${best.name} (${best.stars}★)` : 'attack log empty'],
     ];
     const grid = document.createElement('div');
     grid.className = 'kpi-grid';
@@ -122,7 +141,12 @@ function renderKpis(clan) {
             <p class="kpi-label">${esc(label)}</p>
             <p class="kpi-value">${esc(String(value))}</p>
             <p class="kpi-sub">${esc(sub)}</p>
-        </div>`).join('');
+        </div>`).join('') + `
+        <div class="kpi">
+            <p class="kpi-label">TH Spread</p>
+            <div class="kpi-bars" aria-label="town hall distribution">${spread}</div>
+            <p class="kpi-sub">avg ${(members.length ? members.reduce((s, m) => s + (m.townHallLevel || 0), 0) / members.length : 0).toFixed(1)} · max TH${Math.max(0, ...members.map(m => m.townHallLevel || 0))}</p>
+        </div>`;
     host.insertBefore(grid, host.firstChild);
 }
 
@@ -382,6 +406,7 @@ function updateDisplay() {
     updateMemberCount(filtered.length);
     filtered.sort((a, b) => {
         if (sortKey === 'role') return (roleWeight[b.role] || 0) - (roleWeight[a.role] || 0);
+        if (sortKey === 'net') return ((b.donations||0)-(b.donationsReceived||0)) - ((a.donations||0)-(a.donationsReceived||0));
         if (sortKey === 'league') {
             const lA = a.leagueTier?.id || a.league?.id || 0; const lB = b.leagueTier?.id || b.league?.id || 0;
             return lA !== lB ? lB - lA : (b.trophies || 0) - (a.trophies || 0);
