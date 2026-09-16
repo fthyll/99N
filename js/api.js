@@ -52,3 +52,23 @@ export async function fetchRaidIndex() {
 export async function fetchRaidData(filename) {
     return await fetchData(`data/raid_stats/${filename}`);
 }
+
+// New sources are strictly optional: an absent file means an older archive,
+// not a broken dashboard. Callers must handle null.
+export async function fetchWarLog() {
+    try { return await fetchData('data/warlog_stats/warlog.json'); }
+    catch (e) { console.warn('No war log available.', e); return null; }
+}
+
+export async function fetchPlayerCareers() {
+    try {
+        const index = await fetchData('data/player_stats_index.json');
+        if (!index || index.length === 0) return null;
+        return await fetchData(`data/player_stats/${index[0]}`);
+    } catch (e) { console.warn('No player career data.', e); return null; }
+}
+
+export async function fetchMeta() {
+    try { return await fetchData('data/meta.json'); }
+    catch (e) { console.warn('No meta data.', e); return null; }
+}

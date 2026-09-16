@@ -29,6 +29,8 @@ jobs:
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)/scrapers
           python scrapers/clan_scraper.py
+          python scrapers/player_scraper.py
+          python scrapers/meta_scraper.py
 
       - name: Commit and Push
         run: |

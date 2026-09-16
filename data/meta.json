@@ -1,0 +1,23 @@
+{
+    "fetchedAt": "2026-09-16T03:05:34.063148Z",
+    "goldpass": {
+        "startTime": "20260901T080000.000Z",
+        "endTime": "20261001T080000.000Z"
+    },
+    "countryRank": {
+        "locationId": 32000006,
+        "locationName": "International",
+        "rank": null,
+        "scanned": 200,
+        "trophies": 0,
+        "warLeague": {
+            "id": 48000000,
+            "name": "Unranked"
+        },
+        "capitalLeague": {
+            "id": 85000001,
+            "name": "Bronze League III"
+        }
+    },
+    "cwl": null
+}

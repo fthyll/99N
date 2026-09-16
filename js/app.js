@@ -10,7 +10,10 @@ import {
     fetchWarIndex, 
     fetchWarData,
     fetchRaidIndex,
-    fetchRaidData
+    fetchRaidData,
+    fetchWarLog,
+    fetchPlayerCareers,
+    fetchMeta
 } from './api.js';
 import { 
     renderMembers, 
@@ -26,7 +29,10 @@ import {
 import { renderCharts } from './charts.js';
 
 // Global state variables
-let allMembers = [];           
+let allMembers = [];
+let playerCareers = {};        // tag -> career fields from /players
+let clanMeta = null;           // goldpass / country rank / CWL group
+let warLogHistory = [];        // summary-only pseudo-wars from /warlog           
 let latestClanData = null;     
 let currentRoleFilter = 'all'; 
 let currentWarFilter = 'all';  
@@ -96,6 +102,9 @@ function isWarDecided(w) {
 function renderKpis(clan) {
     const host = document.getElementById('aboutContent');
     if (!host || !clan) return;
+    // Idempotent: init, repaint and the Overview tab click all call this;
+    // drop any previously rendered strip so exactly one exists.
+    host.querySelector('.kpi-grid')?.remove();
     const members = clan.memberList || clan.members || [];
     const totalTrophies = members.reduce((s, m) => s + (m.trophies || 0), 0);
     const avgTrophy = members.length ? Math.round(totalTrophies / members.length) : 0;
@@ -134,6 +143,23 @@ function renderKpis(clan) {
         ['Last Raid', destroyed ? `${destroyed} districts` : (raid?.raidsCompleted ?? '—'), raid ? `${(raid.capitalTotalLoot ?? 0).toLocaleString()} gold looted` : 'no raids logged'],
         ['Raid Efficiency', dpa === null ? '—' : `${dpa} d/a`, best ? `top: ${best.name} (${best.stars}★)` : 'attack log empty'],
     ];
+    // Career totals from /players — lifetime, unlike the weekly donation reset.
+    const careers = Object.values(playerCareers);
+    if (careers.length) {
+        const stars = careers.reduce((s, p) => s + (p.warStars || 0), 0);
+        const cap = careers.reduce((s, p) => s + (p.clanCapitalContributions || 0), 0);
+        kpis.push(['War Stars (career)', stars.toLocaleString(), `${careers.length} members tracked`]);
+        kpis.push(['Capital Contrib.', cap.toLocaleString()], );
+        kpis[kpis.length-1].push('lifetime, per roster');
+    }
+    if (clanMeta?.countryRank?.rank) {
+        kpis.push(['National Rank', `#${clanMeta.countryRank.rank}`, clanMeta.countryRank.locationName || '']);
+    }
+    if (clanMeta?.goldpass?.endTime) {
+        const end = new Date(`${clanMeta.goldpass.endTime.slice(0,4)}-${clanMeta.goldpass.endTime.slice(4,6)}-${clanMeta.goldpass.endTime.slice(6,8)}`);
+        const days = Math.max(0, Math.ceil((end - new Date()) / 86400000));
+        kpis.push(['Goldpass Ends', `${days}d`, end.toISOString().slice(0,10)]);
+    }
     const grid = document.createElement('div');
     grid.className = 'kpi-grid';
     grid.innerHTML = kpis.map(([label, value, sub]) => `
@@ -227,7 +253,31 @@ async function init() {
             } catch (e) { return null; }
         });
         fullWarHistory = (await Promise.all(warDataPromises)).filter(w => w !== null);
+
+        // Optional enrichments — every one tolerates a missing file.
+        const [careers, meta, warlog] = await Promise.all([
+            fetchPlayerCareers(), fetchMeta(), fetchWarLog()]);
+        playerCareers = careers?.players || {};
+        clanMeta = meta;
+
+        // Warlog = last ~50 finished wars with results but no per-player data.
+        // Merge as summary-only pseudo-wars; skip any already covered by a
+        // real currentwar snapshot (same endTime), which is richer.
+        const realEnds = new Set(fullWarHistory.map(w => w.endTime));
+        warLogHistory = (warlog?.items || [])
+            .filter(it => !realEnds.has(it.endTime))
+            .map(it => ({
+                ...it,
+                state: 'warEnded',
+                startTime: it.startTime || it.endTime,  // API gives only endTime
+                summaryOnly: true,
+                filename: 'warlog_' + it.endTime,
+            }));
+        fullWarHistory = [...fullWarHistory, ...warLogHistory];
         filterWarHistory();
+        // Clan/KPI pass ran before these arrived — repaint members & KPIs.
+        updateDisplay();
+        if (latestClanData) { const g = document.querySelector('#aboutContent .kpi-grid'); g?.remove(); renderKpis(latestClanData); }
         setupWarHistoryPickers();
     } catch (e) { console.error("Could not load war history.", e); }
 
@@ -407,13 +457,16 @@ function updateDisplay() {
     filtered.sort((a, b) => {
         if (sortKey === 'role') return (roleWeight[b.role] || 0) - (roleWeight[a.role] || 0);
         if (sortKey === 'net') return ((b.donations||0)-(b.donationsReceived||0)) - ((a.donations||0)-(a.donationsReceived||0));
+        // /players fields live outside the clan snapshot; join via careers map.
+        if (sortKey === 'warStars') return (playerCareers[b.tag]?.warStars || 0) - (playerCareers[a.tag]?.warStars || 0);
+        if (sortKey === 'bestTrophies') return (playerCareers[b.tag]?.bestTrophies || 0) - (playerCareers[a.tag]?.bestTrophies || 0);
         if (sortKey === 'league') {
             const lA = a.leagueTier?.id || a.league?.id || 0; const lB = b.leagueTier?.id || b.league?.id || 0;
             return lA !== lB ? lB - lA : (b.trophies || 0) - (a.trophies || 0);
         }
         return (b[sortKey] || 0) - (a[sortKey] || 0);
     });
-    renderMembers(filtered);
+    renderMembers(filtered, playerCareers);
 }
 
 function setRoleFilter(role, btn) {

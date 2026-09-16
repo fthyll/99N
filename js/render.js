@@ -7,7 +7,7 @@ import { roleMap, getTHImage, parseCoCDate, esc } from './constants.js';
 /**
  * Renders the member roster list with league icons and donation stats.
  */
-export function renderMembers(list) {
+export function renderMembers(list, careers = {}) {
     const container = document.getElementById('memberList');
     if (!container) return;
     if (list.length === 0) {
@@ -26,6 +26,7 @@ export function renderMembers(list) {
                 <div class="flex items-baseline gap-1 md:gap-2 truncate">
                     <span class="font-bold text-[11px] md:text-xs text-white">${esc(m.name)}</span>
                     <span class="text-[7px] md:text-[8px] text-gray-500 font-mono">XP ${m.expLevel}</span>
+                    ${careers[m.tag]?.warStars != null ? `<span class="text-[7px] md:text-[8px] gold font-mono" title="Career war stars · best trophies ${careers[m.tag].bestTrophies?.toLocaleString() ?? '—'}">★${careers[m.tag].warStars.toLocaleString()}</span>` : ''}
                 </div>
                 <span class="text-[7px] md:text-[8px] gold font-bold uppercase block">${roleMap[m.role]}</span>
                 <div class="flex gap-3 md:gap-4 mt-1 md:mt-1.5">
@@ -177,6 +178,7 @@ function getWarSummaryHtml(war, now) {
     <div class="p-2.5 md:p-3.5 rounded-xl border ${pinnedClass} transition-colors relative overflow-hidden">
         <div class="flex justify-between items-center mb-1">
             <span class="text-[8px] md:text-[9px] font-bold text-gray-500 uppercase tracking-widest">${formattedDate}</span>
+            ${war.summaryOnly ? '<span class="text-[7px] md:text-[8px] font-bold text-gray-600 uppercase tracking-widest border border-gray-800 rounded px-1.5 py-0.5" title="Result archived from warlog — per-player attacks need the live war snapshot">summary only</span>' : ''}
         </div>
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-2 md:gap-3 w-1/3 text-left">
@@ -222,7 +224,7 @@ export function renderWarHistory(warHistory) {
     if (countdownInterval) clearInterval(countdownInterval);
     
     container.innerHTML = sorted.map(war => `
-        <div onclick="window.loadWarDetail('${esc(war.filename)}')" class="cursor-pointer hover:border-gold group">
+        <div onclick="${war.summaryOnly ? '' : `window.loadWarDetail('${esc(war.filename)}')`}" class="${war.summaryOnly ? 'opacity-80' : 'cursor-pointer hover:border-gold'} group">
             ${getWarSummaryHtml(war, now)}
         </div>
     `).join('');

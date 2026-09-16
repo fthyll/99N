@@ -1,0 +1,139 @@
+{
+    "items": [
+        {
+            "result": "lose",
+            "endTime": "20260902T161521.000Z",
+            "teamSize": 5,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png"
+                },
+                "clanLevel": 2,
+                "attacks": 5,
+                "stars": 8,
+                "destructionPercentage": 59.6,
+                "expEarned": 57
+            },
+            "opponent": {
+                "tag": "#R0PY22YL",
+                "name": "The Disasters",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/uAT0X1dTtJsVlSOucDJMdyV3iOyJZvrpB_ugwE5EXxU.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/uAT0X1dTtJsVlSOucDJMdyV3iOyJZvrpB_ugwE5EXxU.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/uAT0X1dTtJsVlSOucDJMdyV3iOyJZvrpB_ugwE5EXxU.png"
+                },
+                "clanLevel": 12,
+                "stars": 15,
+                "destructionPercentage": 100.0
+            }
+        },
+        {
+            "result": "lose",
+            "endTime": "20260831T103159.000Z",
+            "teamSize": 5,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png"
+                },
+                "clanLevel": 2,
+                "attacks": 4,
+                "stars": 6,
+                "destructionPercentage": 65.4,
+                "expEarned": 57
+            },
+            "opponent": {
+                "tag": "#2J2QY0PJQ",
+                "name": "AINSNIC42",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png"
+                },
+                "clanLevel": 2,
+                "stars": 12,
+                "destructionPercentage": 87.2
+            }
+        },
+        {
+            "result": "lose",
+            "endTime": "20260829T084120.000Z",
+            "teamSize": 5,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/rAIW4NWFb32Fl-dKkY058UmTA0GCxiSv-qVUwsvRfJU.png"
+                },
+                "clanLevel": 2,
+                "attacks": 8,
+                "stars": 11,
+                "destructionPercentage": 81.6,
+                "expEarned": 86
+            },
+            "opponent": {
+                "tag": "#200J0CRUV",
+                "name": "Shiv Chatrapati",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/wE8ixusgoWzfsObexZmiPbAIrzX9muvG-4ewzNnSYH8.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/wE8ixusgoWzfsObexZmiPbAIrzX9muvG-4ewzNnSYH8.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/wE8ixusgoWzfsObexZmiPbAIrzX9muvG-4ewzNnSYH8.png"
+                },
+                "clanLevel": 9,
+                "stars": 15,
+                "destructionPercentage": 100.0
+            }
+        },
+        {
+            "result": "win",
+            "endTime": "20260827T062113.000Z",
+            "teamSize": 5,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/yOqsuOuAsymn6zpU6Iq1FLqhITwm76cMWV6mzCxq3J4.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/yOqsuOuAsymn6zpU6Iq1FLqhITwm76cMWV6mzCxq3J4.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/yOqsuOuAsymn6zpU6Iq1FLqhITwm76cMWV6mzCxq3J4.png"
+                },
+                "clanLevel": 1,
+                "attacks": 9,
+                "stars": 13,
+                "destructionPercentage": 92.0,
+                "expEarned": 123
+            },
+            "opponent": {
+                "tag": "#2R8CQGPQL",
+                "name": "Royal Atho",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/qSr91nCMrNFhh--Y79F9m1f7uhgQD_m0Y1QaBTm_oEc.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/qSr91nCMrNFhh--Y79F9m1f7uhgQD_m0Y1QaBTm_oEc.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/qSr91nCMrNFhh--Y79F9m1f7uhgQD_m0Y1QaBTm_oEc.png"
+                },
+                "clanLevel": 4,
+                "stars": 12,
+                "destructionPercentage": 80.0
+            }
+        }
+    ],
+    "paging": {
+        "cursors": {}
+    }
+}

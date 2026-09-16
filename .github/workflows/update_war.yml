@@ -29,6 +29,7 @@ jobs:
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)/scrapers
           python scrapers/war_scraper.py
+          python scrapers/warlog_scraper.py
 
       - name: Commit and Push
         run: |
