@@ -10,6 +10,15 @@ import re
 
 import requests
 
+# Loading .env here (not just in config.py) keeps the notifier usable on its
+# own: broadcast.py and notify.py never import config, so without this a local
+# run would silently see no DISCORD_WEBHOOK_URL even when .env has one.
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:  # dotenv is optional for the transport itself
+    pass
+
 TIMEOUT = 15
 
 
