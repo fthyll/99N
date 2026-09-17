@@ -1,6 +1,7 @@
-import requests
 import json
 import os
+import http_client
+import retention
 from config import BASE_URL, CLAN_TAG, HEADERS
 
 def update_raid_data():
@@ -14,7 +15,7 @@ def update_raid_data():
     # Endpoint for capital raid seasons (limit to 1 to ensure full detailed data)
     url = f"{BASE_URL}/clans/{CLAN_TAG}/capitalraidseasons?limit=1"
     print(f"Fetching latest raid data from {url}...")
-    res = requests.get(url, headers=HEADERS)
+    res = http_client.get(url, HEADERS)
     
     if res.status_code == 200:
         data = res.json()
@@ -66,7 +67,10 @@ def update_raid_data():
             print(f"Raid update complete. New: {new_count}, Updated: {updated_count}")
         else:
             print("No new or ongoing raids found.")
-            
+
+        # Runs after the write so the newest snapshot is never the pruned one.
+        retention.prune_raid()
+
     else:
         # Fail loudly so the Actions run goes red instead of silently "succeeding".
         raise SystemExit(f"Failed to fetch raid data: HTTP {res.status_code} {res.text[:200]}")

@@ -1,6 +1,7 @@
-import requests
 import json
 import os
+import http_client
+import retention
 from config import BASE_URL, CLAN_TAG, HEADERS
 
 # Only these states carry per-player attack data worth archiving.
@@ -12,7 +13,7 @@ SAVABLE_STATES = ("inWar", "warEnded")
 def update_war_data():
     os.makedirs('data/war_stats', exist_ok=True)
     url = f"{BASE_URL}/clans/{CLAN_TAG}/currentwar"
-    res = requests.get(url, headers=HEADERS)
+    res = http_client.get(url, HEADERS)
     if res.status_code == 404 and res.json().get("reason") == "notInWar":
         print("Clan is not in war; nothing to update.")
         return
@@ -57,6 +58,9 @@ def update_war_data():
         print(f"Added {filename} to war stats index.")
     else:
         print(f"Updated {filename} (state={state}).")
+
+    # Runs last so a fresh snapshot is never the one pruned.
+    retention.prune_war()
 
 
 if __name__ == "__main__":

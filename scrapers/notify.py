@@ -18,8 +18,6 @@ import os
 import sys
 from datetime import datetime, timezone
 
-import requests
-
 from notifier import discord, embeds
 
 STATE_PATH = 'data/notify_state.json'

@@ -1,13 +1,13 @@
-import requests
 import json
 import os
 from datetime import datetime
+import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS
 
 def update_clan_data():
     os.makedirs('data/clan_stats', exist_ok=True)
     url = f"{BASE_URL}/clans/{CLAN_TAG}"
-    res = requests.get(url, headers=HEADERS)
+    res = http_client.get(url, HEADERS)
     
     if res.status_code == 200:
         clan_data = res.json()

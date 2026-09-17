@@ -1,7 +1,7 @@
-import requests
 import json
 import os
 from datetime import datetime
+import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS, RAW_TAG
 
 # Career stats per member. The clan payload only has current trophies and
@@ -17,8 +17,9 @@ CAREER_FIELDS = (
 
 
 def _get(url):
-    res = requests.get(url, headers=HEADERS, timeout=30)
-    return res
+    # 50 sequential requests a day: without retries one transient 429 in the
+    # middle would discard the whole roster fetch.
+    return http_client.get(url, HEADERS)
 
 
 def update_player_careers():

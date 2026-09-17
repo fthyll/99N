@@ -1,0 +1,51 @@
+name: Tests
+
+# The repo had five passing test suites that nothing ever ran, which is how a
+# broken Broadcast panel shipped to production. This gates every push and PR.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# A newer push makes an in-flight run pointless; unlike the scraper workflows
+# nothing here commits, so cancelling in progress is safe.
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install requests python-dotenv
+
+      - name: Node test suites
+        run: |
+          for t in js/*.test.mjs; do
+            echo "=== $t"
+            node "$t"
+          done
+
+      - name: Python test suites
+        env:
+          # config.py refuses to import without these; the value only has to be
+          # shaped like a tag, no request is ever made by the tests.
+          COC_API_TOKEN: test-token-not-used
+          CLAN_TAG: '#2J0YP2LQL'
+        run: |
+          shopt -s nullglob
+          for t in scrapers/*_test.py; do
+            echo "=== $t"
+            python3 "$t"
+          done
+
+      - name: HTML has no unbalanced <div>
+        run: python3 scripts/check_html.py

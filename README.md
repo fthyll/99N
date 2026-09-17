@@ -129,6 +129,8 @@ Settings → Secrets and variables → Actions:
 | `update_war.yml` | every 15 min | live war snapshots; finalises each war once |
 | `update_raid.yml` | every 15 min | current raid weekend; new file each weekend |
 | `update_clan.yml` | daily 09:00 UTC | roster snapshot for the Members history |
+| `tests.yml` | on push / PR | Node + Python suites, HTML structure check |
+| `health.yml` | every 2 h | alerts if snapshots or scheduled runs go stale |
 
 Manual trigger: Actions tab → *Run workflow*.
 
@@ -150,8 +152,62 @@ No dependencies beyond Node and Python; run from the repo root:
 node js/xss.test.mjs            # 24 checks: weaponised names render inert in every view
 node js/warstate.test.mjs       # only warEnded wars get a Victory/Loss/Draw label
 node js/importsmoke.test.mjs    # all modules parse without a DOM
-python3 scrapers/war_scraper_test.py   # 9 scenarios against a stubbed HTTP layer
+node js/notifier.test.mjs       # embed shapes + state transitions
+python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer
+python3 scrapers/http_client_test.py    # retry/backoff on 429 and 5xx
+python3 scrapers/retention_test.py      # pruning never orphans an index entry
+python3 scripts/check_html.py            # index.html <div> balance + section nesting
 ```
+
+The Python tests need `COC_API_TOKEN` and `CLAN_TAG` set to *any* value —
+`config.py` refuses to import without them. No request is ever made.
+
+All of the above run in CI on every push and PR (`.github/workflows/tests.yml`),
+plus a check that `index.html` has balanced `<div>`s and keeps every
+`[id^="section-"]` a sibling. That last one is not ceremony: a missing `</div>`
+once nested the Broadcast panel inside `#section-raids`, which is
+`display:none`, so the tab rendered completely blank and nothing complained.
+
+## Data retention
+
+Snapshots are pruned by `scrapers/retention.py`, called at the end of the war
+and raid scrapers. It keeps the newest `WAR_KEEP` (150, ≈2 years) and
+`RAID_KEEP` (104, ≈2 years) entries and deletes the file and its index row
+together, so the index can never point at a file that is gone. Override
+`WAR_KEEP`/`RAID_KEEP` as env vars.
+
+`clan_stats` is deliberately **not** pruned: its index feeds the Members tab's
+history date picker, so pruning it would silently remove dates the UI offers.
+
+## Health check
+
+`scrapers/watchdog.py` (`.github/workflows/health.yml`, every 2 hours) exists
+because every failure mode here is silent — if the token expires or Actions
+stops firing, the site keeps serving the last snapshot and looks fine. It
+checks two independent things and posts a Discord alert plus a red run:
+
+- **Snapshot age** — newest commit touching `data/` is under 3 h old.
+- **Run age** — the 15-minute workflows actually ran in the last 2 h.
+
+They fail differently (a run can succeed while writing nothing), so both are
+checked. Run it locally:
+
+```bash
+PYTHONPATH=scrapers GITHUB_REPOSITORY=fthyll/99N python3 scrapers/watchdog.py
+```
+
+## Adding a scraper
+
+1. `import http_client` and call `http_client.get(url, HEADERS)` — never
+   `requests.get` directly. The raw call had no retry, so a single 429 threw
+   away that period's snapshot permanently (the next run only fetches the
+   *current* war). 403 and 404 are returned immediately on purpose.
+2. Write the snapshot, then update its index (oldest first — `app.js`
+   `.reverse()`s it).
+3. If the archive grows without bound, call `retention.prune(...)` **after**
+   the write so the new snapshot is never the one pruned.
+4. Add a `scrapers/<name>_test.py` with a `main()` returning 0/1 — CI globs
+   `scrapers/*_test.py` and fails on a non-zero exit.
 
 ## Win probability — what it actually is
 

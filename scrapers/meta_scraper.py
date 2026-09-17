@@ -1,7 +1,7 @@
-import requests
 import json
 import os
 from datetime import datetime
+import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS, RAW_TAG
 
 # One small "meta" file with slow-changing context the frontend cannot derive
@@ -13,7 +13,7 @@ from config import BASE_URL, CLAN_TAG, HEADERS, RAW_TAG
 
 
 def _get(url):
-    return requests.get(url, headers=HEADERS, timeout=30)
+    return http_client.get(url, HEADERS)
 
 
 def fetch_goldpass(meta):

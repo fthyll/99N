@@ -1,6 +1,6 @@
-import requests
 import json
 import os
+import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS
 
 # warlog returns the clan's finished wars (max 50) with results but WITHOUT
@@ -11,7 +11,7 @@ from config import BASE_URL, CLAN_TAG, HEADERS
 def update_war_log():
     os.makedirs('data/warlog_stats', exist_ok=True)
     url = f"{BASE_URL}/clans/{CLAN_TAG}/warlog?limit=50"
-    res = requests.get(url, headers=HEADERS)
+    res = http_client.get(url, HEADERS)
     if res.status_code != 200:
         raise SystemExit(f"Failed to fetch war log: HTTP {res.status_code} {res.text[:200]}")
 
