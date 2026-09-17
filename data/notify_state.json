@@ -1,0 +1,75 @@
+{
+    "clan": {
+        "donations": {
+            "received": 15193,
+            "total": 15559,
+            "week": "20260917"
+        },
+        "lastSnapshot": "members_20260916.json",
+        "memberTags": [
+            "#88GLRP9LQ",
+            "#9090VYJLJ",
+            "#G0GCCPGUR",
+            "#G0V8LUY98",
+            "#G8YQ9PVCR",
+            "#GG0PPPC9L",
+            "#GG0RY8YVR",
+            "#GG0V0JUG2",
+            "#GG2PL2P9V",
+            "#GG2PY22CR",
+            "#GJ08CPY2U",
+            "#GJ08LYC82",
+            "#GJ08YQJR9",
+            "#GJP2GLC99",
+            "#GJPJ8P0GC",
+            "#GJPQ0QYYL",
+            "#GL9QQQJYU",
+            "#GLU0CYUCY",
+            "#GLUGPPY8Y",
+            "#GP0JP0QUY",
+            "#GP0L8CJ2U",
+            "#GP0L9P0VP",
+            "#GP8QPYUUQ",
+            "#GQ2CV2JRP",
+            "#GQC2R8QCY",
+            "#GQCQRGRJU",
+            "#GQCYYGRC0",
+            "#GQJC9J2Q2",
+            "#GQJJ80U2C",
+            "#GQJULVGV2",
+            "#GQLU8J2J8",
+            "#GQP90VRUV",
+            "#GQQLPUPU0",
+            "#GQQLY8Y0P",
+            "#GQR9YV8R0",
+            "#GQRCUR98U",
+            "#GQRLCCUYC",
+            "#GRL2VC9YJ",
+            "#GRL99YJ8J",
+            "#GRL9VGQU8",
+            "#GRR2RRPJ9",
+            "#GRR89LVYR",
+            "#GYLPLPVC2",
+            "#GYLYL9Q0G",
+            "#GYLYL9VG0",
+            "#GYYRQPPLQ",
+            "#LRL09G0QJ",
+            "#LVCJJ2QGC",
+            "#PU9C0L2VY",
+            "#Q0RP9LCR8"
+        ]
+    },
+    "raid": {
+        "20260911T070000.000Z": {
+            "loot": 190804,
+            "state": "ended"
+        }
+    },
+    "war": {
+        "20260916T041524.000Z": {
+            "clanStars": 29,
+            "opponentStars": 0,
+            "state": "inWar"
+        }
+    }
+}

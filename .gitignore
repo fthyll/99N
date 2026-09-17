@@ -43,6 +43,10 @@ Thumbs.db
 # Environment
 .env
 .env.local
+# Never commit a webhook URL pasted into a scratch file.
+*webhook*.txt
+*webhook*.json
+!data/notify_state.json
 
 # Node (if used)
 node_modules/

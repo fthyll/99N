@@ -32,10 +32,19 @@ jobs:
           python scrapers/player_scraper.py
           python scrapers/meta_scraper.py
 
+      - name: Notify Discord
+        # Best-effort: a missing secret or a Discord outage must not fail the run.
+        continue-on-error: true
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/scrapers
+          python scrapers/notify.py --event clan
+
       - name: Commit and Push
         run: |
           git config --global user.name "Stats Bot"
           git config --global user.email "bot@github.com"
           git add data/
-          git commit -m "Auto-update clan members" || exit 0
+          git diff --cached --quiet || git commit -m "Auto-update clan members"
           git push

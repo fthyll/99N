@@ -38,9 +38,51 @@ data/
   clan_stats/members_YYYYMMDD.json   + clan_stats_index.json   # daily roster
   war_stats/war_<startTime>.json     + war_stats_index.json    # live war, finalised on warEnded
   raid_stats/raid_<startTime>.json   + raid_stats_index.json   # per raid weekend
+  warlog_stats/warlog.json                                      # last 50 results (no attacks)
+  player_stats/players_YYYYMMDD.json + player_stats_index.json  # career stats per member
+  meta.json                                                     # goldpass / country rank / CWL
+  notify_state.json                                             # last-seen state for Discord alerts
 ```
 
-**War history starts from the day you install this** — the CoC API only exposes full per-player attack data on the `currentwar` endpoint while a war is live; `warlog` has results but no attacks, so older wars cannot be backfilled.
+**War history starts from the day you install this** — the CoC API only exposes full per-player attack data on the `currentwar` endpoint while a war is live; `warlog` has results but no attacks, so older wars cannot be backfilled (they still appear in the list, marked *summary only*).
+
+## Discord notifications
+
+Two ways to reach the clan Discord, both driven by one secret:
+
+```bash
+# .env (local) or Settings -> Secrets -> Actions (repo)
+DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/<id>/<token>
+```
+
+**Automatic** — `scrapers/notify.py` runs after each scrape and posts only on a
+state *change* (state lives in `data/notify_state.json`, so restarts never spam):
+
+| Event | Trigger | Embed |
+|---|---|---|
+| War preparation | new war enters `preparation` | opponent, size, battle-day time |
+| War result | snapshot flips to `warEnded` | VICTORY/DEFEAT/DRAW, stars, destruction |
+| Raid start / finish | raid weekend opens or closes | loot, districts, top looters |
+| Roster change | a tag appears or disappears | who joined/left + new count |
+| Donation week | weekly counters reset | last week's total + early leaders |
+
+The step is `continue-on-error: true`: a missing webhook or a Discord outage
+never fails the data pipeline. Test locally without sending anything:
+
+```bash
+PYTHONPATH=scrapers python3 scrapers/notify.py --event war --dry-run
+```
+
+**Manual** — the dashboard's **Broadcast** tab composes a message (title,
+colour, templates) and shows the exact JSON payload. Two caveats, both by
+design: the built-in Send button only works when you serve the site locally
+(Discord blocks the cross-origin POST from `fthyll.github.io`), and the webhook
+URL is never stored in the repo — it lives in `.env`/Actions secrets, and the
+tab keeps a URL you type in `sessionStorage` only. The equivalent CLI:
+
+```bash
+PYTHONPATH=scrapers python3 scrapers/broadcast.py --text "War jam 20:00!" --title "War Reminder" --color gold
+```
 
 ## Theme system
 

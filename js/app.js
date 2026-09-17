@@ -27,6 +27,7 @@ import {
     resetRaidSort
 } from './render.js';
 import { renderCharts } from './charts.js';
+import { initBroadcast } from './broadcast.js';
 
 // Global state variables
 let allMembers = [];
@@ -207,13 +208,15 @@ function preRoute() {
     const tabWar = document.getElementById('tab-war');
     const tabStats = document.getElementById('tab-stats');
     const tabRaids = document.getElementById('tab-raids');
+    const tabBroadcast = document.getElementById('tab-broadcast');
     if (!tabAbout || !tabMembers || !tabWar || !tabStats || !tabRaids) return;
-    [tabAbout, tabMembers, tabWar, tabStats, tabRaids].forEach(t => t.classList.remove('active'));
+    [tabAbout, tabMembers, tabWar, tabStats, tabRaids, tabBroadcast].forEach(t => t?.classList.remove('active'));
     if (!hash || hash === 'about') tabAbout.classList.add('active');
     else if (hash === 'members') tabMembers.classList.add('active');
     else if (hash.startsWith('war')) tabWar.classList.add('active');
     else if (hash === 'stats') tabStats.classList.add('active');
     else if (hash.startsWith('raids')) tabRaids.classList.add('active');
+    else if (hash === 'broadcast') tabBroadcast?.classList.add('active');
 }
 
 async function init() {
@@ -384,6 +387,10 @@ function handleInitialRoute() {
         switchView('stats', false);
         renderCharts(fullWarHistory, document.getElementById('statsTimeRange')?.value || 'month');
     }
+    else if (hash === 'broadcast') {
+        switchView('broadcast', false);
+        initBroadcast();
+    }
     else if (hash.startsWith('raids')) {
         const parts = hash.split('/');
         const subview = parts[1] || 'summary';
@@ -529,6 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCharts(fullWarHistory, document.getElementById('statsTimeRange')?.value || 'month');
     });
     document.getElementById('tab-raids')?.addEventListener('click', () => { switchView('raids'); switchRaidSubView('summary'); });
+    document.getElementById('tab-broadcast')?.addEventListener('click', () => { switchView('broadcast'); initBroadcast(); });
     document.getElementById('raid-subtab-summary')?.addEventListener('click', () => switchRaidSubView('summary'));
     document.getElementById('raid-subtab-attacks')?.addEventListener('click', () => switchRaidSubView('attacks'));
     document.getElementById('raid-subtab-defenses')?.addEventListener('click', () => switchRaidSubView('defenses'));
