@@ -68,8 +68,8 @@
     "war": {
         "20260916T041524.000Z": {
             "clanStars": 29,
-            "opponentStars": 0,
-            "state": "inWar"
+            "opponentStars": 30,
+            "state": "warEnded"
         }
     }
 }
