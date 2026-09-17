@@ -6,6 +6,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
   workflow_dispatch:
 
 # A newer push makes an in-flight run pointless; unlike the scraper workflows
