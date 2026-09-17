@@ -2,6 +2,39 @@
     "items": [
         {
             "result": "lose",
+            "endTime": "20260917T041524.000Z",
+            "teamSize": 10,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
+                },
+                "clanLevel": 2,
+                "attacks": 14,
+                "stars": 29,
+                "destructionPercentage": 99.2,
+                "expEarned": 102
+            },
+            "opponent": {
+                "tag": "#2QC20YPRL",
+                "name": "House of Dragon",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/9eAB6S-_ELOeBKP9P9IMV0f-j9patIDv9_YCkv7nHYQ.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/9eAB6S-_ELOeBKP9P9IMV0f-j9patIDv9_YCkv7nHYQ.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/9eAB6S-_ELOeBKP9P9IMV0f-j9patIDv9_YCkv7nHYQ.png"
+                },
+                "clanLevel": 9,
+                "stars": 30,
+                "destructionPercentage": 100.0
+            }
+        },
+        {
+            "result": "lose",
             "endTime": "20260902T161521.000Z",
             "teamSize": 5,
             "attacksPerMember": 2,
