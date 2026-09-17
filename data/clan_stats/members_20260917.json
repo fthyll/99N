@@ -216,7 +216,7 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/GeLamlTvRYNnZp5lEW64pyaORN30rCdrxTjU7oJoTN8.png"
                 }
             },
-            "trophies": 62,
+            "trophies": 72,
             "builderBaseTrophies": 3129,
             "clanRank": 4,
             "previousClanRank": 4,
@@ -269,7 +269,7 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/6BwmbzkNm6p2unZonTauFQ_683uNl4NYtoOXJmEs78c.png"
                 }
             },
-            "trophies": 107,
+            "trophies": 135,
             "builderBaseTrophies": 1972,
             "clanRank": 5,
             "previousClanRank": 5,
@@ -322,7 +322,7 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
                 }
             },
-            "trophies": 325,
+            "trophies": 343,
             "builderBaseTrophies": 0,
             "clanRank": 6,
             "previousClanRank": 6,
@@ -375,12 +375,65 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
                 }
             },
-            "trophies": 89,
+            "trophies": 158,
             "builderBaseTrophies": 0,
             "clanRank": 7,
             "previousClanRank": 7,
             "donations": 0,
             "donationsReceived": 1118,
+            "playerHouse": {
+                "elements": [
+                    {
+                        "type": "ground",
+                        "id": 82000164
+                    },
+                    {
+                        "type": "walls",
+                        "id": 82000163
+                    },
+                    {
+                        "type": "roof",
+                        "id": 82000010
+                    },
+                    {
+                        "type": "decoration",
+                        "id": 82000127
+                    }
+                ]
+            },
+            "builderBaseLeague": {
+                "id": 44000000,
+                "name": "Wood League V"
+            }
+        },
+        {
+            "tag": "#GQCYYGRC0",
+            "name": "YSLx99N",
+            "role": "member",
+            "townHallLevel": 10,
+            "expLevel": 62,
+            "league": {
+                "id": 29000000,
+                "name": "Unranked",
+                "iconUrls": {
+                    "small": "https://api-assets.clashofclans.com/leagues/72/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png",
+                    "tiny": "https://api-assets.clashofclans.com/leagues/36/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png"
+                }
+            },
+            "leagueTier": {
+                "id": 105000005,
+                "name": "Barbarian League 5",
+                "iconUrls": {
+                    "small": "https://api-assets.clashofclans.com/leaguetiers/125/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png",
+                    "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
+                }
+            },
+            "trophies": 134,
+            "builderBaseTrophies": 0,
+            "clanRank": 8,
+            "previousClanRank": 8,
+            "donations": 0,
+            "donationsReceived": 1064,
             "playerHouse": {
                 "elements": [
                     {
@@ -430,7 +483,7 @@
             },
             "trophies": 60,
             "builderBaseTrophies": 0,
-            "clanRank": 8,
+            "clanRank": 9,
             "previousClanRank": 10,
             "donations": 0,
             "donationsReceived": 1161,
@@ -460,11 +513,11 @@
             }
         },
         {
-            "tag": "#GQCYYGRC0",
-            "name": "YSLx99N",
+            "tag": "#GQRCUR98U",
+            "name": "VICTORIAx99N",
             "role": "member",
             "townHallLevel": 10,
-            "expLevel": 62,
+            "expLevel": 64,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -481,12 +534,12 @@
                     "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
                 }
             },
-            "trophies": 54,
+            "trophies": 52,
             "builderBaseTrophies": 0,
-            "clanRank": 9,
-            "previousClanRank": 8,
-            "donations": 0,
-            "donationsReceived": 1064,
+            "clanRank": 10,
+            "previousClanRank": 12,
+            "donations": 20,
+            "donationsReceived": 1116,
             "playerHouse": {
                 "elements": [
                     {
@@ -536,7 +589,7 @@
             },
             "trophies": 42,
             "builderBaseTrophies": 0,
-            "clanRank": 10,
+            "clanRank": 11,
             "previousClanRank": 9,
             "donations": 0,
             "donationsReceived": 990,
@@ -589,7 +642,7 @@
             },
             "trophies": 37,
             "builderBaseTrophies": 0,
-            "clanRank": 11,
+            "clanRank": 12,
             "previousClanRank": 11,
             "donations": 0,
             "donationsReceived": 1028,
@@ -606,59 +659,6 @@
                     {
                         "type": "roof",
                         "id": 82000010
-                    },
-                    {
-                        "type": "decoration",
-                        "id": 82000127
-                    }
-                ]
-            },
-            "builderBaseLeague": {
-                "id": 44000000,
-                "name": "Wood League V"
-            }
-        },
-        {
-            "tag": "#GQRCUR98U",
-            "name": "VICTORIAx99N",
-            "role": "member",
-            "townHallLevel": 10,
-            "expLevel": 63,
-            "league": {
-                "id": 29000000,
-                "name": "Unranked",
-                "iconUrls": {
-                    "small": "https://api-assets.clashofclans.com/leagues/72/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png",
-                    "tiny": "https://api-assets.clashofclans.com/leagues/36/e--YMyIexEQQhE4imLoJcwhYn6Uy8KqlgyY3_kFV6t4.png"
-                }
-            },
-            "leagueTier": {
-                "id": 105000005,
-                "name": "Barbarian League 5",
-                "iconUrls": {
-                    "small": "https://api-assets.clashofclans.com/leaguetiers/125/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png",
-                    "large": "https://api-assets.clashofclans.com/leaguetiers/326/7Alm6gwA1lYoRn5m8vrXAfbTKIK2fFU7OxfYhYwWJYM.png"
-                }
-            },
-            "trophies": 25,
-            "builderBaseTrophies": 0,
-            "clanRank": 12,
-            "previousClanRank": 12,
-            "donations": 20,
-            "donationsReceived": 1116,
-            "playerHouse": {
-                "elements": [
-                    {
-                        "type": "ground",
-                        "id": 82000129
-                    },
-                    {
-                        "type": "walls",
-                        "id": 82000128
-                    },
-                    {
-                        "type": "roof",
-                        "id": 82000126
                     },
                     {
                         "type": "decoration",
@@ -711,7 +711,7 @@
                     },
                     {
                         "type": "roof",
-                        "id": 82000126
+                        "id": 82000010
                     },
                     {
                         "type": "decoration",
@@ -1014,15 +1014,15 @@
                 "elements": [
                     {
                         "type": "ground",
-                        "id": 82000129
+                        "id": 82000164
                     },
                     {
                         "type": "walls",
-                        "id": 82000128
+                        "id": 82000163
                     },
                     {
                         "type": "roof",
-                        "id": 82000126
+                        "id": 82000010
                     },
                     {
                         "type": "decoration",
@@ -1404,7 +1404,7 @@
             "name": "BUGGATIx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 35,
+            "expLevel": 37,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1427,6 +1427,26 @@
             "previousClanRank": 29,
             "donations": 0,
             "donationsReceived": 26,
+            "playerHouse": {
+                "elements": [
+                    {
+                        "type": "ground",
+                        "id": 82000164
+                    },
+                    {
+                        "type": "walls",
+                        "id": 82000163
+                    },
+                    {
+                        "type": "roof",
+                        "id": 82000010
+                    },
+                    {
+                        "type": "decoration",
+                        "id": 82000058
+                    }
+                ]
+            },
             "builderBaseLeague": {
                 "id": 44000000,
                 "name": "Wood League V"
@@ -1735,7 +1755,7 @@
             "name": "HILTONx99N",
             "role": "member",
             "townHallLevel": 8,
-            "expLevel": 37,
+            "expLevel": 38,
             "league": {
                 "id": 29000000,
                 "name": "Unranked",
@@ -1758,6 +1778,26 @@
             "previousClanRank": 36,
             "donations": 0,
             "donationsReceived": 50,
+            "playerHouse": {
+                "elements": [
+                    {
+                        "type": "ground",
+                        "id": 82000164
+                    },
+                    {
+                        "type": "walls",
+                        "id": 82000163
+                    },
+                    {
+                        "type": "roof",
+                        "id": 82000010
+                    },
+                    {
+                        "type": "decoration",
+                        "id": 82000058
+                    }
+                ]
+            },
             "builderBaseLeague": {
                 "id": 44000000,
                 "name": "Wood League V"
@@ -2093,15 +2133,15 @@
                 "elements": [
                     {
                         "type": "ground",
-                        "id": 82000129
+                        "id": 82000164
                     },
                     {
                         "type": "walls",
-                        "id": 82000128
+                        "id": 82000163
                     },
                     {
                         "type": "roof",
-                        "id": 82000126
+                        "id": 82000010
                     },
                     {
                         "type": "decoration",
