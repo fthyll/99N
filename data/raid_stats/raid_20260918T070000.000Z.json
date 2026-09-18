@@ -16,6 +16,14 @@
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 7347
+        },
+        {
+            "tag": "#GG0V0JUG2",
+            "name": "OBITx99N",
+            "attacks": 0,
+            "attackLimit": 5,
+            "bonusAttackLimit": 0,
+            "capitalResourcesLooted": 0
         }
     ],
     "attackLog": [
