@@ -1,0 +1,122 @@
+{
+    "state": "ongoing",
+    "startTime": "20260918T070000.000Z",
+    "endTime": "20260921T070000.000Z",
+    "capitalTotalLoot": 7347,
+    "raidsCompleted": 0,
+    "totalAttacks": 6,
+    "enemyDistrictsDestroyed": 2,
+    "offensiveReward": 0,
+    "defensiveReward": 0,
+    "members": [
+        {
+            "tag": "#9090VYJLJ",
+            "name": "HIMAWARI",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 7347
+        }
+    ],
+    "attackLog": [
+        {
+            "defender": {
+                "tag": "#2QRY8QUCJ",
+                "name": "cali clan",
+                "level": 2,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/XBmjYCGayrQrwxJsBEmohR919JP-s77UJDh3y9veArM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/XBmjYCGayrQrwxJsBEmohR919JP-s77UJDh3y9veArM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/XBmjYCGayrQrwxJsBEmohR919JP-s77UJDh3y9veArM.png"
+                }
+            },
+            "attackCount": 6,
+            "districtCount": 3,
+            "districtsDestroyed": 2,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 3,
+                    "destructionPercent": 37,
+                    "stars": 0,
+                    "attackCount": 1,
+                    "totalLooted": 1020,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 37,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4131,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 78,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 40,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 2196,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 68,
+                            "stars": 1
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "defenseLog": []
+}
