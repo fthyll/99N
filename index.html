@@ -265,6 +265,40 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Raid attendance: who missed, and who left attacks unused.
+                             Two different questions, kept apart on purpose — the raid
+                             payload only lists participants, so "did not raid at all"
+                             can only be answered by comparing against the roster. -->
+                        <div class="bg-inset p-4 rounded-xl border border-gray-800">
+                            <div class="flex flex-wrap items-center gap-3 mb-4">
+                                <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Raid Attendance</h3>
+                                <span id="raidAttendanceWeekend" class="text-[9px] font-bold text-gray-600 uppercase tracking-widest"></span>
+                            </div>
+
+                            <div id="raidAttendanceSummary" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5"></div>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                                <div>
+                                    <p class="text-[9px] font-bold uppercase tracking-widest text-gray-500 mb-2">
+                                        Did not raid at all <span id="raidAbsentCount" class="gold"></span>
+                                    </p>
+                                    <div id="raidAbsentList" class="space-y-1.5 max-h-64 overflow-y-auto pr-1"></div>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] font-bold uppercase tracking-widest text-gray-500 mb-2">
+                                        Attacks left unused <span id="raidIncompleteCount" class="gold"></span>
+                                    </p>
+                                    <div id="raidIncompleteList" class="space-y-1.5 max-h-64 overflow-y-auto pr-1"></div>
+                                </div>
+                                <div>
+                                    <p class="text-[9px] font-bold uppercase tracking-widest text-gray-500 mb-2">Most weekends missed</p>
+                                    <div id="raidWorstAbsentees" class="space-y-1.5"></div>
+                                </div>
+                            </div>
+
+                            <p id="raidAttendanceNote" class="text-[10px] text-gray-600 italic mt-4"></p>
+                        </div>
                     </div>
                 </div>
             </div>

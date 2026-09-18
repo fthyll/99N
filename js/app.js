@@ -23,11 +23,13 @@ import {
     renderRaidSummary,
     renderRaidAttacks,
     renderRaidDefenses,
+    renderRaidAttendance,
     setRaidSort,
     resetRaidSort
 } from './render.js';
 import { renderCharts } from './charts.js';
 import { initBroadcast } from './broadcast.js';
+import { raidParticipation, raidAbsentees, raidAttendanceSummary } from './raidstats.js';
 
 // Global state variables
 let allMembers = [];
@@ -386,6 +388,7 @@ function handleInitialRoute() {
     else if (hash === 'stats') {
         switchView('stats', false);
         renderCharts(fullWarHistory, document.getElementById('statsTimeRange')?.value || 'month');
+        renderRaidAttendance(fullRaidHistory, allMembers);
     }
     else if (hash === 'broadcast') {
         switchView('broadcast', false);
@@ -534,6 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('tab-stats')?.addEventListener('click', () => { 
         switchView('stats'); 
         renderCharts(fullWarHistory, document.getElementById('statsTimeRange')?.value || 'month');
+        renderRaidAttendance(fullRaidHistory, allMembers);
     });
     document.getElementById('tab-raids')?.addEventListener('click', () => { switchView('raids'); switchRaidSubView('summary'); });
     document.getElementById('tab-broadcast')?.addEventListener('click', () => { switchView('broadcast'); initBroadcast(); });

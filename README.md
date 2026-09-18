@@ -10,7 +10,7 @@ Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on
 | Members | Roster with donations, trophies, role filters, **any historical date** | daily snapshots |
 | Wars | War list + per-player attack/defense breakdown, win probability, cleanup needed | war snapshots |
 | Raids | Capital raid weekends: attacks, defenses, loot per player | raid logs |
-| Stats | Stars-trend line, top-25 star breakdown, conversion-rate bars (finished wars only) | war snapshots |
+| Stats | Stars-trend line, top-25 star breakdown, conversion-rate bars (finished wars only), **raid attendance** | war + raid snapshots |
 
 ## Screenshots (War Room, night theme)
 
@@ -167,6 +167,36 @@ plus a check that `index.html` has balanced `<div>`s and keeps every
 `[id^="section-"]` a sibling. That last one is not ceremony: a missing `</div>`
 once nested the Broadcast panel inside `#section-raids`, which is
 `display:none`, so the tab rendered completely blank and nothing complained.
+
+## Raid attendance (Stats tab)
+
+Answers two different questions, kept apart because conflating them is
+misleading:
+
+- **Attacks left unused** — took part but did not spend every attack
+  (`attacks` vs `attackLimit + bonusAttackLimit`, straight from the raid payload).
+- **Did not raid at all** — on the roster but absent from the raid's member
+  list. The raid API only lists *participants*, so this can only be computed by
+  diffing against the current roster; a member who joined after that weekend
+  therefore appears here too.
+
+Attendance is measured against the **roster size**, not the participant count:
+34 of 50 raiding is 68%, even though everyone who showed up attacked fully.
+That distinction is why the card can show a low attendance figure next to zero
+incomplete attacks.
+
+Absentees are split by whether the account looks dormant — **zero trophies AND
+zero donations** (`isDormant` in `js/raidstats.js`). In 99N's archive all 16
+non-raiding members were low-experience TH8 accounts with no activity at all,
+while every active member with zero trophies still had donations. Without this
+split the report reads as "16 members skipped the raid" when the truth is
+"16 unused alt accounts don't raid", which blames the wrong people. Dormant
+accounts are listed for completeness and are excluded from the *most weekends
+missed* ranking. The heuristic only labels — it never removes anyone from a
+count.
+
+The logic lives in `js/raidstats.js` (pure functions, `js/raidstats.test.mjs`),
+separate from rendering, so the counting rules are testable.
 
 ## Data retention
 
