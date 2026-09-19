@@ -216,8 +216,15 @@ because every failure mode here is silent — if the token expires or Actions
 stops firing, the site keeps serving the last snapshot and looks fine. It
 checks two independent things and posts a Discord alert plus a red run:
 
-- **Snapshot age** — newest commit touching `data/` is under 3 h old.
-- **Run age** — the 15-minute workflows actually ran in the last 2 h.
+- **Snapshot age** — newest commit touching `data/` is under 24 h old.
+- **Run age** — the 15-minute workflows actually ran in the last 12 h.
+
+Both limits are loose on purpose: GitHub drops most ticks of a `*/15` cron on
+this repo (measured over the first four days: war/raid runs landed every
+1.9-5.6 h, median 3.7 h, and the 2-hourly health workflow itself averaged a
+3.6 h gap), and data writes are event-driven — a quiet window with no live war
+or raid weekend has gone 11 h between commits. The first version used 3 h/2 h
+and went red on scheduler drops rather than on real outages.
 
 They fail differently (a run can succeed while writing nothing), so both are
 checked. Run it locally:

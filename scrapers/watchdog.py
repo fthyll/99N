@@ -24,12 +24,20 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from notifier import discord, embeds
 
-# A war snapshot is written every 15 minutes while a war is live, and the clan
-# wars back to back, so an hour of silence means something is wrong rather
-# than "the clan is resting".
-MAX_SNAPSHOT_AGE_HOURS = 3
-# The war/raid workflows are scheduled every 15 minutes; allow for queueing.
-MAX_RUN_AGE_HOURS = 2
+# Thresholds are sized to the cadence GitHub's scheduler actually delivers, not
+# to the cron strings. Measured over the repo's first four days: the */15 war
+# and raid workflows landed every 1.9-5.6 h (median 3.7 h) — the scheduler
+# drops most ticks — and the 2-hourly health workflow itself averaged a 3.6 h
+# gap. The original 2 h/3 h limits sat below that noise floor, so the watchdog
+# went red on dropped ticks instead of on a real outage. 12 h clears the worst
+# observed gap by 2x and still catches a full stop within half a day.
+MAX_RUN_AGE_HOURS = 12
+# Writes are event-driven: war snapshots only change while a war is live, raid
+# snapshots only during a raid weekend, and in a quiet window the only regular
+# writer is the daily clan snapshot — an 11 h gap between data commits has been
+# observed. This is the last-resort "writes stopped entirely" detector; the
+# run-age check above is the faster liveness signal.
+MAX_SNAPSHOT_AGE_HOURS = 24
 WATCHED_WORKFLOWS = ("Update War Stats (15m)", "Update Raid Stats (15m)")
 
 
