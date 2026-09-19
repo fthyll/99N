@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20260918T070000.000Z",
     "endTime": "20260921T070000.000Z",
-    "capitalTotalLoot": 317984,
-    "raidsCompleted": 26,
-    "totalAttacks": 247,
-    "enemyDistrictsDestroyed": 79,
+    "capitalTotalLoot": 330520,
+    "raidsCompleted": 27,
+    "totalAttacks": 259,
+    "enemyDistrictsDestroyed": 82,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -218,6 +218,14 @@
             "capitalResourcesLooted": 8406
         },
         {
+            "tag": "#GRL9VGQU8",
+            "name": "VICIx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 7515
+        },
+        {
             "tag": "#GJPJ8P0GC",
             "name": "AVENTUSx99N",
             "attacks": 5,
@@ -272,6 +280,14 @@
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 6738
+        },
+        {
+            "tag": "#GJPQ0QYYL",
+            "name": "ATHENAx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 5021
         },
         {
             "tag": "#GJP2GLC99",
@@ -3610,27 +3626,103 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/kDLs-B7j3IcWhjEZMcd-3vL1SWcTXnDqefJCOWtVk5w.png"
                 }
             },
-            "attackCount": 3,
+            "attackCount": 12,
             "districtCount": 3,
-            "districtsDestroyed": 1,
+            "districtsDestroyed": 3,
             "districts": [
                 {
                     "id": 70000000,
                     "name": "Capital Peak",
                     "districtHallLevel": 3,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 4,
+                    "totalLooted": 4591,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRL9VGQU8",
+                                "name": "VICIx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRL9VGQU8",
+                                "name": "VICIx99N"
+                            },
+                            "destructionPercent": 53,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRL9VGQU8",
+                                "name": "VICIx99N"
+                            },
+                            "destructionPercent": 34,
+                            "stars": 0
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 29,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000001,
                     "name": "Barbarian Camp",
                     "districtHallLevel": 2,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 5,
+                    "totalLooted": 4341,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 82,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 59,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 40,
+                            "stars": 0
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 34,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000002,
@@ -3663,6 +3755,76 @@
                                 "name": "AQUAx99N"
                             },
                             "destructionPercent": 35,
+                            "stars": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "defender": {
+                "tag": "#2C0VYRGQC",
+                "name": "amg",
+                "level": 4,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/YZEZ1nt3aCeu0EyoEj4eGWQgu7YYQfk0JeKS8TpGrug.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/YZEZ1nt3aCeu0EyoEj4eGWQgu7YYQfk0JeKS8TpGrug.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/YZEZ1nt3aCeu0EyoEj4eGWQgu7YYQfk0JeKS8TpGrug.png"
+                }
+            },
+            "attackCount": 3,
+            "districtCount": 3,
+            "districtsDestroyed": 1,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 3,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 3604,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRL9VGQU8",
+                                "name": "VICIx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRL9VGQU8",
+                                "name": "VICIx99N"
+                            },
+                            "destructionPercent": 71,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRL9VGQU8",
+                                "name": "VICIx99N"
+                            },
+                            "destructionPercent": 32,
                             "stars": 1
                         }
                     ]
