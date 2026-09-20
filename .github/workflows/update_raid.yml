@@ -50,7 +50,16 @@ jobs:
           git config --global user.name "Stats Bot"
           git config --global user.email "bot@github.com"
           git add data/
-          git diff --cached --quiet || git commit -m "Auto-update raid stats"
-          # Another workflow may have pushed since checkout; replay our commit on top.
-          git pull --rebase --autostash origin main
-          git push
+          if git diff --cached --quiet; then
+            echo "No data change; skipping commit."
+          else
+            # Heartbeat, written ONLY when real raid data changed. Lets the
+            # freshness indicator move at the ~15m raid cadence without minting
+            # an empty commit every run (idle weekends change nothing -> none).
+            printf '{"fetchedAt": "%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > data/sync_raid.json
+            git add data/sync_raid.json
+            git commit -m "Auto-update raid stats"
+            # Another workflow may have pushed since checkout; replay on top.
+            git pull --rebase --autostash origin main
+            git push
+          fi

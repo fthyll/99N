@@ -126,6 +126,25 @@ body {
 .sidebar-note { display: none; }
 .content { flex: 1; padding: 0 12px 40px; min-width: 0; }
 
+/* Data-freshness indicator (spec §10). Mobile: inline chip in the top bar. */
+.freshness {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: 8px; margin-left: auto;
+    background: rgb(var(--s-card)); border: 1px solid rgb(var(--s-line-dim));
+    font-size: 10px; line-height: 1.3;
+}
+.fresh-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    background: var(--muted); box-shadow: 0 0 0 3px rgb(var(--s-hover) / 0.5);
+}
+.freshness[data-state="live"] .fresh-dot { background: rgb(var(--bar3)); box-shadow: 0 0 8px rgb(var(--bar3) / 0.6); }
+.freshness[data-state="stale"] .fresh-dot { background: rgb(var(--bar2)); box-shadow: 0 0 8px rgb(var(--bar2) / 0.6); }
+.fresh-text { display: flex; flex-direction: column; }
+.fresh-label { font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+.freshness[data-state="live"] .fresh-label { color: rgb(var(--bar3)); }
+.freshness[data-state="stale"] .fresh-label { color: rgb(var(--bar2)); }
+.fresh-sub { color: var(--muted); font-variant-numeric: tabular-nums; }
+
 @media (min-width: 1024px) {
     .app-shell { flex-direction: row; }
     .sidebar {
@@ -146,6 +165,7 @@ body {
         font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
         color: var(--muted); text-align: center; line-height: 1.6;
     }
+    .freshness { margin: auto 0 0; }  /* pin to sidebar bottom on desktop */
     .content { padding: 24px 32px 56px; }
 }
 

@@ -4,7 +4,7 @@ global.window = { location: { hash: '' } };
 global.flatpickr = () => ({ destroy() {} });
 global.Chart = class { constructor() { this.destroy = () => {}; } };
 let bad = 0;
-for (const f of ['constants.js', 'api.js', 'charts.js', 'render.js']) {
+for (const f of ['constants.js', 'api.js', 'charts.js', 'render.js', 'freshness.js']) {
   try { await import('./' + f); console.log('OK   js/' + f); }
   catch (e) { console.log('FAIL js/' + f, e.message); bad = 1; }
 }

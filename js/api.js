@@ -68,6 +68,13 @@ export async function fetchPlayerCareers() {
     } catch (e) { console.warn('No player career data.', e); return null; }
 }
 
+export async function fetchSync(name) {
+    // Heartbeat files written by the 15m war/raid jobs (spec §10). Absent until
+    // the first data-changing run, so a miss is normal, not an error.
+    try { return await fetchData(`data/sync_${name}.json`); }
+    catch (e) { return null; }
+}
+
 export async function fetchMeta() {
     try { return await fetchData('data/meta.json'); }
     catch (e) { console.warn('No meta data.', e); return null; }

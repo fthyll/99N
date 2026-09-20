@@ -13,7 +13,8 @@ import {
     fetchRaidData,
     fetchWarLog,
     fetchPlayerCareers,
-    fetchMeta
+    fetchMeta,
+    fetchSync,
 } from './api.js';
 import { 
     renderMembers, 
@@ -28,8 +29,31 @@ import {
     resetRaidSort
 } from './render.js';
 import { renderCharts } from './charts.js';
-import { initBroadcast } from './broadcast.js';
 import { raidParticipation, raidAbsentees, raidAttendanceSummary } from './raidstats.js';
+import { freshness, newestTimestamp } from './freshness.js';
+
+// Data-freshness indicator (spec §10): the chip tracks whichever pipeline
+// synced last — the daily clan job (meta.fetchedAt) or the 15m war/raid
+// heartbeats — shown in WIB. Re-rendered on a 60s tick so "X ago" stays honest
+// in a tab left open, without any extra network or commits.
+let freshnessAt = null;   // newest sync timestamp across sources
+function paintFreshness() {
+    const el = document.getElementById('freshness');
+    if (!el) return;
+    const f = freshness(freshnessAt);
+    el.dataset.state = f.state;
+    el.querySelector('.fresh-label').textContent = f.label;
+    el.querySelector('.fresh-sub').textContent = f.sub;
+    el.title = f.state === 'stale'
+        ? `Last successful API sync ${f.sub} — data may be outdated`
+        : `Last successful API sync ${f.sub}`;
+}
+async function initFreshness(meta) {
+    const [w, r] = await Promise.all([fetchSync('war'), fetchSync('raid')]);
+    freshnessAt = newestTimestamp(meta?.fetchedAt, w?.fetchedAt, r?.fetchedAt);
+    paintFreshness();
+    setInterval(paintFreshness, 60000);
+}
 
 // Global state variables
 let allMembers = [];
@@ -210,15 +234,13 @@ function preRoute() {
     const tabWar = document.getElementById('tab-war');
     const tabStats = document.getElementById('tab-stats');
     const tabRaids = document.getElementById('tab-raids');
-    const tabBroadcast = document.getElementById('tab-broadcast');
     if (!tabAbout || !tabMembers || !tabWar || !tabStats || !tabRaids) return;
-    [tabAbout, tabMembers, tabWar, tabStats, tabRaids, tabBroadcast].forEach(t => t?.classList.remove('active'));
+    [tabAbout, tabMembers, tabWar, tabStats, tabRaids].forEach(t => t?.classList.remove('active'));
     if (!hash || hash === 'about') tabAbout.classList.add('active');
     else if (hash === 'members') tabMembers.classList.add('active');
     else if (hash.startsWith('war')) tabWar.classList.add('active');
     else if (hash === 'stats') tabStats.classList.add('active');
     else if (hash.startsWith('raids')) tabRaids.classList.add('active');
-    else if (hash === 'broadcast') tabBroadcast?.classList.add('active');
 }
 
 async function init() {
@@ -264,6 +286,7 @@ async function init() {
             fetchPlayerCareers(), fetchMeta(), fetchWarLog()]);
         playerCareers = careers?.players || {};
         clanMeta = meta;
+        initFreshness(meta);
 
         // Warlog = last ~50 finished wars with results but no per-player data.
         // Merge as summary-only pseudo-wars; skip any already covered by a
@@ -389,10 +412,6 @@ function handleInitialRoute() {
         switchView('stats', false);
         renderCharts(fullWarHistory, document.getElementById('statsTimeRange')?.value || 'month');
         renderRaidAttendance(fullRaidHistory, allMembers);
-    }
-    else if (hash === 'broadcast') {
-        switchView('broadcast', false);
-        initBroadcast();
     }
     else if (hash.startsWith('raids')) {
         const parts = hash.split('/');
@@ -540,7 +559,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderRaidAttendance(fullRaidHistory, allMembers);
     });
     document.getElementById('tab-raids')?.addEventListener('click', () => { switchView('raids'); switchRaidSubView('summary'); });
-    document.getElementById('tab-broadcast')?.addEventListener('click', () => { switchView('broadcast'); initBroadcast(); });
     document.getElementById('raid-subtab-summary')?.addEventListener('click', () => switchRaidSubView('summary'));
     document.getElementById('raid-subtab-attacks')?.addEventListener('click', () => switchRaidSubView('attacks'));
     document.getElementById('raid-subtab-defenses')?.addEventListener('click', () => switchRaidSubView('defenses'));
