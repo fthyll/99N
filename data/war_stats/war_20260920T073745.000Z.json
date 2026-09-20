@@ -15,9 +15,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
         },
         "clanLevel": 2,
-        "attacks": 12,
+        "attacks": 13,
         "stars": 24,
-        "destructionPercentage": 85.9,
+        "destructionPercentage": 89.9,
         "members": [
             {
                 "tag": "#GQRCUR98U",
@@ -57,14 +57,14 @@
                 "name": "DIORx99N",
                 "townhallLevel": 10,
                 "mapPosition": 9,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
-                    "attackerTag": "#GGP92J2LR",
+                    "attackerTag": "#R9QJ90R9G",
                     "defenderTag": "#GQRLCCUYC",
                     "stars": 2,
-                    "destructionPercentage": 85,
-                    "order": 18,
-                    "duration": 130
+                    "destructionPercentage": 88,
+                    "order": 27,
+                    "duration": 101
                 }
             },
             {
@@ -219,6 +219,16 @@
                 "name": "JOYx99N",
                 "townhallLevel": 10,
                 "mapPosition": 10,
+                "attacks": [
+                    {
+                        "attackerTag": "#GYLPLPVC2",
+                        "defenderTag": "#LQLR0LCQU",
+                        "stars": 0,
+                        "destructionPercentage": 40,
+                        "order": 25,
+                        "duration": 52
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GGP92J2LR",
@@ -234,14 +244,14 @@
                 "name": "MOYx99N",
                 "townhallLevel": 10,
                 "mapPosition": 8,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
-                    "attackerTag": "#R2CCYQQJG",
+                    "attackerTag": "#R9QJ90R9G",
                     "defenderTag": "#GYYRQPPLQ",
                     "stars": 2,
-                    "destructionPercentage": 80,
-                    "order": 22,
-                    "duration": 99
+                    "destructionPercentage": 91,
+                    "order": 26,
+                    "duration": 119
                 }
             },
             {
@@ -288,9 +298,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/Q0LEu-Q--Yve9uAX0n58OOjbomdQ3kmK3CGMYzVwjPg.png"
         },
         "clanLevel": 10,
-        "attacks": 12,
+        "attacks": 14,
         "stars": 28,
-        "destructionPercentage": 96.5,
+        "destructionPercentage": 97.9,
         "members": [
             {
                 "tag": "#GGP92J2LR",
@@ -363,7 +373,15 @@
                         "duration": 48
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#GYLPLPVC2",
+                    "defenderTag": "#LQLR0LCQU",
+                    "stars": 0,
+                    "destructionPercentage": 40,
+                    "order": 25,
+                    "duration": 52
+                }
             },
             {
                 "tag": "#PU9CQ8QR2",
@@ -499,6 +517,24 @@
                 "name": "hard hearted",
                 "townhallLevel": 10,
                 "mapPosition": 6,
+                "attacks": [
+                    {
+                        "attackerTag": "#R9QJ90R9G",
+                        "defenderTag": "#GYYRQPPLQ",
+                        "stars": 2,
+                        "destructionPercentage": 91,
+                        "order": 26,
+                        "duration": 119
+                    },
+                    {
+                        "attackerTag": "#R9QJ90R9G",
+                        "defenderTag": "#GQRLCCUYC",
+                        "stars": 2,
+                        "destructionPercentage": 88,
+                        "order": 27,
+                        "duration": 101
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GQRCUR98U",
