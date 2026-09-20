@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20260918T070000.000Z",
     "endTime": "20260921T070000.000Z",
-    "capitalTotalLoot": 352074,
+    "capitalTotalLoot": 360129,
     "raidsCompleted": 29,
-    "totalAttacks": 275,
-    "enemyDistrictsDestroyed": 87,
+    "totalAttacks": 281,
+    "enemyDistrictsDestroyed": 89,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -216,6 +216,14 @@
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 7283
+        },
+        {
+            "tag": "#GG0RY8YVR",
+            "name": "MESOPOTAMIAx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 8055
         },
         {
             "tag": "#GRL2VC9YJ",
@@ -4040,9 +4048,9 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/V7DNf2Mo7SYjvx97E7C7XLPyAUWMp_lISZg_Ta1ArGc.png"
                 }
             },
-            "attackCount": 0,
+            "attackCount": 6,
             "districtCount": 3,
-            "districtsDestroyed": 0,
+            "districtsDestroyed": 2,
             "districts": [
                 {
                     "id": 70000000,
@@ -4057,19 +4065,71 @@
                     "id": 70000001,
                     "name": "Barbarian Camp",
                     "districtHallLevel": 2,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4313,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GG0RY8YVR",
+                                "name": "MESOPOTAMIAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG0RY8YVR",
+                                "name": "MESOPOTAMIAx99N"
+                            },
+                            "destructionPercent": 59,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG0RY8YVR",
+                                "name": "MESOPOTAMIAx99N"
+                            },
+                            "destructionPercent": 38,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000002,
                     "name": "Wizard Valley",
                     "districtHallLevel": 1,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 3742,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GG0RY8YVR",
+                                "name": "MESOPOTAMIAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG0RY8YVR",
+                                "name": "MESOPOTAMIAx99N"
+                            },
+                            "destructionPercent": 69,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG0RY8YVR",
+                                "name": "MESOPOTAMIAx99N"
+                            },
+                            "destructionPercent": 30,
+                            "stars": 0
+                        }
+                    ]
                 }
             ]
         }
