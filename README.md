@@ -73,12 +73,8 @@ never fails the data pipeline. Test locally without sending anything:
 PYTHONPATH=scrapers python3 scrapers/notify.py --event war --dry-run
 ```
 
-**Manual** — the dashboard's **Broadcast** tab composes a message (title,
-colour, templates) and shows the exact JSON payload. Two caveats, both by
-design: the built-in Send button only works when you serve the site locally
-(Discord blocks the cross-origin POST from `fthyll.github.io`), and the webhook
-URL is never stored in the repo — it lives in `.env`/Actions secrets, and the
-tab keeps a URL you type in `sessionStorage` only. The equivalent CLI:
+**Manual** — send a one-off message to the clan Discord from the CLI. The
+webhook URL is never stored in the repo; it lives in `.env`/Actions secrets:
 
 ```bash
 PYTHONPATH=scrapers python3 scrapers/broadcast.py --text "War jam 20:00!" --title "War Reminder" --color gold
@@ -165,8 +161,8 @@ The Python tests need `COC_API_TOKEN` and `CLAN_TAG` set to *any* value —
 All of the above run in CI on every push and PR (`.github/workflows/tests.yml`),
 plus a check that `index.html` has balanced `<div>`s and keeps every
 `[id^="section-"]` a sibling. That last one is not ceremony: a missing `</div>`
-once nested the Broadcast panel inside `#section-raids`, which is
-`display:none`, so the tab rendered completely blank and nothing complained.
+once nested one section panel inside another `display:none` section, so the tab
+rendered completely blank and nothing complained.
 
 ## Raid attendance (Stats tab)
 
