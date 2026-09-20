@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20260918T070000.000Z",
     "endTime": "20260921T070000.000Z",
-    "capitalTotalLoot": 360129,
-    "raidsCompleted": 29,
-    "totalAttacks": 281,
-    "enemyDistrictsDestroyed": 89,
+    "capitalTotalLoot": 366769,
+    "raidsCompleted": 30,
+    "totalAttacks": 287,
+    "enemyDistrictsDestroyed": 90,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -96,6 +96,14 @@
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 7972
+        },
+        {
+            "tag": "#GLUGPPY8Y",
+            "name": "SUBARUx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 6640
         },
         {
             "tag": "#GLU0CYUCY",
@@ -4048,18 +4056,52 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/V7DNf2Mo7SYjvx97E7C7XLPyAUWMp_lISZg_Ta1ArGc.png"
                 }
             },
-            "attackCount": 6,
+            "attackCount": 10,
             "districtCount": 3,
-            "districtsDestroyed": 2,
+            "districtsDestroyed": 3,
             "districts": [
                 {
                     "id": 70000000,
                     "name": "Capital Peak",
                     "districtHallLevel": 3,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 4,
+                    "totalLooted": 4690,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GLUGPPY8Y",
+                                "name": "SUBARUx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GLUGPPY8Y",
+                                "name": "SUBARUx99N"
+                            },
+                            "destructionPercent": 92,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GLUGPPY8Y",
+                                "name": "SUBARUx99N"
+                            },
+                            "destructionPercent": 74,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GLUGPPY8Y",
+                                "name": "SUBARUx99N"
+                            },
+                            "destructionPercent": 70,
+                            "stars": 1
+                        }
+                    ]
                 },
                 {
                     "id": 70000001,
@@ -4127,6 +4169,68 @@
                                 "name": "MESOPOTAMIAx99N"
                             },
                             "destructionPercent": 30,
+                            "stars": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "defender": {
+                "tag": "#GQVP88V0",
+                "name": "\u0639\u0643\u0627\u0631\u0634",
+                "level": 7,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/eMKmOkyEuhSqy4Xx96il4YoqmN8bnn5FqqvPmhXGvvc.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/eMKmOkyEuhSqy4Xx96il4YoqmN8bnn5FqqvPmhXGvvc.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/eMKmOkyEuhSqy4Xx96il4YoqmN8bnn5FqqvPmhXGvvc.png"
+                }
+            },
+            "attackCount": 2,
+            "districtCount": 3,
+            "districtsDestroyed": 0,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 3,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 52,
+                    "stars": 1,
+                    "attackCount": 2,
+                    "totalLooted": 1950,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GLUGPPY8Y",
+                                "name": "SUBARUx99N"
+                            },
+                            "destructionPercent": 52,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GLUGPPY8Y",
+                                "name": "SUBARUx99N"
+                            },
+                            "destructionPercent": 32,
                             "stars": 0
                         }
                     ]
