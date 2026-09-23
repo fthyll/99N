@@ -15,9 +15,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
         },
         "clanLevel": 2,
-        "attacks": 10,
-        "stars": 26,
-        "destructionPercentage": 87.0,
+        "attacks": 12,
+        "stars": 28,
+        "destructionPercentage": 95.5,
         "members": [
             {
                 "tag": "#GQRCUR98U",
@@ -130,6 +130,24 @@
                 "name": "HIMAWARI",
                 "townhallLevel": 16,
                 "mapPosition": 1,
+                "attacks": [
+                    {
+                        "attackerTag": "#9090VYJLJ",
+                        "defenderTag": "#2Y2CGCGG2",
+                        "stars": 2,
+                        "destructionPercentage": 58,
+                        "order": 19,
+                        "duration": 74
+                    },
+                    {
+                        "attackerTag": "#9090VYJLJ",
+                        "defenderTag": "#Y2UVYLYVP",
+                        "stars": 2,
+                        "destructionPercentage": 97,
+                        "order": 20,
+                        "duration": 129
+                    }
+                ],
                 "opponentAttacks": 0
             },
             {
@@ -255,14 +273,14 @@
                 "name": "DAVRONZODA",
                 "townhallLevel": 15,
                 "mapPosition": 2,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
-                    "attackerTag": "#LRL09G0QJ",
+                    "attackerTag": "#9090VYJLJ",
                     "defenderTag": "#Y2UVYLYVP",
                     "stars": 2,
-                    "destructionPercentage": 70,
-                    "order": 18,
-                    "duration": 100
+                    "destructionPercentage": 97,
+                    "order": 20,
+                    "duration": 129
                 }
             },
             {
@@ -462,7 +480,15 @@
                 "name": "\u0410\u0411\u0414\u0423",
                 "townhallLevel": 16,
                 "mapPosition": 1,
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#9090VYJLJ",
+                    "defenderTag": "#2Y2CGCGG2",
+                    "stars": 2,
+                    "destructionPercentage": 58,
+                    "order": 19,
+                    "duration": 74
+                }
             }
         ]
     }
