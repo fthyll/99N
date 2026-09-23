@@ -1,0 +1,179 @@
+{
+    "state": "inWar",
+    "teamSize": 10,
+    "attacksPerMember": 2,
+    "battleModifier": "none",
+    "preparationStartTime": "20260922T104625.000Z",
+    "startTime": "20260923T094625.000Z",
+    "endTime": "20260924T094625.000Z",
+    "clan": {
+        "tag": "#2J0YP2LQL",
+        "name": "99N",
+        "badgeUrls": {
+            "small": "https://api-assets.clashofclans.com/badges/70/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+            "large": "https://api-assets.clashofclans.com/badges/512/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+            "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
+        },
+        "clanLevel": 2,
+        "attacks": 0,
+        "stars": 0,
+        "destructionPercentage": 0.0,
+        "members": [
+            {
+                "tag": "#GQRCUR98U",
+                "name": "VICTORIAx99N",
+                "townhallLevel": 10,
+                "mapPosition": 3,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQJULVGV2",
+                "name": "HERMESx99N",
+                "townhallLevel": 10,
+                "mapPosition": 7,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQRLCCUYC",
+                "name": "DIORx99N",
+                "townhallLevel": 10,
+                "mapPosition": 8,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQCQRGRJU",
+                "name": "CEYx99N",
+                "townhallLevel": 10,
+                "mapPosition": 10,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#9090VYJLJ",
+                "name": "HIMAWARI",
+                "townhallLevel": 16,
+                "mapPosition": 1,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQCYYGRC0",
+                "name": "YSLx99N",
+                "townhallLevel": 10,
+                "mapPosition": 4,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GG0V0JUG2",
+                "name": "OBITx99N",
+                "townhallLevel": 10,
+                "mapPosition": 5,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GYLPLPVC2",
+                "name": "JOYx99N",
+                "townhallLevel": 10,
+                "mapPosition": 9,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GYYRQPPLQ",
+                "name": "MOYx99N",
+                "townhallLevel": 10,
+                "mapPosition": 6,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#LRL09G0QJ",
+                "name": "Ridoy",
+                "townhallLevel": 15,
+                "mapPosition": 2,
+                "opponentAttacks": 0
+            }
+        ]
+    },
+    "opponent": {
+        "tag": "#29G0G2GGL",
+        "name": "TJK CHAMPIONS",
+        "badgeUrls": {
+            "small": "https://api-assets.clashofclans.com/badges/70/FCW1g82ijpU9xukbX4fwPY5t4XwGHAppeaCTNmcnOZM.png",
+            "large": "https://api-assets.clashofclans.com/badges/512/FCW1g82ijpU9xukbX4fwPY5t4XwGHAppeaCTNmcnOZM.png",
+            "medium": "https://api-assets.clashofclans.com/badges/200/FCW1g82ijpU9xukbX4fwPY5t4XwGHAppeaCTNmcnOZM.png"
+        },
+        "clanLevel": 11,
+        "attacks": 0,
+        "stars": 0,
+        "destructionPercentage": 0.0,
+        "members": [
+            {
+                "tag": "#Y2UVYLYVP",
+                "name": "DAVRONZODA",
+                "townhallLevel": 15,
+                "mapPosition": 2,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#QRVV0CCVC",
+                "name": "\u0414\u043e\u043a.\u0423\u0437\u043e\u043a\u043e\u0432",
+                "townhallLevel": 10,
+                "mapPosition": 9,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#QU2QP0GGG",
+                "name": "FS-0222",
+                "townhallLevel": 6,
+                "mapPosition": 10,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#R9QGGGL8P",
+                "name": "ItsYosss",
+                "townhallLevel": 10,
+                "mapPosition": 7,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#R9G0P8Y9C",
+                "name": "\u0410\u043b\u043c\u0430\u0437",
+                "townhallLevel": 10,
+                "mapPosition": 5,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#8G8P902Y8",
+                "name": "LOCKDOWN02",
+                "townhallLevel": 10,
+                "mapPosition": 4,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#R9PUU0Q8G",
+                "name": "miras",
+                "townhallLevel": 11,
+                "mapPosition": 3,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#R8UJCPY8Y",
+                "name": "\u0432\u0430\u043d\u0433\u04302",
+                "townhallLevel": 10,
+                "mapPosition": 6,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#QUP0PVQL0",
+                "name": "FS-02",
+                "townhallLevel": 10,
+                "mapPosition": 8,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#2Y2CGCGG2",
+                "name": "\u0410\u0411\u0414\u0423",
+                "townhallLevel": 16,
+                "mapPosition": 1,
+                "opponentAttacks": 0
+            }
+        ]
+    }
+}
