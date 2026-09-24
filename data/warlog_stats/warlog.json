@@ -1,6 +1,39 @@
 {
     "items": [
         {
+            "result": "win",
+            "endTime": "20260924T094626.000Z",
+            "teamSize": 10,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
+                },
+                "clanLevel": 2,
+                "attacks": 12,
+                "stars": 28,
+                "destructionPercentage": 95.5,
+                "expEarned": 156
+            },
+            "opponent": {
+                "tag": "#29G0G2GGL",
+                "name": "TJK CHAMPIONS",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/FCW1g82ijpU9xukbX4fwPY5t4XwGHAppeaCTNmcnOZM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/FCW1g82ijpU9xukbX4fwPY5t4XwGHAppeaCTNmcnOZM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/FCW1g82ijpU9xukbX4fwPY5t4XwGHAppeaCTNmcnOZM.png"
+                },
+                "clanLevel": 11,
+                "stars": 20,
+                "destructionPercentage": 73.8
+            }
+        },
+        {
             "result": "lose",
             "endTime": "20260921T073747.000Z",
             "teamSize": 10,
