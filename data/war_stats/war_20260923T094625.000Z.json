@@ -24,14 +24,14 @@
                 "name": "VICTORIAx99N",
                 "townhallLevel": 10,
                 "mapPosition": 3,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
-                    "attackerTag": "#QUP0PVQL0",
+                    "attackerTag": "#Y2UVYLYVP",
                     "defenderTag": "#GQRCUR98U",
-                    "stars": 2,
-                    "destructionPercentage": 70,
-                    "order": 3,
-                    "duration": 91
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 23,
+                    "duration": 59
                 }
             },
             {
@@ -90,7 +90,15 @@
                         "duration": 89
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#QRVV0CCVC",
+                    "defenderTag": "#GQRLCCUYC",
+                    "stars": 2,
+                    "destructionPercentage": 50,
+                    "order": 21,
+                    "duration": 49
+                }
             },
             {
                 "tag": "#GQCQRGRJU",
@@ -155,14 +163,14 @@
                 "name": "YSLx99N",
                 "townhallLevel": 10,
                 "mapPosition": 4,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
-                    "attackerTag": "#QUP0PVQL0",
+                    "attackerTag": "#Y2UVYLYVP",
                     "defenderTag": "#GQCYYGRC0",
-                    "stars": 1,
-                    "destructionPercentage": 60,
-                    "order": 4,
-                    "duration": 97
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 24,
+                    "duration": 60
                 }
             },
             {
@@ -203,7 +211,7 @@
                         "duration": 99
                     }
                 ],
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
                     "attackerTag": "#R8UJCPY8Y",
                     "defenderTag": "#GYLPLPVC2",
@@ -264,15 +272,33 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/FCW1g82ijpU9xukbX4fwPY5t4XwGHAppeaCTNmcnOZM.png"
         },
         "clanLevel": 11,
-        "attacks": 8,
-        "stars": 15,
-        "destructionPercentage": 60.0,
+        "attacks": 12,
+        "stars": 20,
+        "destructionPercentage": 72.0,
         "members": [
             {
                 "tag": "#Y2UVYLYVP",
                 "name": "DAVRONZODA",
                 "townhallLevel": 15,
                 "mapPosition": 2,
+                "attacks": [
+                    {
+                        "attackerTag": "#Y2UVYLYVP",
+                        "defenderTag": "#GQRCUR98U",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 23,
+                        "duration": 59
+                    },
+                    {
+                        "attackerTag": "#Y2UVYLYVP",
+                        "defenderTag": "#GQCYYGRC0",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 24,
+                        "duration": 60
+                    }
+                ],
                 "opponentAttacks": 2,
                 "bestOpponentAttack": {
                     "attackerTag": "#9090VYJLJ",
@@ -288,6 +314,24 @@
                 "name": "\u0414\u043e\u043a.\u0423\u0437\u043e\u043a\u043e\u0432",
                 "townhallLevel": 10,
                 "mapPosition": 9,
+                "attacks": [
+                    {
+                        "attackerTag": "#QRVV0CCVC",
+                        "defenderTag": "#GQRLCCUYC",
+                        "stars": 2,
+                        "destructionPercentage": 50,
+                        "order": 21,
+                        "duration": 49
+                    },
+                    {
+                        "attackerTag": "#QRVV0CCVC",
+                        "defenderTag": "#GYLPLPVC2",
+                        "stars": 1,
+                        "destructionPercentage": 63,
+                        "order": 22,
+                        "duration": 59
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GQCQRGRJU",
