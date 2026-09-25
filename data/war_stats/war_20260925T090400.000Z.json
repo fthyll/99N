@@ -158,7 +158,15 @@
                         "duration": 75
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#PRRUGYGVU",
+                    "defenderTag": "#GQCYYGRC0",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 17,
+                    "duration": 78
+                }
             },
             {
                 "tag": "#PU9C0L2VY",
@@ -205,7 +213,15 @@
                 "name": "OBITx99N",
                 "townhallLevel": 10,
                 "mapPosition": 6,
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#PRRUGYGVU",
+                    "defenderTag": "#GG0V0JUG2",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 18,
+                    "duration": 76
+                }
             },
             {
                 "tag": "#GYLPLPVC2",
@@ -240,9 +256,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/-_JSuDcthLfsUeBRFV9fbPIIAqY6pGSci2Rk4I2l3dw.png"
         },
         "clanLevel": 8,
-        "attacks": 6,
-        "stars": 8,
-        "destructionPercentage": 41.6,
+        "attacks": 8,
+        "stars": 14,
+        "destructionPercentage": 61.6,
         "members": [
             {
                 "tag": "#QRG9YVRLP",
@@ -375,6 +391,24 @@
                 "name": "sahel 10",
                 "townhallLevel": 14,
                 "mapPosition": 3,
+                "attacks": [
+                    {
+                        "attackerTag": "#PRRUGYGVU",
+                        "defenderTag": "#GQCYYGRC0",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 17,
+                        "duration": 78
+                    },
+                    {
+                        "attackerTag": "#PRRUGYGVU",
+                        "defenderTag": "#GG0V0JUG2",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 18,
+                        "duration": 76
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#9090VYJLJ",
