@@ -109,7 +109,15 @@
                         "duration": 92
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#LU82JLLG2",
+                    "defenderTag": "#9090VYJLJ",
+                    "stars": 1,
+                    "destructionPercentage": 62,
+                    "order": 12,
+                    "duration": 108
+                }
             },
             {
                 "tag": "#GQCYYGRC0",
@@ -158,7 +166,15 @@
                         "duration": 166
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#LU82JLLG2",
+                    "defenderTag": "#LVCJJ2QGC",
+                    "stars": 1,
+                    "destructionPercentage": 60,
+                    "order": 11,
+                    "duration": 111
+                }
             },
             {
                 "tag": "#GG0V0JUG2",
@@ -192,9 +208,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/-_JSuDcthLfsUeBRFV9fbPIIAqY6pGSci2Rk4I2l3dw.png"
         },
         "clanLevel": 8,
-        "attacks": 0,
-        "stars": 0,
-        "destructionPercentage": 0.0,
+        "attacks": 2,
+        "stars": 2,
+        "destructionPercentage": 12.2,
         "members": [
             {
                 "tag": "#QRG9YVRLP",
@@ -336,6 +352,24 @@
                 "name": "ss boos",
                 "townhallLevel": 16,
                 "mapPosition": 1,
+                "attacks": [
+                    {
+                        "attackerTag": "#LU82JLLG2",
+                        "defenderTag": "#LVCJJ2QGC",
+                        "stars": 1,
+                        "destructionPercentage": 60,
+                        "order": 11,
+                        "duration": 111
+                    },
+                    {
+                        "attackerTag": "#LU82JLLG2",
+                        "defenderTag": "#9090VYJLJ",
+                        "stars": 1,
+                        "destructionPercentage": 62,
+                        "order": 12,
+                        "duration": 108
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#9090VYJLJ",
