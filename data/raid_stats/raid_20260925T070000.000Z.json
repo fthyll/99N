@@ -2,13 +2,21 @@
     "state": "ongoing",
     "startTime": "20260925T070000.000Z",
     "endTime": "20260928T070000.000Z",
-    "capitalTotalLoot": 17056,
+    "capitalTotalLoot": 20432,
     "raidsCompleted": 1,
-    "totalAttacks": 12,
-    "enemyDistrictsDestroyed": 4,
+    "totalAttacks": 15,
+    "enemyDistrictsDestroyed": 5,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
+        {
+            "tag": "#GQJULVGV2",
+            "name": "HERMESx99N",
+            "attacks": 3,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 3376
+        },
         {
             "tag": "#9090VYJLJ",
             "name": "HIMAWARI",
@@ -160,9 +168,9 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/PbPZBW8Px3ztvyDywY2W2pLXMLk5ocEVOAFJIFol5Z8.png"
                 }
             },
-            "attackCount": 3,
+            "attackCount": 6,
             "districtCount": 4,
-            "districtsDestroyed": 1,
+            "districtsDestroyed": 2,
             "districts": [
                 {
                     "id": 70000000,
@@ -177,20 +185,46 @@
                     "id": 70000001,
                     "name": "Barbarian Camp",
                     "districtHallLevel": 2,
-                    "destructionPercent": 0,
+                    "destructionPercent": 36,
                     "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "attackCount": 1,
+                    "totalLooted": 1390,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GQJULVGV2",
+                                "name": "HERMESx99N"
+                            },
+                            "destructionPercent": 36,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000002,
                     "name": "Wizard Valley",
                     "districtHallLevel": 1,
-                    "destructionPercent": 37,
-                    "stars": 1,
-                    "attackCount": 1,
-                    "totalLooted": 1615,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 3601,
                     "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GQJULVGV2",
+                                "name": "HERMESx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GQJULVGV2",
+                                "name": "HERMESx99N"
+                            },
+                            "destructionPercent": 64,
+                            "stars": 2
+                        },
                         {
                             "attacker": {
                                 "tag": "#GG0PPPC9L",
