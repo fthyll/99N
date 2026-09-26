@@ -2,6 +2,39 @@
     "items": [
         {
             "result": "win",
+            "endTime": "20260926T090401.000Z",
+            "teamSize": 10,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/JfDa6Jpm1n8uYBIYf1w9hWP3LesHDZ9PP-8xeSU0m7w.png"
+                },
+                "clanLevel": 2,
+                "attacks": 13,
+                "stars": 28,
+                "destructionPercentage": 95.9,
+                "expEarned": 160
+            },
+            "opponent": {
+                "tag": "#2LGV2JGLR",
+                "name": "Clan of boss",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/-_JSuDcthLfsUeBRFV9fbPIIAqY6pGSci2Rk4I2l3dw.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/-_JSuDcthLfsUeBRFV9fbPIIAqY6pGSci2Rk4I2l3dw.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/-_JSuDcthLfsUeBRFV9fbPIIAqY6pGSci2Rk4I2l3dw.png"
+                },
+                "clanLevel": 8,
+                "stars": 14,
+                "destructionPercentage": 61.6
+            }
+        },
+        {
+            "result": "win",
             "endTime": "20260924T094626.000Z",
             "teamSize": 10,
             "attacksPerMember": 2,
