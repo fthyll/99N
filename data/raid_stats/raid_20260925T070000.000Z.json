@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20260925T070000.000Z",
     "endTime": "20260928T070000.000Z",
-    "capitalTotalLoot": 134056,
-    "raidsCompleted": 10,
-    "totalAttacks": 103,
-    "enemyDistrictsDestroyed": 32,
+    "capitalTotalLoot": 148689,
+    "raidsCompleted": 11,
+    "totalAttacks": 115,
+    "enemyDistrictsDestroyed": 36,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -44,10 +44,10 @@
         {
             "tag": "#GQJULVGV2",
             "name": "HERMESx99N",
-            "attacks": 3,
+            "attacks": 6,
             "attackLimit": 5,
             "bonusAttackLimit": 1,
-            "capitalResourcesLooted": 3376
+            "capitalResourcesLooted": 8694
         },
         {
             "tag": "#GQRLCCUYC",
@@ -98,6 +98,14 @@
             "capitalResourcesLooted": 8086
         },
         {
+            "tag": "#GRL2VC9YJ",
+            "name": "HILTONx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 5504
+        },
+        {
             "tag": "#GRL99YJ8J",
             "name": "BACCARATx99N",
             "attacks": 6,
@@ -146,12 +154,20 @@
             "capitalResourcesLooted": 9055
         },
         {
+            "tag": "#GYLPLPVC2",
+            "name": "JOYx99N",
+            "attacks": 1,
+            "attackLimit": 5,
+            "bonusAttackLimit": 0,
+            "capitalResourcesLooted": 1110
+        },
+        {
             "tag": "#GP8QPYUUQ",
             "name": "FLOBAMORAx99N",
-            "attacks": 4,
+            "attacks": 6,
             "attackLimit": 5,
             "bonusAttackLimit": 1,
-            "capitalResourcesLooted": 5191
+            "capitalResourcesLooted": 7892
         }
     ],
     "attackLog": [
@@ -1469,28 +1485,70 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/qOJthn3mPfRRTWAetzFCjkVB32fcRftJ3pnCyuuYGKo.png"
                 }
             },
-            "attackCount": 4,
+            "attackCount": 9,
             "districtCount": 3,
-            "districtsDestroyed": 1,
+            "districtsDestroyed": 3,
             "districts": [
                 {
                     "id": 70000000,
                     "name": "Capital Peak",
                     "districtHallLevel": 3,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4633,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GQJULVGV2",
+                                "name": "HERMESx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GQJULVGV2",
+                                "name": "HERMESx99N"
+                            },
+                            "destructionPercent": 58,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GYLPLPVC2",
+                                "name": "JOYx99N"
+                            },
+                            "destructionPercent": 41,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000001,
                     "name": "Barbarian Camp",
                     "districtHallLevel": 2,
-                    "destructionPercent": 38,
-                    "stars": 0,
-                    "attackCount": 1,
-                    "totalLooted": 1560,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4261,
                     "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GP8QPYUUQ",
+                                "name": "FLOBAMORAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GP8QPYUUQ",
+                                "name": "FLOBAMORAx99N"
+                            },
+                            "destructionPercent": 50,
+                            "stars": 1
+                        },
                         {
                             "attacker": {
                                 "tag": "#GP8QPYUUQ",
@@ -1533,6 +1591,121 @@
                             },
                             "destructionPercent": 30,
                             "stars": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "defender": {
+                "tag": "#U8G92LPL",
+                "name": "\u26a1\u26a1TITAN\u26a1\u26a1",
+                "level": 6,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/mo8b0OXse0jvHkA7pmRBLMp8t92TKzT7B7eV5uvBj2Y.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/mo8b0OXse0jvHkA7pmRBLMp8t92TKzT7B7eV5uvBj2Y.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/mo8b0OXse0jvHkA7pmRBLMp8t92TKzT7B7eV5uvBj2Y.png"
+                }
+            },
+            "attackCount": 7,
+            "districtCount": 4,
+            "districtsDestroyed": 2,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 4,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 30,
+                    "stars": 0,
+                    "attackCount": 2,
+                    "totalLooted": 970,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRL2VC9YJ",
+                                "name": "HILTONx99N"
+                            },
+                            "destructionPercent": 30,
+                            "stars": 0
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRL2VC9YJ",
+                                "name": "HILTONx99N"
+                            },
+                            "destructionPercent": 17,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 3640,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRL2VC9YJ",
+                                "name": "HILTONx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRL2VC9YJ",
+                                "name": "HILTONx99N"
+                            },
+                            "destructionPercent": 40,
+                            "stars": 0
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRL2VC9YJ",
+                                "name": "HILTONx99N"
+                            },
+                            "destructionPercent": 18,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000003,
+                    "name": "Balloon Lagoon",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 2689,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRL2VC9YJ",
+                                "name": "HILTONx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GQJULVGV2",
+                                "name": "HERMESx99N"
+                            },
+                            "destructionPercent": 67,
+                            "stars": 2
                         }
                     ]
                 }
