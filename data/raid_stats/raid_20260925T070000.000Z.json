@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20260925T070000.000Z",
     "endTime": "20260928T070000.000Z",
-    "capitalTotalLoot": 356914,
-    "raidsCompleted": 25,
-    "totalAttacks": 276,
-    "enemyDistrictsDestroyed": 87,
+    "capitalTotalLoot": 361221,
+    "raidsCompleted": 26,
+    "totalAttacks": 279,
+    "enemyDistrictsDestroyed": 88,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -200,6 +200,14 @@
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 7616
+        },
+        {
+            "tag": "#LVCJJ2QGC",
+            "name": "Pikiii",
+            "attacks": 3,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 4307
         },
         {
             "tag": "#GG2PY22CR",
@@ -3918,9 +3926,9 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/pU_iNeMEsjQ0XgdODee-i2hMrSRWvkd0-_wlTdKZqAo.png"
                 }
             },
-            "attackCount": 5,
+            "attackCount": 8,
             "districtCount": 4,
-            "districtsDestroyed": 2,
+            "districtsDestroyed": 3,
             "districts": [
                 {
                     "id": 70000000,
@@ -3935,10 +3943,36 @@
                     "id": 70000001,
                     "name": "Barbarian Camp",
                     "districtHallLevel": 2,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4307,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#LVCJJ2QGC",
+                                "name": "Pikiii"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#LVCJJ2QGC",
+                                "name": "Pikiii"
+                            },
+                            "destructionPercent": 61,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#LVCJJ2QGC",
+                                "name": "Pikiii"
+                            },
+                            "destructionPercent": 42,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000002,
@@ -4017,27 +4051,127 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/SPvdZd-rc1SCMq7rjSJU6JEadb6jVHlevQNqqUEr-mo.png"
                 }
             },
-            "attackCount": 4,
+            "attackCount": 17,
             "districtCount": 4,
-            "districtsDestroyed": 1,
+            "districtsDestroyed": 4,
             "districts": [
                 {
                     "id": 70000000,
                     "name": "Capital Peak",
                     "districtHallLevel": 4,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 8,
+                    "totalLooted": 4733,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#R8L0Q2GQR",
+                                "name": "\u0627\u0631\u0645\u0627\u0646\u064a \u0647\u0644\u06a9"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#R8L0Q2GQR",
+                                "name": "\u0627\u0631\u0645\u0627\u0646\u064a \u0647\u0644\u06a9"
+                            },
+                            "destructionPercent": 93,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#R8L0Q2GQR",
+                                "name": "\u0627\u0631\u0645\u0627\u0646\u064a \u0647\u0644\u06a9"
+                            },
+                            "destructionPercent": 85,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#R8L0Q2GQR",
+                                "name": "\u0627\u0631\u0645\u0627\u0646\u064a \u0647\u0644\u06a9"
+                            },
+                            "destructionPercent": 78,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#R8L0Q2GQR",
+                                "name": "\u0627\u0631\u0645\u0627\u0646\u064a \u0647\u0644\u06a9"
+                            },
+                            "destructionPercent": 75,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#YRPY8GQ8G",
+                                "name": "KHAN SULTAN U/K"
+                            },
+                            "destructionPercent": 72,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#YRPY8GQ8G",
+                                "name": "KHAN SULTAN U/K"
+                            },
+                            "destructionPercent": 62,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#YRPY8GQ8G",
+                                "name": "KHAN SULTAN U/K"
+                            },
+                            "destructionPercent": 54,
+                            "stars": 1
+                        }
+                    ]
                 },
                 {
                     "id": 70000001,
                     "name": "Barbarian Camp",
                     "districtHallLevel": 2,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 4,
+                    "totalLooted": 4253,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#YRPY8GQ8G",
+                                "name": "KHAN SULTAN U/K"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#YRPY8GQ8G",
+                                "name": "KHAN SULTAN U/K"
+                            },
+                            "destructionPercent": 73,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#YRPY8GQ8G",
+                                "name": "KHAN SULTAN U/K"
+                            },
+                            "destructionPercent": 50,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#P8ULGLP2J",
+                                "name": "KING"
+                            },
+                            "destructionPercent": 23,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000002,
@@ -4078,11 +4212,19 @@
                     "id": 70000003,
                     "name": "Balloon Lagoon",
                     "districtHallLevel": 1,
-                    "destructionPercent": 78,
-                    "stars": 2,
-                    "attackCount": 1,
-                    "totalLooted": 1995,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 2665,
                     "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#P8ULGLP2J",
+                                "name": "KING"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
                         {
                             "attacker": {
                                 "tag": "#P8ULGLP2J",
