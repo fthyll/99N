@@ -24,7 +24,15 @@
                 "name": "CHANELx99N",
                 "townhallLevel": 8,
                 "mapPosition": 10,
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#R00PJYYRJ",
+                    "defenderTag": "#GP0L8CJ2U",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 16,
+                    "duration": 71
+                }
             },
             {
                 "tag": "#GQRCUR98U",
@@ -82,7 +90,15 @@
                         "duration": 64
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#R288QCLG8",
+                    "defenderTag": "#GQJULVGV2",
+                    "stars": 1,
+                    "destructionPercentage": 64,
+                    "order": 17,
+                    "duration": 92
+                }
             },
             {
                 "tag": "#GQRLCCUYC",
@@ -151,7 +167,15 @@
                         "duration": 93
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#R00PJYYRJ",
+                    "defenderTag": "#GG0PPPC9L",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 15,
+                    "duration": 74
+                }
             },
             {
                 "tag": "#GYLPLPVC2",
@@ -209,7 +233,15 @@
                         "duration": 66
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#R288QCLG8",
+                    "defenderTag": "#GYYRQPPLQ",
+                    "stars": 1,
+                    "destructionPercentage": 72,
+                    "order": 18,
+                    "duration": 92
+                }
             }
         ]
     },
@@ -222,15 +254,33 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/aIqH8JUUM0lDBRDcnw0wHe1YqOLvaFWVXPhlo7Q6R_Y.png"
         },
         "clanLevel": 1,
-        "attacks": 4,
-        "stars": 5,
-        "destructionPercentage": 30.8,
+        "attacks": 8,
+        "stars": 13,
+        "destructionPercentage": 64.4,
         "members": [
             {
                 "tag": "#R00PJYYRJ",
                 "name": "\u0627\u0628\u0648 \u0646\u062a\u0627\u0644\u064a",
                 "townhallLevel": 10,
                 "mapPosition": 9,
+                "attacks": [
+                    {
+                        "attackerTag": "#R00PJYYRJ",
+                        "defenderTag": "#GG0PPPC9L",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 15,
+                        "duration": 74
+                    },
+                    {
+                        "attackerTag": "#R00PJYYRJ",
+                        "defenderTag": "#GP0L8CJ2U",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 16,
+                        "duration": 71
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GG0PPPC9L",
@@ -261,6 +311,24 @@
                 "name": "\u0627\u0643\u0631\u0645",
                 "townhallLevel": 10,
                 "mapPosition": 5,
+                "attacks": [
+                    {
+                        "attackerTag": "#R288QCLG8",
+                        "defenderTag": "#GQJULVGV2",
+                        "stars": 1,
+                        "destructionPercentage": 64,
+                        "order": 17,
+                        "duration": 92
+                    },
+                    {
+                        "attackerTag": "#R288QCLG8",
+                        "defenderTag": "#GYYRQPPLQ",
+                        "stars": 1,
+                        "destructionPercentage": 72,
+                        "order": 18,
+                        "duration": 92
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GYYRQPPLQ",
