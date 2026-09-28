@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20260925T070000.000Z",
     "endTime": "20260928T070000.000Z",
-    "capitalTotalLoot": 370501,
-    "raidsCompleted": 28,
-    "totalAttacks": 285,
-    "enemyDistrictsDestroyed": 89,
+    "capitalTotalLoot": 386312,
+    "raidsCompleted": 29,
+    "totalAttacks": 294,
+    "enemyDistrictsDestroyed": 93,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -202,12 +202,20 @@
             "capitalResourcesLooted": 7616
         },
         {
-            "tag": "#LVCJJ2QGC",
-            "name": "Pikiii",
-            "attacks": 3,
+            "tag": "#PU9C0L2VY",
+            "name": "R I P C U R L",
+            "attacks": 6,
             "attackLimit": 5,
             "bonusAttackLimit": 1,
-            "capitalResourcesLooted": 4307
+            "capitalResourcesLooted": 10037
+        },
+        {
+            "tag": "#LVCJJ2QGC",
+            "name": "Pikiii",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 10081
         },
         {
             "tag": "#GG2PY22CR",
@@ -4091,7 +4099,156 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/lpeshD-GRSeRucLn61pXaNfh98N61HuT0HPHpPmGdEA.png"
                 }
             },
-            "attackCount": 2,
+            "attackCount": 11,
+            "districtCount": 4,
+            "districtsDestroyed": 4,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 4,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 5647,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#PU9C0L2VY",
+                                "name": "R I P C U R L"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#PU9C0L2VY",
+                                "name": "R I P C U R L"
+                            },
+                            "destructionPercent": 91,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#PU9C0L2VY",
+                                "name": "R I P C U R L"
+                            },
+                            "destructionPercent": 59,
+                            "stars": 1
+                        }
+                    ]
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4390,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#PU9C0L2VY",
+                                "name": "R I P C U R L"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#PU9C0L2VY",
+                                "name": "R I P C U R L"
+                            },
+                            "destructionPercent": 84,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#PU9C0L2VY",
+                                "name": "R I P C U R L"
+                            },
+                            "destructionPercent": 23,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4878,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#LVCJJ2QGC",
+                                "name": "Pikiii"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#88GLRP9LQ",
+                                "name": "NOBIT"
+                            },
+                            "destructionPercent": 73,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#88GLRP9LQ",
+                                "name": "NOBIT"
+                            },
+                            "destructionPercent": 28,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000003,
+                    "name": "Balloon Lagoon",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 4386,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#LVCJJ2QGC",
+                                "name": "Pikiii"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#LVCJJ2QGC",
+                                "name": "Pikiii"
+                            },
+                            "destructionPercent": 66,
+                            "stars": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "defender": {
+                "tag": "#2YUP9RU99",
+                "name": "IND.RI 3",
+                "level": 12,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/JnJorCK6Ola4Z9uZ-k9dyln33Sw6zcY1eHfGuVb7AFA.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/JnJorCK6Ola4Z9uZ-k9dyln33Sw6zcY1eHfGuVb7AFA.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/JnJorCK6Ola4Z9uZ-k9dyln33Sw6zcY1eHfGuVb7AFA.png"
+                }
+            },
+            "attackCount": 0,
             "districtCount": 4,
             "districtsDestroyed": 0,
             "districts": [
@@ -4117,28 +4274,10 @@
                     "id": 70000002,
                     "name": "Wizard Valley",
                     "districtHallLevel": 2,
-                    "destructionPercent": 73,
-                    "stars": 2,
-                    "attackCount": 2,
-                    "totalLooted": 3490,
-                    "attacks": [
-                        {
-                            "attacker": {
-                                "tag": "#88GLRP9LQ",
-                                "name": "NOBIT"
-                            },
-                            "destructionPercent": 73,
-                            "stars": 2
-                        },
-                        {
-                            "attacker": {
-                                "tag": "#88GLRP9LQ",
-                                "name": "NOBIT"
-                            },
-                            "destructionPercent": 28,
-                            "stars": 0
-                        }
-                    ]
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
                 },
                 {
                     "id": 70000003,
