@@ -167,7 +167,7 @@
                         "duration": 93
                     }
                 ],
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
                     "attackerTag": "#R00PJYYRJ",
                     "defenderTag": "#GG0PPPC9L",
@@ -254,7 +254,7 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/aIqH8JUUM0lDBRDcnw0wHe1YqOLvaFWVXPhlo7Q6R_Y.png"
         },
         "clanLevel": 1,
-        "attacks": 8,
+        "attacks": 9,
         "stars": 13,
         "destructionPercentage": 64.4,
         "members": [
@@ -359,6 +359,16 @@
                 "name": "\u00d6mer",
                 "townhallLevel": 8,
                 "mapPosition": 10,
+                "attacks": [
+                    {
+                        "attackerTag": "#R8LLY9V09",
+                        "defenderTag": "#GG0PPPC9L",
+                        "stars": 2,
+                        "destructionPercentage": 94,
+                        "order": 19,
+                        "duration": 139
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GG0PPPC9L",
