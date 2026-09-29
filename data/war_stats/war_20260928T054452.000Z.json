@@ -15,7 +15,7 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/0oDRqYgQHH76QThhBAl9DaVFqpZPy-r62RnRGn4Fv30.png"
         },
         "clanLevel": 3,
-        "attacks": 10,
+        "attacks": 11,
         "stars": 30,
         "destructionPercentage": 100.0,
         "members": [
@@ -120,6 +120,16 @@
                 "name": "CEYx99N",
                 "townhallLevel": 10,
                 "mapPosition": 8,
+                "attacks": [
+                    {
+                        "attackerTag": "#GQCQRGRJU",
+                        "defenderTag": "#GU8LJCR0C",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 20,
+                        "duration": 79
+                    }
+                ],
                 "opponentAttacks": 0
             },
             {
@@ -384,7 +394,7 @@
                 "name": "\u0645\u0639\u062a\u0635\u0645",
                 "townhallLevel": 10,
                 "mapPosition": 8,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
                     "attackerTag": "#GQRCUR98U",
                     "defenderTag": "#GU8LJCR0C",
