@@ -115,7 +115,15 @@
                         "duration": 92
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#R2J9G9CGG",
+                    "defenderTag": "#GQRLCCUYC",
+                    "stars": 1,
+                    "destructionPercentage": 71,
+                    "order": 25,
+                    "duration": 140
+                }
             },
             {
                 "tag": "#GQCQRGRJU",
@@ -261,7 +269,15 @@
                         "duration": 86
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#R2J9G9CGG",
+                    "defenderTag": "#GYYRQPPLQ",
+                    "stars": 0,
+                    "destructionPercentage": 21,
+                    "order": 26,
+                    "duration": 180
+                }
             }
         ]
     },
@@ -274,9 +290,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/-PtVLehMsnHzPr--mceVoDVhwe7Nfc7nDlrn4FVQR9U.png"
         },
         "clanLevel": 3,
-        "attacks": 11,
-        "stars": 13,
-        "destructionPercentage": 55.8,
+        "attacks": 13,
+        "stars": 14,
+        "destructionPercentage": 65.0,
         "members": [
             {
                 "tag": "#GLRRRQLUJ",
@@ -412,6 +428,24 @@
                 "name": "blastt",
                 "townhallLevel": 10,
                 "mapPosition": 9,
+                "attacks": [
+                    {
+                        "attackerTag": "#R2J9G9CGG",
+                        "defenderTag": "#GQRLCCUYC",
+                        "stars": 1,
+                        "destructionPercentage": 71,
+                        "order": 25,
+                        "duration": 140
+                    },
+                    {
+                        "attackerTag": "#R2J9G9CGG",
+                        "defenderTag": "#GYYRQPPLQ",
+                        "stars": 0,
+                        "destructionPercentage": 21,
+                        "order": 26,
+                        "duration": 180
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GQCQRGRJU",
