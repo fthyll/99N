@@ -155,14 +155,14 @@
                 "name": "YSLx99N",
                 "townhallLevel": 10,
                 "mapPosition": 4,
-                "opponentAttacks": 1,
+                "opponentAttacks": 2,
                 "bestOpponentAttack": {
-                    "attackerTag": "#GUP9V2Y0U",
+                    "attackerTag": "#R8CQUP88V",
                     "defenderTag": "#GQCYYGRC0",
-                    "stars": 0,
-                    "destructionPercentage": 22,
-                    "order": 18,
-                    "duration": 31
+                    "stars": 1,
+                    "destructionPercentage": 63,
+                    "order": 24,
+                    "duration": 88
                 }
             },
             {
@@ -274,9 +274,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/-PtVLehMsnHzPr--mceVoDVhwe7Nfc7nDlrn4FVQR9U.png"
         },
         "clanLevel": 3,
-        "attacks": 10,
-        "stars": 12,
-        "destructionPercentage": 51.7,
+        "attacks": 11,
+        "stars": 13,
+        "destructionPercentage": 55.8,
         "members": [
             {
                 "tag": "#GLRRRQLUJ",
@@ -435,6 +435,14 @@
                         "destructionPercentage": 90,
                         "order": 14,
                         "duration": 120
+                    },
+                    {
+                        "attackerTag": "#R8CQUP88V",
+                        "defenderTag": "#GQCYYGRC0",
+                        "stars": 1,
+                        "destructionPercentage": 63,
+                        "order": 24,
+                        "duration": 88
                     }
                 ],
                 "opponentAttacks": 3,
