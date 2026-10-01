@@ -3,6 +3,7 @@
  * Orchestrates the data loading flow, global event listeners, and view switching.
  */
 import { roleWeight, parseCoCDate, esc } from './constants.js';
+import { mergeWarLog } from './warmerge.js';
 import { 
     fetchClanData, 
     fetchMembersIndex, 
@@ -288,19 +289,11 @@ async function init() {
         clanMeta = meta;
         initFreshness(meta);
 
-        // Warlog = last ~50 finished wars with results but no per-player data.
-        // Merge as summary-only pseudo-wars; skip any already covered by a
-        // real currentwar snapshot (same endTime), which is richer.
-        const realEnds = new Set(fullWarHistory.map(w => w.endTime));
-        warLogHistory = (warlog?.items || [])
-            .filter(it => !realEnds.has(it.endTime))
-            .map(it => ({
-                ...it,
-                state: 'warEnded',
-                startTime: it.startTime || it.endTime,  // API gives only endTime
-                summaryOnly: true,
-                filename: 'warlog_' + it.endTime,
-            }));
+        // Warlog = last ~50 finished wars with the authoritative result but no
+        // per-player data. A snapshot frozen mid-war is promoted in place from
+        // its warlog entry (same war, endTime a second or two apart), which
+        // keeps the roster and finally settles the score.
+        warLogHistory = mergeWarLog(fullWarHistory, warlog?.items);
         fullWarHistory = [...fullWarHistory, ...warLogHistory];
         filterWarHistory();
         // Clan/KPI pass ran before these arrived — repaint members & KPIs.
