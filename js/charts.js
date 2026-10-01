@@ -3,6 +3,7 @@
  * Handles all MTD statistical aggregations and Chart.js rendering.
  */
 import { parseCoCDate, esc } from './constants.js';
+import { resolveStatsRange } from './statsrange.js';
 
 // Resolve theme tokens (css/style.css) at draw time so charts flip with
 // day/night. Triplet vars need rgb(); --ink etc. are ready-made colors.
@@ -26,43 +27,23 @@ let efficiencyChart = null;
 export function renderCharts(warHistory, range = 'month') {
     if (!warHistory || warHistory.length === 0) return;
 
-    // Undecided snapshots have partial star counts; averaging them into a
-    // trend line reports an unfinished war as a low-scoring one.
-    const decidedHistory = warHistory.filter(w => w.state === 'warEnded');
+    // An empty calendar range falls back to the nearest range that has data,
+    // and reports it, so three blank panels never read as a broken tab.
+    const { wars: filteredHistory, label } = resolveStatsRange(warHistory, range);
+    paintStatsRangeNote(label);
 
-    // Filter history based on range
-    const filteredHistory = filterHistoryByRange(decidedHistory, range);
-    
     renderStarsTrend(filteredHistory);
     renderTopPerformers(filteredHistory);
     renderEfficiencyChart(filteredHistory);
 }
 
-/**
- * Filter utility for the Stats time-range dropdown.
- */
-function filterHistoryByRange(warHistory, range) {
-    const now = new Date();
-    
-    if (range === 'month') {
-        const currentMonthStr = now.toISOString().substring(0, 4) + now.toISOString().substring(5, 7);
-        return warHistory.filter(w => w.startTime.substring(0, 6) === currentMonthStr);
-    }
-    
-    if (range === 'week') {
-        const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        return warHistory.filter(w => parseCoCDate(w.startTime) >= oneWeekAgo);
-    }
-    
-    if (range === 'prev') {
-        // Return only the most recently finished war
-        const finished = warHistory
-            .filter(w => parseCoCDate(w.endTime) < now)
-            .sort((a, b) => b.startTime.localeCompare(a.startTime));
-        return finished.slice(0, 1);
-    }
-    
-    return warHistory;
+// The note doubles as the empty state: when nothing resolves at all it is the
+// only thing in the three panels, so it has to explain rather than sit silent.
+function paintStatsRangeNote(label) {
+    const note = document.getElementById('statsRangeNote');
+    if (!note) return;
+    note.textContent = label;
+    note.classList.toggle('hidden-section', !/no wars in/i.test(label));
 }
 
 function renderStarsTrend(warHistory) {
