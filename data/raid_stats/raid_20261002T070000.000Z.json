@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20261002T070000.000Z",
     "endTime": "20261005T070000.000Z",
-    "capitalTotalLoot": 85550,
-    "raidsCompleted": 4,
-    "totalAttacks": 48,
-    "enemyDistrictsDestroyed": 18,
+    "capitalTotalLoot": 120557,
+    "raidsCompleted": 6,
+    "totalAttacks": 66,
+    "enemyDistrictsDestroyed": 25,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -26,12 +26,28 @@
             "capitalResourcesLooted": 11945
         },
         {
+            "tag": "#GP0L9P0VP",
+            "name": "BVLGARIx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 11931
+        },
+        {
             "tag": "#GQC2R8QCY",
             "name": "BUGGATIx99N",
             "attacks": 6,
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 9476
+        },
+        {
+            "tag": "#GG2PL2P9V",
+            "name": "CAPELLAx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 9134
         },
         {
             "tag": "#9090VYJLJ",
@@ -56,6 +72,14 @@
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 11699
+        },
+        {
+            "tag": "#GRR89LVYR",
+            "name": "CARTIERx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 13942
         },
         {
             "tag": "#GRR2RRPJ9",
@@ -666,28 +690,70 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/YM9o6BsRdE5jyJCfuOsIj6SsIvrszd70gQQV7JTzl6E.png"
                 }
             },
-            "attackCount": 6,
+            "attackCount": 11,
             "districtCount": 4,
-            "districtsDestroyed": 2,
+            "districtsDestroyed": 4,
             "districts": [
                 {
                     "id": 70000000,
                     "name": "Capital Peak",
                     "districtHallLevel": 4,
-                    "destructionPercent": 0,
-                    "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 5767,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GP0L9P0VP",
+                                "name": "BVLGARIx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GP0L9P0VP",
+                                "name": "BVLGARIx99N"
+                            },
+                            "destructionPercent": 58,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GP0L9P0VP",
+                                "name": "BVLGARIx99N"
+                            },
+                            "destructionPercent": 28,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000001,
                     "name": "Barbarian Camp",
                     "districtHallLevel": 2,
-                    "destructionPercent": 25,
-                    "stars": 0,
-                    "attackCount": 1,
-                    "totalLooted": 830,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4374,
                     "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GP0L9P0VP",
+                                "name": "BVLGARIx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GP0L9P0VP",
+                                "name": "BVLGARIx99N"
+                            },
+                            "destructionPercent": 73,
+                            "stars": 2
+                        },
                         {
                             "attacker": {
                                 "tag": "#GQC2R8QCY",
@@ -756,6 +822,228 @@
                                 "name": "BUGGATIx99N"
                             },
                             "destructionPercent": 59,
+                            "stars": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "defender": {
+                "tag": "#2QGR9LU8U",
+                "name": "Besties",
+                "level": 4,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/ZzcrK8MVxobcwaIWLJ55ynsP6g7EkfqyfuIq4dMMPo4.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/ZzcrK8MVxobcwaIWLJ55ynsP6g7EkfqyfuIq4dMMPo4.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/ZzcrK8MVxobcwaIWLJ55ynsP6g7EkfqyfuIq4dMMPo4.png"
+                }
+            },
+            "attackCount": 10,
+            "districtCount": 4,
+            "districtsDestroyed": 4,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 4,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 5650,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRR89LVYR",
+                                "name": "CARTIERx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRR89LVYR",
+                                "name": "CARTIERx99N"
+                            },
+                            "destructionPercent": 17,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4284,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRR89LVYR",
+                                "name": "CARTIERx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG2PL2P9V",
+                                "name": "CAPELLAx99N"
+                            },
+                            "destructionPercent": 69,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG2PL2P9V",
+                                "name": "CAPELLAx99N"
+                            },
+                            "destructionPercent": 44,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4880,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GG2PL2P9V",
+                                "name": "CAPELLAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG2PL2P9V",
+                                "name": "CAPELLAx99N"
+                            },
+                            "destructionPercent": 65,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GG2PL2P9V",
+                                "name": "CAPELLAx99N"
+                            },
+                            "destructionPercent": 32,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000003,
+                    "name": "Balloon Lagoon",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 4464,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GG2PL2P9V",
+                                "name": "CAPELLAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GP0L9P0VP",
+                                "name": "BVLGARIx99N"
+                            },
+                            "destructionPercent": 56,
+                            "stars": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "defender": {
+                "tag": "#2QYLG28LP",
+                "name": "\u0645\u0627\u0631\u0634\u0627\u06447",
+                "level": 6,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/ceJ-deWPfxSKgK_HPyntz6mhSqiPhNPUfyb6Qcih3LA.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/ceJ-deWPfxSKgK_HPyntz6mhSqiPhNPUfyb6Qcih3LA.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/ceJ-deWPfxSKgK_HPyntz6mhSqiPhNPUfyb6Qcih3LA.png"
+                }
+            },
+            "attackCount": 3,
+            "districtCount": 4,
+            "districtsDestroyed": 1,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 4,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 40,
+                    "stars": 0,
+                    "attackCount": 1,
+                    "totalLooted": 1945,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRR89LVYR",
+                                "name": "CARTIERx99N"
+                            },
+                            "destructionPercent": 40,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000003,
+                    "name": "Balloon Lagoon",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 4473,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GRR89LVYR",
+                                "name": "CARTIERx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GRR89LVYR",
+                                "name": "CARTIERx99N"
+                            },
+                            "destructionPercent": 61,
                             "stars": 1
                         }
                     ]
