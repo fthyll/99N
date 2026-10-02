@@ -1,0 +1,270 @@
+{
+    "state": "ongoing",
+    "startTime": "20261002T070000.000Z",
+    "endTime": "20261005T070000.000Z",
+    "capitalTotalLoot": 26216,
+    "raidsCompleted": 1,
+    "totalAttacks": 14,
+    "enemyDistrictsDestroyed": 5,
+    "offensiveReward": 0,
+    "defensiveReward": 0,
+    "members": [
+        {
+            "tag": "#G0V8LUY98",
+            "name": "AQUAx99N",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 11026
+        },
+        {
+            "tag": "#9090VYJLJ",
+            "name": "HIMAWARI",
+            "attacks": 6,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 11400
+        },
+        {
+            "tag": "#GJPQ0QYYL",
+            "name": "ATHENAx99N",
+            "attacks": 2,
+            "attackLimit": 5,
+            "bonusAttackLimit": 0,
+            "capitalResourcesLooted": 3790
+        }
+    ],
+    "attackLog": [
+        {
+            "defender": {
+                "tag": "#2LQQLV988",
+                "name": "God Squad",
+                "level": 4,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/LW3JPtwdFYRbGoSUMJFnJJqAWCAXlTtvnYWMc_93ask.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/LW3JPtwdFYRbGoSUMJFnJJqAWCAXlTtvnYWMc_93ask.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/LW3JPtwdFYRbGoSUMJFnJJqAWCAXlTtvnYWMc_93ask.png"
+                }
+            },
+            "attackCount": 10,
+            "districtCount": 4,
+            "districtsDestroyed": 4,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 4,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 5826,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#G0V8LUY98",
+                                "name": "AQUAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#G0V8LUY98",
+                                "name": "AQUAx99N"
+                            },
+                            "destructionPercent": 93,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#G0V8LUY98",
+                                "name": "AQUAx99N"
+                            },
+                            "destructionPercent": 38,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 4517,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#G0V8LUY98",
+                                "name": "AQUAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 69,
+                            "stars": 1
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 38,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 3794,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 37,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000003,
+                    "name": "Balloon Lagoon",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 4281,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#9090VYJLJ",
+                                "name": "HIMAWARI"
+                            },
+                            "destructionPercent": 40,
+                            "stars": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "defender": {
+                "tag": "#2LJQY8JYV",
+                "name": "Pepsi United",
+                "level": 4,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/H6oMVCKUKzhsjrkQFD14enl9xQmEuw1TlBtk5R5K82c.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/H6oMVCKUKzhsjrkQFD14enl9xQmEuw1TlBtk5R5K82c.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/H6oMVCKUKzhsjrkQFD14enl9xQmEuw1TlBtk5R5K82c.png"
+                }
+            },
+            "attackCount": 4,
+            "districtCount": 4,
+            "districtsDestroyed": 1,
+            "districts": [
+                {
+                    "id": 70000000,
+                    "name": "Capital Peak",
+                    "districtHallLevel": 4,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000001,
+                    "name": "Barbarian Camp",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 0,
+                    "stars": 0,
+                    "attackCount": 0,
+                    "totalLooted": 0
+                },
+                {
+                    "id": 70000002,
+                    "name": "Wizard Valley",
+                    "districtHallLevel": 2,
+                    "destructionPercent": 83,
+                    "stars": 2,
+                    "attackCount": 2,
+                    "totalLooted": 3790,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 83,
+                            "stars": 2
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#GJPQ0QYYL",
+                                "name": "ATHENAx99N"
+                            },
+                            "destructionPercent": 42,
+                            "stars": 0
+                        }
+                    ]
+                },
+                {
+                    "id": 70000003,
+                    "name": "Balloon Lagoon",
+                    "districtHallLevel": 1,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 2,
+                    "totalLooted": 4008,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#G0V8LUY98",
+                                "name": "AQUAx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
+                        {
+                            "attacker": {
+                                "tag": "#G0V8LUY98",
+                                "name": "AQUAx99N"
+                            },
+                            "destructionPercent": 75,
+                            "stars": 2
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "defenseLog": []
+}
