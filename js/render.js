@@ -588,6 +588,12 @@ export function renderAbout(clanData, meta = null) {
     const container = document.getElementById('aboutContent'); if (!container || !clanData) return;
     const labelsHtml = (clanData.labels || []).map(l => `<div class="flex items-center gap-1.5 bg-card px-2 py-1 rounded border border-gray-800"><img src="${esc(l.iconUrls.small)}" class="w-3.5 h-3.5"><span class="text-[8px] md:text-[9px] font-bold text-gray-400 uppercase">${esc(l.name)}</span></div>`).join('');
     container.innerHTML = `<div class="panel p-4 md:p-6 space-y-6 md:space-y-8">
+        <div class="flex items-center gap-3">
+            <h2 class="display text-base md:text-lg font-semibold uppercase">Overview</h2>
+            <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            </button>
+        </div>
         <div class="bg-inset p-4 md:p-6 rounded-xl border border-gray-800">
             <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
                 <div class="flex-1 space-y-4 w-full">

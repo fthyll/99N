@@ -180,6 +180,7 @@ node js/warstate.test.mjs       # only warEnded wars get a Victory/Loss/Draw lab
 node js/cwl.test.mjs            # league table, out-of-season vs failed-lookup wording
 node js/chartdata.test.mjs      # chart text twins are labelled, sr-only, and actually filled
 node js/refresh.test.mjs        # what a refresh reports: changed, unchanged, no stamp, failure
+node js/syncbtn.test.mjs        # every tab in the nav has a working refresh button
 node js/importsmoke.test.mjs    # all modules parse without a DOM
 node js/notifier.test.mjs       # embed shapes + state transitions
 python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer
@@ -415,6 +416,13 @@ already showing and reports one of four outcomes in the freshness chip:
 | same stamp | *No change — the last scraper commit was Nh ago. Nothing on this page can update until one lands.* |
 | no heartbeat | *No sync heartbeat found, so there is nothing to compare against.* |
 | load threw | *Refresh failed to load — the committed data could not be read.* |
+
+The buttons themselves were originally on three of the five tabs, so landing on
+Overview — the default view — showed nothing to press. All five now carry one, and
+`js/syncbtn.test.mjs` holds that as an invariant: it reads the tab list out of the
+nav and fails if any tab lacks a button, so a sixth tab cannot quietly reintroduce
+the hole. Overview's button lives inside the `renderAbout` template, since that
+section is rendered from JS rather than written into `index.html`.
 
 The heartbeat stamp is the honest signal: the workflows write it only when real
 data changed, so it cannot advance without a commit. The first load is not
