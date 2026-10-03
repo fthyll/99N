@@ -1,5 +1,5 @@
 {
-    "fetchedAt": "2026-10-02T15:34:39.297738Z",
+    "fetchedAt": "2026-10-03T11:39:50.236897Z",
     "goldpass": {
         "startTime": "20261001T080000.000Z",
         "endTime": "20261101T080000.000Z"
@@ -19,5 +19,204 @@
             "name": "Silver League II"
         }
     },
-    "cwl": null
+    "cwl": {
+        "state": "inWar",
+        "season": "2026-10-02",
+        "standings": [
+            {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "clanLevel": 3,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/0oDRqYgQHH76QThhBAl9DaVFqpZPy-r62RnRGn4Fv30.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/0oDRqYgQHH76QThhBAl9DaVFqpZPy-r62RnRGn4Fv30.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/0oDRqYgQHH76QThhBAl9DaVFqpZPy-r62RnRGn4Fv30.png"
+                },
+                "townHallLevels": [
+                    16,
+                    15,
+                    13,
+                    10,
+                    9,
+                    8
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 1
+            },
+            {
+                "tag": "#G2ULLUC0",
+                "name": "BD Dohar Sparta",
+                "clanLevel": 15,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/UktFdWi_GgTHpbxPjrExeeBIgQ0qNznOfJiAdybr9oE.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/UktFdWi_GgTHpbxPjrExeeBIgQ0qNznOfJiAdybr9oE.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/UktFdWi_GgTHpbxPjrExeeBIgQ0qNznOfJiAdybr9oE.png"
+                },
+                "townHallLevels": [
+                    16,
+                    15,
+                    14,
+                    13,
+                    11,
+                    9,
+                    8
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 2
+            },
+            {
+                "tag": "#2CYPQUCGR",
+                "name": "HeardLess Team",
+                "clanLevel": 6,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/9Zd7pOVtQ-iXrdKbW5THXl-em1SdT-JnVgIY91JgEUo.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/9Zd7pOVtQ-iXrdKbW5THXl-em1SdT-JnVgIY91JgEUo.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/9Zd7pOVtQ-iXrdKbW5THXl-em1SdT-JnVgIY91JgEUo.png"
+                },
+                "townHallLevels": [
+                    18,
+                    16,
+                    13,
+                    12,
+                    11,
+                    10,
+                    9
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 3
+            },
+            {
+                "tag": "#2R00YY9YL",
+                "name": "K U R D\u2122",
+                "clanLevel": 8,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/-PmRoQvNrUJi12yBgva4cUK_WwSdXgWUTAFcEadQ69Q.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/-PmRoQvNrUJi12yBgva4cUK_WwSdXgWUTAFcEadQ69Q.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/-PmRoQvNrUJi12yBgva4cUK_WwSdXgWUTAFcEadQ69Q.png"
+                },
+                "townHallLevels": [
+                    17,
+                    15,
+                    13,
+                    12,
+                    11,
+                    10,
+                    9
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 4
+            },
+            {
+                "tag": "#2CQJVQ2RV",
+                "name": "TAMIL PASAGA",
+                "clanLevel": 9,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/rsYPIpl-rXatiHJ7JP0QZGajvFhnL7U_Tv_1oyAlr9I.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/rsYPIpl-rXatiHJ7JP0QZGajvFhnL7U_Tv_1oyAlr9I.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/rsYPIpl-rXatiHJ7JP0QZGajvFhnL7U_Tv_1oyAlr9I.png"
+                },
+                "townHallLevels": [
+                    18,
+                    16,
+                    15,
+                    14,
+                    13,
+                    12,
+                    6,
+                    4
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 5
+            },
+            {
+                "tag": "#2U80JGYL0",
+                "name": "TheRussianMafia",
+                "clanLevel": 4,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/pNUyYJxEpP0IhjJRMoL5ymTASVaLs2baWznfTi_zm4E.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/pNUyYJxEpP0IhjJRMoL5ymTASVaLs2baWznfTi_zm4E.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/pNUyYJxEpP0IhjJRMoL5ymTASVaLs2baWznfTi_zm4E.png"
+                },
+                "townHallLevels": [
+                    15,
+                    14,
+                    13,
+                    12,
+                    10,
+                    9,
+                    8,
+                    7,
+                    6
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 6
+            },
+            {
+                "tag": "#2RCC80YRP",
+                "name": "\u306e\u3065\u3082",
+                "clanLevel": 5,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/YM9o6BsRdE5jyJCfuOsIj6SsIvrszd70gQQV7JTzl6E.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/YM9o6BsRdE5jyJCfuOsIj6SsIvrszd70gQQV7JTzl6E.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/YM9o6BsRdE5jyJCfuOsIj6SsIvrszd70gQQV7JTzl6E.png"
+                },
+                "townHallLevels": [
+                    18,
+                    16,
+                    15,
+                    13,
+                    12,
+                    11,
+                    10,
+                    9,
+                    8,
+                    7
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 7
+            },
+            {
+                "tag": "#2CCVJV9Y2",
+                "name": "\u5e7f\u5dde",
+                "clanLevel": 5,
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/ks-Nd02q_KY40G4f_nOrkCAUf6TbMK3O440Ugq8ttAA.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/ks-Nd02q_KY40G4f_nOrkCAUf6TbMK3O440Ugq8ttAA.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/ks-Nd02q_KY40G4f_nOrkCAUf6TbMK3O440Ugq8ttAA.png"
+                },
+                "townHallLevels": [
+                    16,
+                    15,
+                    14,
+                    13
+                ],
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "stars": 0,
+                "position": 8
+            }
+        ]
+    }
 }
