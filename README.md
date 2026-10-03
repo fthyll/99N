@@ -139,6 +139,12 @@ Settings → Secrets and variables → Actions:
 - Live here: https://fthyll.github.io/99N/
 - `CNAME` (optional): put your own domain there and point DNS at GitHub Pages.
 
+Every workflow states its own token scope rather than inheriting the repo
+default: the four scrapers declare `contents: write` at the job level because
+they commit back, and `tests.yml` and `health.yml` declare `contents: read`.
+`tests.yml` matters most — it is the only workflow triggered by
+`pull_request`, so its scope is the one that would widen if the default changed.
+
 ### 4. Automation
 
 | Workflow | Schedule | What |

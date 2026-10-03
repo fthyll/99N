@@ -15,6 +15,12 @@ concurrency:
   group: tests-${{ github.ref }}
   cancel-in-progress: true
 
+# Read-only, stated rather than inherited. This is the only workflow that runs on
+# pull_request, so it is the one place where a wider default token would matter;
+# the scrapers each declare contents: write at the job level because they commit.
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
