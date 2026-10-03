@@ -6,7 +6,7 @@ Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on
 
 | Tab | What it shows | Data source |
 |---|---|---|
-| Overview | KPI strip + clan card, war/capital league, join requirements | latest member snapshot + indices |
+| Overview | KPI strip + clan card, war/capital league, join requirements, **CWL standings** | latest member snapshot + indices |
 | Members | Roster with donations, trophies, role filters, **any historical date** | daily snapshots |
 | Wars | War list + per-player attack/defense breakdown, win probability, cleanup needed | war snapshots |
 | Raids | Capital raid weekends: attacks, defenses, loot per player | raid logs |
@@ -45,6 +45,27 @@ data/
 ```
 
 **War history starts from the day you install this** — the CoC API only exposes full per-player attack data on the `currentwar` endpoint while a war is live; `warlog` has results but no attacks, so older wars cannot be backfilled (they still appear in the list, marked *summary only*).
+
+### How a finished war gets its result
+
+`currentwar` stops returning a war the moment the next one starts, so a war's
+last snapshot is frozen at `state: inWar` with a **partial** score — 24 stars
+where the final was 26. Scoring that frozen partial is wrong, and treating it as
+undecided forever is worse: the card reads *Incomplete* long after the war is
+over.
+
+`warlog` carries the authoritative final result but no roster, and the two
+endpoints stamp `endTime` **independently** — they land one to two seconds
+apart for the same war (`...073745.000Z` vs `...073747.000Z`). Pairing on exact
+equality therefore never matches, which is why this used to leave finished wars
+permanently *Incomplete* and append the same war twice.
+
+`mergeWarLog` in `js/warmerge.js` pairs each snapshot with the nearest warlog
+entry inside a 60-second window and promotes the snapshot **in place**: final
+stars, destruction and attack count from warlog, per-player roster kept. That is
+why the war stops reading *Incomplete* without losing the only record of who
+attacked. A war still live, or older than the 50-entry warlog window, is left
+untouched — an unarchived war is never given a guessed result.
 
 ## Discord notifications
 
@@ -145,12 +166,16 @@ Files land in `scrapers/data/` when run from that directory — run them from th
 No dependencies beyond Node and Python; run from the repo root:
 
 ```bash
-node js/xss.test.mjs            # 24 checks: weaponised names render inert in every view
+node js/xss.test.mjs            # 27 checks: weaponised names render inert in every view
+node js/warmerge.test.mjs       # 16 checks: warlog pairing, in-place promotion, no duplicates
+node js/statsrange.test.mjs     # 17 checks: empty-range fallback (clock is pinned)
 node js/warstate.test.mjs       # only warEnded wars get a Victory/Loss/Draw label
+node js/cwl.test.mjs            # 19 checks: league table, out-of-season wording, escaping
 node js/importsmoke.test.mjs    # all modules parse without a DOM
 node js/notifier.test.mjs       # embed shapes + state transitions
 python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer
-python3 scrapers/http_client_test.py    # retry/backoff on 429 and 5xx
+python3 scrapers/meta_scraper_test.py   # 15 checks: CWL endpoint + league-table arithmetic
+python3 scrapers/http_client_test.py    # retry/backoff on 429, 5xx and Cloudflare 5xx
 python3 scrapers/retention_test.py      # pruning never orphans an index entry
 python3 scripts/check_html.py            # index.html <div> balance + section nesting
 ```
@@ -158,11 +183,45 @@ python3 scripts/check_html.py            # index.html <div> balance + section ne
 The Python tests need `COC_API_TOKEN` and `CLAN_TAG` set to *any* value —
 `config.py` refuses to import without them. No request is ever made.
 
+Two suites that reason about the calendar (`statsrange`, and the unarchived-war
+branch of `warstate`) pin their own clock. Without a pinned `now` they start
+failing on the 1st of a month, which is exactly when the behaviour they cover
+matters.
+
 All of the above run in CI on every push and PR (`.github/workflows/tests.yml`),
 plus a check that `index.html` has balanced `<div>`s and keeps every
 `[id^="section-"]` a sibling. That last one is not ceremony: a missing `</div>`
 once nested one section panel inside another `display:none` section, so the tab
 rendered completely blank and nothing complained.
+
+## Clan War League (Overview tab)
+
+`scrapers/meta_scraper.py` archives the live league group into
+`data/meta.json`. Two things about it are worth knowing:
+
+**The endpoint is `/clans/{tag}/currentwar/leaguegroup`.** It used to resolve
+the league tag by scanning up to five members via `/players/{tag}` (reasonable
+at the time), then fetch the group from **`/cwl/{tag}` — an endpoint that does
+not exist in the Clash of Clans API**. Every one of those requests 404'd, so
+`cwl` has been `null` in `meta.json` since the feature landed and the panel
+rendered nothing. The tag lookup is unnecessary: the clan's own
+`currentwar/leaguegroup` returns the group directly.
+
+That endpoint returns `state`, `season`, the clans in the group (name, tag, level,
+badge, member town hall levels) and `rounds[].warTags` — **but no scores**. So
+the league table is derived rather than read: each finished war is fetched from
+`/clanwarleagues/wars/{warTag}`, settled on stars, then on destruction
+percentage, then drawn. Points are `wins*3 + draws`, with stars breaking ties.
+
+Every clan in the group gets a row, even at 0-0-0 before the first war — a
+missing row reads as "not in the group". A war still live, or a war tag that
+404s, leaves the table intact rather than inventing a result. Outside a season
+the panel says **Not in a season** in words rather than showing zeroes, which
+read as a lost season.
+
+Note there is a second, unrelated endpoint, `/leaguegroup/{tag}/{seasonId}`,
+which serves ranked battle leagues. It is not what a clan war league group
+resolves to, and swapping one for the other silently returns the wrong shape.
 
 ## Raid attendance (Stats tab)
 
@@ -245,3 +304,34 @@ PYTHONPATH=scrapers GITHUB_REPOSITORY=fthyll/99N python3 scrapers/watchdog.py
 ## Win probability — what it actually is
 
 `calculateWinProbability` in `js/render.js` projects the remaining attacks of both sides from each attacker's month-to-date star average, with town-hall gap caps (4+ TH levels below target ≈ 1–2 stars max), a defense-insurance bonus when ahead, and volatility that grows as attacks run out. It uses finished wars only for the MTD input. Treat it as a weighted heuristic, not a calibrated model — no backtest exists.
+
+## Stats — why the three bottom panels can go blank
+
+The Stats tab filters war history by calendar range. On the 1st of a month the
+default *This Month* range can contain **no finished wars at all** — October
+opened on a war that began in September — and the three panels fed from that
+same slice (*War Stars Achieved*, *Stars Earned Breakdown*, *Stars Conversion
+Rates*) rendered empty with no explanation, which read as a broken dashboard
+rather than an empty calendar.
+
+`resolveStatsRange()` in `js/statsrange.js` resolves the range before the charts
+draw, falling back `month → week → previous month` until it finds decided wars,
+and only then renders. The label under the range selector says which range is
+actually in use and why it fell back (`This Week — no wars in this month`), so a
+fallback is legible instead of silent.
+
+Changing the default range to *This Week* would also have stopped the blank
+panels, but it hides the real state of the data rather than reporting it.
+
+## Retries
+
+`scrapers/http_client.py` retries 429, 500, 502, 503 and 504 with short
+exponential backoff (3 attempts, 2s then 5s). It now also retries **521, 522,
+524 and 525** — Cloudflare's "upstream unreachable" and "SSL handshake failed"
+codes, which the proxy in front of the CoC API throws when a runner's TLS
+session drops mid-run.
+
+That mattered: one real run lost a full day of war snapshots to a single 525,
+and it was unrecoverable. `/currentwar` only reports the current war, so the
+next run had nothing to re-fetch and the day was simply gone. A retried 5xx is
+cheap; a dropped day is not.
