@@ -32,6 +32,7 @@ import {
 import { renderCharts } from './charts.js';
 import { raidParticipation, raidAbsentees, raidAttendanceSummary } from './raidstats.js';
 import { freshness, newestTimestamp } from './freshness.js';
+import { refreshOutcome, refreshMessage } from './refresh.js';
 
 // Data-freshness indicator (spec §10): the chip tracks whichever pipeline
 // synced last — the daily clan job (meta.fetchedAt) or the 15m war/raid
@@ -54,6 +55,39 @@ async function initFreshness(meta) {
     freshnessAt = newestTimestamp(meta?.fetchedAt, w?.fetchedAt, r?.fetchedAt);
     paintFreshness();
     setInterval(paintFreshness, 60000);
+}
+
+// Refresh feedback. A refresh that re-downloads identical files is silent, and
+// silence on a stale dashboard reads as "the button is broken" — when in fact
+// nothing on this page can change until a scraper commits. syncReport() shows
+// what the refresh actually saw, in the freshness chip so it is the same place
+// on every tab.
+let syncReportTimer = null;
+function showSyncReport(msg) {
+    const el = document.getElementById('freshness');
+    if (!el) return;
+    let note = el.querySelector('.sync-report');
+    if (!note) {
+        note = document.createElement('span');
+        note.className = 'sync-report';
+        el.appendChild(note);
+    }
+    note.textContent = msg.text;
+    note.dataset.tone = msg.tone;
+    note.hidden = false;
+    clearTimeout(syncReportTimer);
+    // Left up long enough to read, then removed so it never reads as state.
+    syncReportTimer = setTimeout(() => { note.hidden = true; }, 9000);
+}
+async function syncReport(previous) {
+    const [meta, w, r] = await Promise.all([
+        fetchMeta(), fetchSync('war'), fetchSync('raid'),
+    ]);
+    const outcome = refreshOutcome(meta, w, r, previous);
+    // Whatever the outcome, the chip's own age reading must follow it.
+    freshnessAt = outcome.latest ? outcome.latest.toISOString() : freshnessAt;
+    paintFreshness();
+    return outcome;
 }
 
 // Global state variables
@@ -217,13 +251,20 @@ function updateHeader(name, badgeUrl) {
 window.syncData = async () => {
     const btns = document.querySelectorAll('.sync-btn');
     btns.forEach(b => b.classList.add('syncing'));
+    // Captured before the reload so the comparison is against what this tab was
+    // already showing, not against the state it is about to have.
+    const previous = freshnessAt;
     try {
         await init();
         if (activeWarFilename) {
             const warData = fullWarHistory.find(w => w.filename === activeWarFilename);
             if (warData) renderWarDetail(warData, fullWarHistory);
         }
-    } catch (e) { console.error("Sync failed", e); } finally {
+        showSyncReport(refreshMessage(await syncReport(previous), false));
+    } catch (e) {
+        console.error("Sync failed", e);
+        showSyncReport(refreshMessage({ changed: false, latest: null, ageHours: null }, true));
+    } finally {
         setTimeout(() => btns.forEach(b => b.classList.remove('syncing')), 500);
     }
 };

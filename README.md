@@ -179,6 +179,7 @@ node js/statsrange.test.mjs     # 17 checks: empty-range fallback (clock is pinn
 node js/warstate.test.mjs       # only warEnded wars get a Victory/Loss/Draw label
 node js/cwl.test.mjs            # league table, out-of-season vs failed-lookup wording
 node js/chartdata.test.mjs      # chart text twins are labelled, sr-only, and actually filled
+node js/refresh.test.mjs        # what a refresh reports: changed, unchanged, no stamp, failure
 node js/importsmoke.test.mjs    # all modules parse without a DOM
 node js/notifier.test.mjs       # embed shapes + state transitions
 python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer
@@ -396,6 +397,33 @@ reading pixels.
 
 The tradeoff: these are the numbers *as displayed*, rounded to one decimal. The
 tables follow the charts rather than exposing raw attack data.
+
+## The refresh button says what it did
+
+The refresh buttons already existed on four tabs and re-fetch everything with
+cache-busting. What they did not do was say anything — and on a stale dashboard
+that silence is misleading, because re-downloading identical files cannot change
+anything. It reads as a broken button when the truth is that the fix is never on
+the page.
+
+So `js/refresh.js` compares the newest sync heartbeat against what this tab was
+already showing and reports one of four outcomes in the freshness chip:
+
+| Outcome | Message |
+|---|---|
+| newer stamp | *Updated — the scrapers committed new data since the last check.* |
+| same stamp | *No change — the last scraper commit was Nh ago. Nothing on this page can update until one lands.* |
+| no heartbeat | *No sync heartbeat found, so there is nothing to compare against.* |
+| load threw | *Refresh failed to load — the committed data could not be read.* |
+
+The heartbeat stamp is the honest signal: the workflows write it only when real
+data changed, so it cannot advance without a commit. The first load is not
+reported as an update — there is nothing to compare against, and claiming one
+would be a lie that fires on every fresh page load.
+
+The chip is `aria-live="polite"`, so the message is announced rather than only
+drawn. It hides itself after 9 s, so it can never be mistaken for the sync state
+shown beside it.
 
 ## Retries
 

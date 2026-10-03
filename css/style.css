@@ -371,6 +371,19 @@ select.control-base {
 .syncing svg { animation: spin 1s linear infinite; }
 @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
 
+/* Refresh feedback, shown under the freshness chip. aria-live on the chip picks
+ * this up, so the same text reaches a screen reader. Transient by design — the
+ * timer hides it, so it can never be mistaken for the current sync state. */
+.sync-report {
+    display: block; width: 100%; margin-top: 4px;
+    font-size: 9px; line-height: 1.4; font-weight: 600;
+    color: var(--muted);
+}
+.sync-report[data-tone="good"] { color: rgb(var(--bar3)); }
+.sync-report[data-tone="warn"] { color: rgb(var(--gold)); }
+.sync-report[data-tone="error"] { color: rgb(var(--bar1)); }
+.sync-report[hidden] { display: none; }
+
 /* ============ Reset buttons ============ */
 .btn-reset {
     font-size: 10px; letter-spacing: 0.08em; font-weight: 700; color: var(--muted);
