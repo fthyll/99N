@@ -182,6 +182,7 @@ node js/chartdata.test.mjs      # chart text twins are labelled, sr-only, and ac
 node js/importsmoke.test.mjs    # all modules parse without a DOM
 node js/notifier.test.mjs       # embed shapes + state transitions
 python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer
+python3 scrapers/watchdog_test.py      # 15 checks: thresholds, independent age checks, alerting
 python3 scrapers/clan_scraper_test.py   # a failed fetch exits non-zero and writes nothing
 python3 scrapers/cwl_scraper_test.py    # the 15m writer touches only the cwl key
 python3 scrapers/meta_scraper_test.py   # CWL endpoint, league-table arithmetic, failure states
@@ -303,14 +304,29 @@ stops firing, the site keeps serving the last snapshot and looks fine. It
 checks two independent things and posts a Discord alert plus a red run:
 
 - **Snapshot age** — newest commit touching `data/` is under 24 h old.
-- **Run age** — the 15-minute workflows actually ran in the last 12 h.
+- **Run age** — the 15-minute workflows actually ran in the last 3 h.
 
-Both limits are loose on purpose: GitHub drops most ticks of a `*/15` cron on
-this repo (measured over the first four days: war/raid runs landed every
-1.9-5.6 h, median 3.7 h, and the 2-hourly health workflow itself averaged a
-3.6 h gap), and data writes are event-driven — a quiet window with no live war
-or raid weekend has gone 11 h between commits. The first version used 3 h/2 h
-and went red on scheduler drops rather than on real outages.
+The two limits answer different questions. Snapshot age is the one that matters
+for the dashboard: `data/` goes untouched when no war is live and no raid is
+running, so a quiet week looks stale while nothing is wrong. Run age is the
+faster signal that the scheduler itself has stopped.
+
+**The run-age limit of 3 h is below this repo's normal scheduler gap, by
+choice.** Measured over 100 war and 100 raid runs: the median gap was 3.8 h
+(war) and 4.4 h (raid), **72% of gaps exceeded 3 h**, and the worst ever
+observed was 8.1 h. GitHub's scheduler drops most `*/15` ticks on this repo,
+and the 2-hourly health workflow itself has averaged a 4.9 h gap (max 9.9 h).
+
+So a red watchdog run here is *not* evidence of a stall — it means "the
+scheduler has been quiet for 3 hours", which is the normal state of this repo.
+Expect it to be red most of the time, and expect a Discord alert most ticks.
+The signal worth acting on is that alert **recurring across days while `data/`
+stays put**, not any single red check. Raise the limit if that noise proves too
+much.
+
+Snapshot age keeps a 24 h limit for the same reason: an 11 h gap between data
+commits has been observed in a quiet window, and the daily clan snapshot is the
+only regular writer then.
 
 They fail differently (a run can succeed while writing nothing), so both are
 checked. Run it locally:
