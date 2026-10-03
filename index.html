@@ -257,8 +257,9 @@
                         <div class="bg-inset p-4 rounded-xl border border-gray-800">
                             <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">War Stars Achieved (%)</h3>
                             <div id="starsTrendContainer" style="height: 180px;">
-                                <canvas id="starsTrendChart"></canvas>
+                                <canvas id="starsTrendChart" role="img" aria-label="Line chart of war stars won as a percentage of the stars available, per war. The same figures are in the table below the chart."></canvas>
                             </div>
+                            <div id="starsTrendData" class="sr-only"></div>
                         </div>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <div class="bg-inset p-4 rounded-xl border border-gray-800">
@@ -268,8 +269,9 @@
                             <div class="bg-inset p-4 rounded-xl border border-gray-800">
                                 <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Stars Conversion Rates</h3>
                                 <div id="efficiencyContainer">
-                                    <canvas id="efficiencyChart"></canvas>
+                                    <canvas id="efficiencyChart" role="img" aria-label="Stacked bar chart of each attacker's star conversion: 3-star, 2-star, 1-star and failed attack percentages. The same figures are in the table below the chart."></canvas>
                                 </div>
+                                <div id="efficiencyData" class="sr-only"></div>
                             </div>
                         </div>
 

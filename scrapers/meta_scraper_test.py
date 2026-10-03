@@ -33,6 +33,8 @@ class FakeResponse:
     def __init__(self, status_code, payload):
         self.status_code = status_code
         self._payload = payload
+        # fetch_cwl quotes res.text when it logs an unexpected status.
+        self.text = json.dumps(payload) if payload is not None else ""
 
     def json(self):
         return self._payload
@@ -166,9 +168,27 @@ def main():
         meta_scraper.fetch_cwl(meta)
     finally:
         meta_scraper.http_client.get = original
-    check("reports no season instead of raising", meta.get("cwl") is None, json.dumps(meta)[:160])
+    check("reports no season, as a state rather than a bare null",
+          meta.get("cwl") == {"state": "notInSeason"}, json.dumps(meta)[:160])
     check("and makes no war requests when there is no group",
           not any("/clanwarleagues/" in c for c in calls), str(calls)[:160])
+
+    print("a league lookup that fails for any other reason")
+    original, calls = install_fake_http({
+        "/currentwar/leaguegroup": FakeResponse(503, {"reason": "unavailable"}),
+    })
+    try:
+        meta = {}
+        meta_scraper.fetch_cwl(meta)
+    finally:
+        meta_scraper.http_client.get = original
+    # A 404 is the only expected miss. Anything else is recorded, because a bare
+    # null cannot be told apart from a quiet season — which is exactly how the
+    # dead /cwl/ endpoint stayed invisible.
+    check("is not reported as out of season",
+          (meta.get("cwl") or {}).get("state") == "unavailable", json.dumps(meta)[:160])
+    check("keeps the status for the UI", (meta.get("cwl") or {}).get("httpStatus") == 503,
+          json.dumps(meta)[:160])
 
     print("a group with no finished wars yet")
     original, calls = install_fake_http({

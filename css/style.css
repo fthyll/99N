@@ -294,6 +294,16 @@ html[data-theme="day"] .icon-moon { display: none; }
 
 .hidden-section { display: none !important; }
 
+/* Available to assistive tech, absent from the screen. Used for the text
+ * equivalent of the canvas charts: a canvas is opaque to a screen reader and
+ * vanishes entirely out of a shared screenshot, and this dashboard is read by
+ * people who share screenshots into Discord mid-war. */
+.sr-only {
+    position: absolute; width: 1px; height: 1px;
+    margin: -1px; padding: 0; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
 /* ============ Controls ============ */
 .control-base {
     background: rgb(var(--s-card)); border: 1px solid rgb(var(--s-line-dim));
@@ -303,6 +313,15 @@ html[data-theme="day"] .icon-moon { display: none; }
 }
 .control-base:hover { border-color: rgb(var(--s-line)); }
 .control-base:focus { border-color: rgb(var(--gold)); box-shadow: 0 0 0 3px var(--chip-a); }
+
+/* Keyboard focus was previously invisible outside .control-base: the sidebar,
+ * tab buttons and cards set no outline, so tabbing through the dashboard left
+ * no trace at all. :focus-visible keeps this off mouse clicks. */
+:focus-visible {
+    outline: 2px solid rgb(var(--gold));
+    outline-offset: 2px;
+    border-radius: 4px;
+}
 
 .btn-role {
     font-size: 9px; font-weight: bold; border: 1px solid rgb(var(--s-line-dim));

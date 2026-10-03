@@ -145,6 +145,7 @@ Settings → Secrets and variables → Actions:
 |---|---|---|
 | `update_war.yml` | every 15 min | live war snapshots; finalises each war once |
 | `update_raid.yml` | every 15 min | current raid weekend; new file each weekend |
+| `update_cwl.yml` | every 15 min | league group + standings, during a season |
 | `update_clan.yml` | daily 09:00 UTC | roster snapshot for the Members history |
 | `tests.yml` | on push / PR | Node + Python suites, HTML structure check |
 | `health.yml` | every 2 h | alerts if snapshots or scheduled runs go stale |
@@ -170,11 +171,14 @@ node js/xss.test.mjs            # 27 checks: weaponised names render inert in ev
 node js/warmerge.test.mjs       # 16 checks: warlog pairing, in-place promotion, no duplicates
 node js/statsrange.test.mjs     # 17 checks: empty-range fallback (clock is pinned)
 node js/warstate.test.mjs       # only warEnded wars get a Victory/Loss/Draw label
-node js/cwl.test.mjs            # 19 checks: league table, out-of-season wording, escaping
+node js/cwl.test.mjs            # league table, out-of-season vs failed-lookup wording
+node js/chartdata.test.mjs      # chart text twins are labelled, sr-only, and actually filled
 node js/importsmoke.test.mjs    # all modules parse without a DOM
 node js/notifier.test.mjs       # embed shapes + state transitions
 python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer
-python3 scrapers/meta_scraper_test.py   # 15 checks: CWL endpoint + league-table arithmetic
+python3 scrapers/clan_scraper_test.py   # a failed fetch exits non-zero and writes nothing
+python3 scrapers/cwl_scraper_test.py    # the 15m writer touches only the cwl key
+python3 scrapers/meta_scraper_test.py   # CWL endpoint, league-table arithmetic, failure states
 python3 scrapers/http_client_test.py    # retry/backoff on 429, 5xx and Cloudflare 5xx
 python3 scrapers/retention_test.py      # pruning never orphans an index entry
 python3 scripts/check_html.py            # index.html <div> balance + section nesting
@@ -222,6 +226,27 @@ read as a lost season.
 Note there is a second, unrelated endpoint, `/leaguegroup/{tag}/{seasonId}`,
 which serves ranked battle leagues. It is not what a clan war league group
 resolves to, and swapping one for the other silently returns the wrong shape.
+
+**A null `cwl` is not a valid state.** It cannot distinguish "not in a season"
+from "the lookup broke", which is precisely how the dead `/cwl/` endpoint went
+unnoticed for the panel's entire life. The key is now always an object:
+
+| `cwl` | Meaning |
+|---|---|
+| `{state, season, standings}` | live group, standings derived from finished wars |
+| `{state: "notInSeason"}` | 404 — 99N is between seasons, which is normal |
+| `{state: "unavailable", httpStatus}` | the lookup itself failed; the panel says so |
+
+So an endpoint that breaks again shows a named fault with its status instead of
+quietly reading as a league that never started.
+
+`scrapers/cwl_scraper.py` owns the 15-minute refresh. It replaces **only** the
+`cwl` key and writes nothing else, because the daily `meta_scraper.py` puts
+`goldpass` and `countryRank` in the same file — a run that rewrote the whole
+document from its own older view of those keys would roll them back. Country
+rank alone can walk a thousand ranking rows, and none of it moves on battle day,
+which is why it stays on the daily job while the league table moves every
+15 minutes.
 
 ## Raid attendance (Stats tab)
 
@@ -322,6 +347,33 @@ fallback is legible instead of silent.
 
 Changing the default range to *This Week* would also have stopped the blank
 panels, but it hides the real state of the data rather than reporting it.
+
+## Scrapers must fail loudly
+
+Every scraper raises `SystemExit` on an unexpected API status, so the workflow
+goes red instead of reporting success while writing nothing. `clan_scraper.py`
+used to `print` and return 0 — the one job that still writes in a quiet window,
+so a dead token produced a passing run and no snapshot, and the first hint was
+the 24-hour watchdog, a day later.
+
+The other half is not overwriting good data with a bad fetch: a failed run
+leaves the previous snapshot and the index untouched.
+
+## Charts have a text twin
+
+Both Stats canvases (`starsTrendChart`, `efficiencyChart`) are pictures. A
+screen reader sees nothing, and a screenshot posted into the clan Discord loses
+the graph entirely — which is how this dashboard is actually shared mid-war.
+
+So `paintChartData()` in `js/charts.js` writes the same numbers into an
+`sr-only` `<table>` beside each canvas, and each canvas carries `role="img"`
+with an `aria-label`. `.sr-only` clips rather than `display:none`, so the tables
+stay in the accessibility tree and take no layout space (1×1 px, verified in a
+real browser). Copying a chart's numbers now works from the page, not just by
+reading pixels.
+
+The tradeoff: these are the numbers *as displayed*, rounded to one decimal. The
+tables follow the charts rather than exposing raw attack data.
 
 ## Retries
 

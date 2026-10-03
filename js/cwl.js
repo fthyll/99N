@@ -46,6 +46,10 @@ const rowHtml = (row) => `
  */
 export function renderCwlPanel(cwl, clanTag) {
     if (!cwl || !Array.isArray(cwl.standings) || cwl.standings.length === 0) {
+        // Three different situations, three different sentences. Collapsing them
+        // into one "not in a season" is what let a dead endpoint read as a quiet
+        // league for as long as the panel existed.
+        const failed = cwl && cwl.state === 'unavailable';
         return `
             <h3 class="medieval text-xs md:text-sm font-bold gold mb-4 flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
@@ -53,11 +57,12 @@ export function renderCwlPanel(cwl, clanTag) {
             </h3>
             <div class="p-3 bg-card rounded-lg h-[58px] flex flex-col justify-center">
                 <p class="stat-label">Season</p>
-                <p class="stat-value text-white text-[11px] md:text-xs">Not in a season</p>
+                <p class="stat-value text-white text-[11px] md:text-xs">${failed ? 'Lookup failed' : 'Not in a season'}</p>
             </div>
             <p class="text-[10px] text-gray-500 mt-3 leading-relaxed">
-                99N is between war league seasons. The group and table reappear here
-                as soon as a season opens.
+                ${failed
+                    ? `The league group could not be read (HTTP ${esc(String(cwl.httpStatus || '?'))}). This is a scraper fault, not a quiet season.`
+                    : '99N is between war league seasons. The group and table reappear here as soon as a season opens.'}
             </p>`;
     }
 

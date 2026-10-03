@@ -74,10 +74,21 @@ def fetch_cwl(meta):
 
     This used to call /cwl/{tag}, which does not exist, so every request 404'd
     and meta.json has always carried "cwl": null.
+
+    A 404 is the *only* expected non-200, and it is recorded as a state rather
+    than a bare null: a null cannot tell "not in a season" apart from "the
+    endpoint broke again", which is precisely how the dead /cwl/ call went
+    unnoticed. Any other status is kept in the file so the frontend can say the
+    league lookup failed instead of claiming the clan is out of season.
     """
-    meta['cwl'] = None
     res = _get(f"{BASE_URL}/clans/{CLAN_TAG}/currentwar/leaguegroup")
+    if res.status_code == 404:
+        meta['cwl'] = {'state': 'notInSeason'}
+        return
     if res.status_code != 200:
+        meta['cwl'] = {'state': 'unavailable', 'httpStatus': res.status_code}
+        print(f"WARNING league group lookup failed: HTTP {res.status_code} "
+              f"{res.text[:200]}")
         return
     group = res.json() or {}
     meta['cwl'] = {

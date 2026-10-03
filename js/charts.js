@@ -37,6 +37,27 @@ export function renderCharts(warHistory, range = 'month') {
     renderEfficiencyChart(filteredHistory);
 }
 
+/**
+ * Writes the text twin of a chart into `id`: a real <table> of the same numbers.
+ *
+ * The canvas itself is a picture — a screen reader gets nothing, and a shared
+ * screenshot drops the graph entirely, which matters on a dashboard whose main
+ * social life is posting results into a clan Discord. The host element carries
+ * the `sr-only` class in index.html, so sighted layout is untouched.
+ */
+function paintChartData(id, caption, headers, rows) {
+    const host = document.getElementById(id);
+    if (!host) return;
+    const th = headers.map(h => `<th scope="col" class="text-right py-1 pl-2">${esc(h)}</th>`).join('');
+    const body = rows.map(r =>
+        `<tr><th scope="row" class="text-left font-normal py-1 pr-2">${esc(r[0])}</th>${
+            r.slice(1).map(v => `<td class="text-right py-1 pl-2 font-mono">${esc(String(v))}</td>`).join('')}</tr>`
+    ).join('');
+    host.innerHTML = `<table class="w-full text-[10px] border-collapse">
+        <caption class="sr-only">${esc(caption)}</caption>
+        <thead><tr>${th}</tr></thead><tbody>${body}</tbody></table>`;
+}
+
 // The note doubles as the empty state: when nothing resolves at all it is the
 // only thing in the three panels, so it has to explain rather than sit silent.
 function paintStatsRangeNote(label) {
@@ -55,6 +76,7 @@ function renderStarsTrend(warHistory) {
     const finishedWars = warHistory.filter(w => parseCoCDate(w.endTime) < now);
     if (finishedWars.length === 0) {
         if (starsChart) starsChart.destroy();
+        paintChartData('starsTrendData', 'No finished wars in this range', [], []);
         return;
     }
 
@@ -90,6 +112,10 @@ function renderStarsTrend(warHistory) {
             plugins: { legend: { display: false } }
         }
     });
+
+    paintChartData('starsTrendData',
+        'War stars achieved, as a percentage of the stars available in each war',
+        ['War', 'Stars won (%)'], sortedHistory.map((w, i) => [labels[i], data[i]]));
 }
 
 function renderTopPerformers(warHistory) {
@@ -149,7 +175,11 @@ function renderEfficiencyChart(warHistory) {
     });
 
     const top25 = Object.values(statsMap).filter(p => p.total > 0).sort((a, b) => (b.s3/b.total) - (a.s3/a.total) || b.total - a.total).slice(0, 25);
-    if (top25.length === 0) { if (efficiencyChart) efficiencyChart.destroy(); return; }
+    if (top25.length === 0) {
+        if (efficiencyChart) efficiencyChart.destroy();
+        paintChartData('efficiencyData', 'No attack data in this range', [], []);
+        return;
+    }
 
     const th = chartTheme();
     const labels = top25.map(p => p.name);
@@ -159,6 +189,14 @@ function renderEfficiencyChart(warHistory) {
         { label: '1-Star %', data: top25.map(p => (p.s1/p.total*100).toFixed(1)), backgroundColor: th.bar1 },
         { label: 'Fail %', data: top25.map(p => (p.s0/p.total*100).toFixed(1)), backgroundColor: th.bar0 }
     ];
+
+    paintChartData('efficiencyData', 'Stars conversion rates for the top 25 attackers',
+        ['Player', '3-Star %', '2-Star %', '1-Star %', 'Fail %'],
+        top25.map(p => [p.name,
+            (p.s3 / p.total * 100).toFixed(1),
+            (p.s2 / p.total * 100).toFixed(1),
+            (p.s1 / p.total * 100).toFixed(1),
+            (p.s0 / p.total * 100).toFixed(1)]));
 
     if (efficiencyChart) efficiencyChart.destroy();
     efficiencyChart = new Chart(ctx, {

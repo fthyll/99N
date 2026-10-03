@@ -19,6 +19,24 @@ console.log('outside a season');
     check('keeps the panel heading', /Clan War League/.test(html));
 }
 
+console.log('a lookup that failed is not a quiet season');
+
+{
+    // The distinction that let the dead /cwl/ endpoint go unnoticed for weeks:
+    // a null and a failed lookup rendered identically.
+    const failed = renderCwlPanel({ state: 'unavailable', httpStatus: 500 }, '#99N');
+    check('does not claim the clan is out of season', !/Not in a season/i.test(failed), failed.slice(0, 200));
+    check('names the fault', /Lookup failed/i.test(failed));
+    check('surfaces the HTTP status', /HTTP 500/.test(failed), failed.match(/HTTP \d+/)?.[0]);
+    check('says it is a scraper fault, not a quiet league', /scraper fault/i.test(failed));
+
+    const quiet = renderCwlPanel({ state: 'notInSeason' }, '#99N');
+    check('a real out-of-season still says so', /Not in a season/i.test(quiet));
+    check('and is worded as a season, not a fault', !/Lookup failed/i.test(quiet));
+
+    check('a failure status with no code still reads', /HTTP \?/.test(renderCwlPanel({ state: 'unavailable' }, '#99N')));
+}
+
 console.log('a group with no decided war yet');
 {
     const cwl = { state: 'preparation', season: '2026-10', standings: [row('#AAA', 'Alpha', 0, 0, 0, 1), row('#BBB', 'Beta', 0, 0, 0, 2)] };
