@@ -250,7 +250,7 @@ async function init() {
         latestClanData = clanData;
         allMembers = clanData.memberList || clanData.members || [];
         updateDisplay();
-        renderAbout(latestClanData);
+        renderAbout(latestClanData, clanMeta);
         bindAboutPageEvents();
         updateHeader(clanData.name, clanData.badgeUrls?.medium || clanData.badgeUrls?.small);
     } catch (e) { console.error("Could not load latest clan data.", e); }
@@ -288,6 +288,9 @@ async function init() {
         playerCareers = careers?.players || {};
         clanMeta = meta;
         initFreshness(meta);
+        // The About page renders before meta arrives, so repaint it now that the
+        // CWL group and league table are known.
+        if (latestClanData) renderAbout(latestClanData, clanMeta);
 
         // Warlog = last ~50 finished wars with the authoritative result but no
         // per-player data. A snapshot frozen mid-war is promoted in place from

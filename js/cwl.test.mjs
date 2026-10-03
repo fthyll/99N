@@ -1,0 +1,65 @@
+// Run: node js/cwl.test.mjs
+import { renderCwlPanel } from './cwl.js';
+
+const check = (name, cond, detail = '') => {
+    if (cond) console.log('PASS  ' + name);
+    else { console.log('FAIL  ' + name + (detail ? '   [' + detail + ']' : '')); process.exitCode = 1; }
+};
+
+const row = (tag, name, w, d, l, pos, th = 15) => ({
+    tag, name, wins: w, draws: d, losses: l, position: pos,
+    stars: w * 30, townHallLevels: [th], badgeUrls: { small: `${tag.slice(1).toLowerCase()}.png` },
+});
+
+console.log('outside a season');
+{
+    const html = renderCwlPanel(null, '#99N');
+    check('says so in words', /Not in a season/i.test(html), html.slice(0, 120));
+    check('shows no zeroed record', !/Position/.test(html) && !/Record/.test(html));
+    check('keeps the panel heading', /Clan War League/.test(html));
+}
+
+console.log('a group with no decided war yet');
+{
+    const cwl = { state: 'preparation', season: '2026-10', standings: [row('#AAA', 'Alpha', 0, 0, 0, 1), row('#BBB', 'Beta', 0, 0, 0, 2)] };
+    const html = renderCwlPanel(cwl, '#AAA');
+    check('lists every clan', (html.match(/Alpha/g) || []).length === 1 && /Beta/.test(html));
+    check('says no war decided yet', /No war decided yet/i.test(html));
+    check('own row is marked', /bg-raise/.test(html));
+    check('record reads 0-0-0 honestly', /0-0-0/.test(html), html.match(/\d-\d-\d/)?.[0]);
+}
+
+console.log('mid-season standings');
+{
+    const cwl = {
+        state: 'inWar', season: '2026-09',
+        standings: [row('#AAA', 'Alpha', 4, 1, 1, 1, 16), row('#BBB', 'Beta', 3, 0, 3, 2, 14)],
+    };
+    const html = renderCwlPanel(cwl, '#BBB');
+    check('points are wins*3 + draws = 13 for Beta', />13</.test(html), html.match(/>\d+</g)?.join(','));
+    check('own position is shown', /#2/.test(html));
+    check('status reflects a live battle day', /Battle day live/i.test(html));
+    check('every clan gets a row', /Alpha/.test(html) && /Beta/.test(html));
+    check('no "no war decided" note when wars are played', !/No war decided yet/.test(html));
+}
+
+console.log('missing or malformed meta never throws');
+{
+    check('undefined is safe', /Not in a season/i.test(renderCwlPanel(undefined, '#AAA')));
+    check('empty standings is safe', /Not in a season/i.test(renderCwlPanel({ standings: [] }, '#AAA')));
+    check('a missing state falls back to the no-season wording',
+        /Not in a season/i.test(renderCwlPanel({ season: 'x', standings: [row('#AAA', 'A', 0, 0, 0, 1)] }, '#AAA')));
+    check('a row without badgeUrls still renders', /Alpha/.test(
+        renderCwlPanel({ season: 'x', standings: [{ tag: '#AAA', name: 'Alpha', wins: 1, draws: 0, losses: 0, position: 1 }] }, '#AAA')));
+}
+
+console.log('escaping');
+{
+    const nasty = row('#ZZZ', '<img src=x onerror=alert(1)>', 1, 0, 0, 1);
+    nasty.badgeUrls = {};
+    const html = renderCwlPanel({ season: '<b>s</b>', standings: [nasty] }, '#AAA');
+    check('clan name is escaped', !/<img src=x/.test(html) && /&lt;img/.test(html));
+    check('season is escaped', !/<b>s<\/b>/.test(html));
+}
+
+console.log(process.exitCode ? '\nFAILURES' : '\nAll cwl checks passed.');

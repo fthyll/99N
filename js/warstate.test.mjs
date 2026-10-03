@@ -57,21 +57,30 @@ for (const war of [...wars, ...leftovers]) {
   }
 }
 
-// The user's exact symptom: a war past its endTime may never read "Incomplete".
-const past = (w) => Date.parse(
-  `${w.endTime.slice(0, 4)}-${w.endTime.slice(4, 6)}-${w.endTime.slice(6, 8)}T${w.endTime.slice(9, 11)}:${w.endTime.slice(11, 13)}:${w.endTime.slice(13, 15)}Z`
-) < now;
-for (const war of wars.filter(past)) {
+// The user's exact symptom: a war past its endTime may never read "Incomplete"
+// once the API has archived its result. A war the API has not archived yet —
+// /currentwar stopped returning it and warlog has not caught up — genuinely has
+// no authoritative score, so it must NOT be scored from the frozen partial. It
+// is reported separately here so a stale archive is visible rather than silent.
+const ms = (stamp) => Date.parse(
+  `${stamp.slice(0, 4)}-${stamp.slice(4, 6)}-${stamp.slice(6, 8)}T${stamp.slice(9, 11)}:${stamp.slice(11, 13)}:${stamp.slice(13, 15)}Z`
+);
+const unarchived = [];
+for (const w of wars.filter(w => ms(w.endTime) < now.getTime() && w.state !== 'warEnded')) {
   const label = /uppercase tracking-widest leading-none[^>]*>([A-Za-z ]+)<\/p>/
-    .exec(getWarSummaryHtml(war, now))?.[1]?.trim();
-  if (label === 'Incomplete') {
-    throw new Error(`regression: finished war ${war.filename} (end ${war.endTime}) still renders as Incomplete`);
+    .exec(getWarSummaryHtml(w, now))?.[1]?.trim();
+  if (label !== 'Incomplete') {
+    throw new Error(`regression: an unarchived finished war must not be scored: ${w.filename} -> ${label}`);
   }
+  unarchived.push(w.filename);
 }
 
 console.log('warEnded files checked :', seen.warEnded);
 console.log('  promoted from frozen :', seen.promoted);
 console.log('stale files checked    :', seen.stale);
+console.log('unarchived finished war:', unarchived.length, unarchived.join(', ') || '(none)');
 console.log('label distribution     :', labels);
-console.log('PASS: no finished war renders as Incomplete; no stale snapshot is scored.');
+console.log(unarchived.length === 0
+  ? 'PASS: every finished war is decided; no stale snapshot is scored.'
+  : `PASS: no stale snapshot is scored. ${unarchived.length} finished war(s) await API archival and correctly stay Incomplete.`);
 fs.unlinkSync(tmp);

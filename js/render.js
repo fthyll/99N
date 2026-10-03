@@ -4,6 +4,7 @@
  */
 import { roleMap, getTHImage, parseCoCDate, esc } from './constants.js';
 import { raidParticipation, raidAbsentees, raidAttendanceSummary, splitAbsentees } from './raidstats.js';
+import { renderCwlPanel } from './cwl.js';
 
 /**
  * Renders the member roster list with league icons and donation stats.
@@ -583,7 +584,7 @@ export function renderWarDetail(warData, history = []) {
         ${filtered.map(m => renderMemberCard(m, infoInfoMap, warData.teamSize * 2, warAttacksMap)).join('')}`;
 }
 
-export function renderAbout(clanData) {
+export function renderAbout(clanData, meta = null) {
     const container = document.getElementById('aboutContent'); if (!container || !clanData) return;
     const labelsHtml = (clanData.labels || []).map(l => `<div class="flex items-center gap-1.5 bg-card px-2 py-1 rounded border border-gray-800"><img src="${esc(l.iconUrls.small)}" class="w-3.5 h-3.5"><span class="text-[8px] md:text-[9px] font-bold text-gray-400 uppercase">${esc(l.name)}</span></div>`).join('');
     container.innerHTML = `<div class="panel p-4 md:p-6 space-y-6 md:space-y-8">
@@ -652,6 +653,9 @@ export function renderAbout(clanData) {
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="bg-inset p-4 md:p-5 rounded-xl border border-gray-800 flex flex-col">
+            ${renderCwlPanel(meta?.cwl, clanData.tag)}
         </div>
     </div>`;
 }

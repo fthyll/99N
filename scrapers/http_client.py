@@ -23,7 +23,12 @@ DEFAULT_ATTEMPTS = 3
 BACKOFF_SECONDS = (2, 5)
 REQUEST_TIMEOUT = 30
 
-RETRYABLE_STATUS = frozenset({429, 500, 502, 503, 504})
+# 525 is Cloudflare's "SSL handshake failed" and 521/522/524 are its other
+# "upstream unreachable" codes. They arrive from the proxy in front of the API
+# when the runner's TLS session is dropped mid-run — a real run lost its whole
+# snapshot to a single one of these, because a stale war snapshot is never
+# re-fetched and the day is simply gone. Transient like any 5xx.
+RETRYABLE_STATUS = frozenset({429, 500, 502, 503, 504, 521, 522, 524, 525})
 
 
 def get(url, headers, attempts=DEFAULT_ATTEMPTS, timeout=REQUEST_TIMEOUT, session=None):

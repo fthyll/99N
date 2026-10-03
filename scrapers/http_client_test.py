@@ -69,6 +69,22 @@ def main():
     check("5xx chain retries until success", res.status_code == 200 and s.calls == 3,
           f"(status={res.status_code} calls={s.calls})")
 
+    print("Cloudflare upstream errors")
+
+    # A real war run was lost to a single 525 from the proxy: the snapshot for
+    # that day was never re-fetchable, because /currentwar only reports the
+    # current war.
+    for code in (521, 522, 524, 525):
+        s = FakeSession([FakeResponse(code), FakeResponse(200)])
+        res = http_client.get("http://x", {}, session=s)
+        check(f"{code} is retried, not fatal", res.status_code == 200 and s.calls == 2,
+              f"(status={res.status_code} calls={s.calls})")
+
+    s = FakeSession([FakeResponse(525)] * 3)
+    res = http_client.get("http://x", {}, attempts=3, session=s)
+    check("a persistent 525 still returns the response after the attempts",
+          res.status_code == 525 and s.calls == 3, f"(status={res.status_code} calls={s.calls})")
+
     s = FakeSession([FakeResponse(429)])
     res = http_client.get("http://x", {}, attempts=3, session=s)
     check("exhausted retries return the last response, not an exception",

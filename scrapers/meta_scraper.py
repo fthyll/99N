@@ -65,23 +65,105 @@ def fetch_country_rank(meta):
 
 
 def fetch_cwl(meta):
-    """Current war league group, if any. 404 outside season is normal.
-    Cap the member scan: in a live season the first member almost always
-    carries the tag; outside one we do not want 50 wasted requests."""
+    """Current war league group plus the league table, if 99N is in a season.
+
+    The endpoint is /clans/{tag}/currentwar/leaguegroup. It returns state,
+    season, the clans in the group (name, tag, level, badge, member THs) and
+    rounds[].warTags — but no scores: standings have to be derived by fetching
+    each finished war. Outside a season the endpoint 404s, which is normal.
+
+    This used to call /cwl/{tag}, which does not exist, so every request 404'd
+    and meta.json has always carried "cwl": null.
+    """
     meta['cwl'] = None
-    res = _get(f"{BASE_URL}/clans/{CLAN_TAG}/members?limit=5")
+    res = _get(f"{BASE_URL}/clans/{CLAN_TAG}/currentwar/leaguegroup")
     if res.status_code != 200:
         return
-    group = None
-    for m in res.json().get('items', []):
-        pr = _get(f"{BASE_URL}/players/{m['tag'].replace('#', '%23')}")
-        if pr.status_code == 200 and pr.json().get('currentLeagueGroupTag'):
-            group = pr.json()['currentLeagueGroupTag']
-            break
-    if not group:
-        return
-    gr = _get(f"{BASE_URL}/cwl/{group.replace('#', '%23')}")
-    meta['cwl'] = gr.json() if gr.status_code == 200 else None
+    group = res.json() or {}
+    meta['cwl'] = {
+        'state': group.get('state'),
+        'season': group.get('season'),
+        'standings': _league_standings(group),
+    }
+
+
+def _league_standings(group):
+    """One row per clan: wins/losses/draws and stars, from the finished wars.
+
+    Every clan sees the same war from its own side, so a war is counted once
+    per clan by reading the result from that clan's perspective rather than
+    counting war tags globally.
+    """
+    teams = {c.get('tag'): c for c in (group.get('clans') or []) if c.get('tag')}
+    rows = {tag: _empty_row(c) for tag, c in teams.items()}
+
+    for war_tag in _war_tags(group):
+        war = _get(f"{BASE_URL}/clanwarleagues/wars/{war_tag}")
+        if war.status_code != 200:
+            continue  # a round that never happened; the table stands as-is
+        war = war.json() or {}
+        if war.get('state') != 'warEnded':
+            continue  # partial score, not a result
+        for side in ('clan', 'opponent'):
+            row = rows.get((war.get(side) or {}).get('tag'))
+            if row is None:
+                continue
+            stars = (war.get(side) or {}).get('stars') or 0
+            dest = (war.get(side) or {}).get('destructionPercentage') or 0
+            row['stars'] += stars
+            row['losses' if _lost(side, war) else 'wins'] += 1
+            if _drawn(war):
+                row['draws'] += 1
+    return _ranked(rows)
+
+
+def _empty_row(clan):
+    return {
+        'tag': clan.get('tag'),
+        'name': clan.get('name') or '',
+        'clanLevel': clan.get('clanLevel'),
+        'badgeUrls': clan.get('badgeUrls') or {},
+        'townHallLevels': sorted({m.get('townHallLevel') for m in (clan.get('members') or [])
+                                  if m.get('townHallLevel')}, reverse=True),
+        'wins': 0, 'losses': 0, 'draws': 0, 'stars': 0,
+    }
+
+
+def _war_tags(group):
+    return [t for r in (group.get('rounds') or []) for t in (r.get('warTags') or [])]
+
+
+def _tally(war, side):
+    entry = war.get(side) or {}
+    return entry.get('stars') or 0, entry.get('destructionPercentage') or 0
+
+
+def _lost(side, war):
+    """A side lost unless it also won: a war resolved on stars, else on destruction."""
+    my_stars, my_dest = _tally(war, side)
+    opp_stars, opp_dest = _tally(war, 'opponent' if side == 'clan' else 'clan')
+    return _outcome(my_stars, my_dest, opp_stars, opp_dest) == 'loss'
+
+
+def _drawn(war):
+    return _outcome(*_tally(war, 'clan'), *_tally(war, 'opponent')) == 'draw'
+
+
+def _outcome(clan_stars, clan_dest, opp_stars, opp_dest):
+    if clan_stars != opp_stars:
+        return 'win' if clan_stars > opp_stars else 'loss'
+    if clan_dest != opp_dest:
+        return 'win' if clan_dest > opp_dest else 'loss'
+    return 'draw'
+
+
+def _ranked(rows):
+    """Sorted like a league table: points first, then stars, then name."""
+    ordered = sorted(rows.values(),
+                     key=lambda r: (-(r['wins'] * 3 + r['draws']), -r['stars'], r['name']))
+    for i, row in enumerate(ordered, start=1):
+        row['position'] = i
+    return ordered
 
 
 def update_meta():
