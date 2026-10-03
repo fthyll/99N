@@ -4,6 +4,8 @@ import http_client
 import retention
 from config import BASE_URL, CLAN_TAG, HEADERS
 
+TRANSIENT_UPSTREAM_STATUS = frozenset(http_client.RETRYABLE_STATUS - {429})
+
 def update_raid_data():
     """
     Fetches the capital raid log and saves each weekend as a separate JSON file.
@@ -72,7 +74,13 @@ def update_raid_data():
         retention.prune_raid()
 
     else:
-        # Fail loudly so the Actions run goes red instead of silently "succeeding".
+        if res.status_code in TRANSIENT_UPSTREAM_STATUS:
+            print(
+                f"Transient upstream error fetching raid data: HTTP {res.status_code}; "
+                "skipping this run."
+            )
+            return
+        # Fail loudly for non-transient failures (e.g. bad credentials).
         raise SystemExit(f"Failed to fetch raid data: HTTP {res.status_code} {res.text[:200]}")
 
 if __name__ == "__main__":
