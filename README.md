@@ -244,10 +244,15 @@ unnoticed for the panel's entire life. The key is now always an object:
 |---|---|
 | `{state, season, standings}` | live group, standings derived from finished wars |
 | `{state: "notInSeason"}` | 404 — 99N is between seasons, which is normal |
-| `{state: "unavailable", httpStatus}` | the lookup itself failed; the panel says so |
+| `{state: "unavailable", httpStatus}` | the lookup failed and there was no good table to keep |
+| `{state: "inWar", …, stale: true, error}` | the lookup failed but a good table was already held — it is kept, marked stale, with the error beside it |
 
 So an endpoint that breaks again shows a named fault with its status instead of
-quietly reading as a league that never started.
+quietly reading as a league that never started. A held table matters in
+practice: a 500 from the proxy no longer erases a live standings table, and
+the panel shows the last good numbers with a visible "last refresh failed"
+warning instead of a dead end. The flag clears on the next successful
+refresh, which writes a fresh group without `stale`.
 
 `scrapers/cwl_scraper.py` owns the 15-minute refresh. It replaces **only** the
 `cwl` key and writes nothing else, because the daily `meta_scraper.py` puts

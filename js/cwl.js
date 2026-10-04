@@ -8,6 +8,11 @@
  *
  * Outside a season this renders an explicit "not in a season" state rather
  * than zeros, because a table of zeroes reads as a lost season.
+ *
+ * A stale group — the scraper's last refresh failed but it is holding the
+ * previous table — also renders the table, with the failure attached. Hiding
+ * a league that very likely still exists behind "Lookup failed" is how a
+ * single 500 used to read as a dead season.
  */
 
 import { esc } from './constants.js';
@@ -69,12 +74,21 @@ export function renderCwlPanel(cwl, clanTag) {
     const rows = cwl.standings.map(r => ({ ...r, isUs: r.tag === clanTag }));
     const me = rows.find(r => r.isUs);
     const played = rows.reduce((n, r) => n + (r.wins || 0) + (r.draws || 0) + (r.losses || 0), 0);
+    // stale: the scraper's last refresh failed but it held this table. The
+    // numbers are the last *known* good ones, so say that plainly rather than
+    // silently presenting them as live.
+    const staleNote = cwl.stale ? `
+        <p class="text-[10px] font-bold text-yellow-500/90 mb-3 flex items-center gap-1.5" role="status">
+            <svg class="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z" /></svg>
+            ${esc(cwl.error || 'Last refresh failed')} — showing the last good standings.
+        </p>` : '';
 
     return `
         <h3 class="medieval text-xs md:text-sm font-bold gold mb-4 flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
             Clan War League
         </h3>
+        ${staleNote}
         <div class="grid grid-cols-2 gap-2 mb-3">
             <div class="p-3 bg-card rounded-lg h-[58px] flex flex-col justify-center">
                 <p class="stat-label">Season</p>

@@ -190,6 +190,38 @@ def main():
     check("keeps the status for the UI", (meta.get("cwl") or {}).get("httpStatus") == 503,
           json.dumps(meta)[:160])
 
+    print("a failed lookup when a good table is already held")
+    # The live case this exists for: a season was inWar with full standings,
+    # then one run hit HTTP 500. Overwriting the table with "unavailable"
+    # erased a live league for up to 15 minutes of wall time; the table must
+    # survive, marked as held, with the error attached.
+    held_group = {
+        "state": "inWar", "season": "2026-10-02",
+        "standings": [
+            {"tag": "#AAA", "name": "Alpha", "wins": 1, "losses": 0, "draws": 0,
+             "position": 1, "stars": 60, "destruction": 1.2, "townHallLevels": [15, 14]},
+            {"tag": "#BBB", "name": "Beta", "wins": 0, "losses": 1, "draws": 0,
+             "position": 2, "stars": 20, "destruction": 0.4, "townHallLevels": [13, 12]},
+        ],
+    }
+    original, calls = install_fake_http({
+        "/currentwar/leaguegroup": FakeResponse(500, {"reason": "boom"}),
+    })
+    try:
+        meta = {"cwl": json.loads(json.dumps(held_group))}
+        meta_scraper.fetch_cwl(meta)
+    finally:
+        meta_scraper.http_client.get = original
+    cwl = meta.get("cwl") or {}
+    check("the held table survives the failure",
+          len(cwl.get("standings") or []) == 2, json.dumps(cwl)[:200])
+    check("it still reads as a live season, not a fault",
+          cwl.get("state") == "inWar", json.dumps(cwl)[:120])
+    check("it is marked stale", cwl.get("stale") is True, json.dumps(cwl)[:120])
+    check("the failure is recorded beside it",
+          "HTTP 500" in (cwl.get("error") or ""), json.dumps(cwl)[:160])
+    check("and the season is kept", cwl.get("season") == "2026-10-02", json.dumps(cwl)[:120])
+
     print("a group with no finished wars yet")
     original, calls = install_fake_http({
         "/currentwar/leaguegroup": FakeResponse(200, {

@@ -61,6 +61,47 @@ console.log('mid-season standings');
     check('no "no war decided" note when wars are played', !/No war decided yet/.test(html));
 }
 
+console.log('a held table after a failed refresh');
+{
+    // The exact shape the scraper now writes when a good table is held across
+    // a 500: the last standings survive, stale:true, error attached. The panel
+    // must show the table with a visible warning, not "Lookup failed" — that
+    // is what made a live league read as dead for 15 minutes.
+    const held = {
+        state: 'inWar', season: '2026-10', stale: true,
+        error: 'last refresh failed: HTTP 500',
+        standings: [row('#AAA', 'Alpha', 1, 0, 0, 1), row('#BBB', 'Beta', 0, 0, 1, 2)],
+    };
+    const html = renderCwlPanel(held, '#AAA');
+    check('still renders the table', /Alpha/.test(html) && /Beta/.test(html));
+    check('still shows it as a live season', /Battle day live/i.test(html));
+    check('does NOT read as a dead lookup', !/Lookup failed/i.test(html));
+    check('the failure is shown, not hidden', /last refresh failed/i.test(html), html.match(/last refresh[^<]*/)?.[0]);
+    check('it says the table is held', /last good standings/i.test(html));
+    check('it is announced as a status region for screen readers', /role="status"/.test(html));
+
+    // The error string is API-derived; it must be escaped, not injected.
+    const injected = {
+        state: 'inWar', season: 's', stale: true,
+        error: '<img src=x onerror=alert(1)>',
+        standings: [row('#AAA', 'Alpha', 1, 0, 0, 1)],
+    };
+    // The danger is the tag, not the words: the angle brackets must be
+    // neutralised so the string renders as text.
+    check('a hostile error string is escaped',
+        !/<img src=x onerror/.test(renderCwlPanel(injected, '#AAA')));
+
+    // A held table that has no error text still warns.
+    const noText = { state: 'inWar', season: 's', stale: true, standings: [row('#AAA', 'Alpha', 1, 0, 0, 1)] };
+    check('missing error falls back to a generic warning', /Last refresh failed/i.test(renderCwlPanel(noText, '#AAA')));
+}
+
+console.log('a non-stale table shows no warning');
+{
+    const clean = { state: 'inWar', season: '2026-10', standings: [row('#AAA', 'Alpha', 1, 0, 0, 1), row('#BBB', 'Beta', 0, 0, 1, 2)] };
+    check('no held-staleness banner on a fresh table', !/last refresh failed/i.test(renderCwlPanel(clean, '#AAA')));
+}
+
 console.log('missing or malformed meta never throws');
 {
     check('undefined is safe', /Not in a season/i.test(renderCwlPanel(undefined, '#AAA')));

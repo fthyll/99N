@@ -86,6 +86,22 @@ def fetch_cwl(meta):
         meta['cwl'] = {'state': 'notInSeason'}
         return
     if res.status_code != 200:
+        # A held group is a *stale but real* view of a season that is, very
+        # likely, still in progress. Overwriting it with "unavailable" made
+        # one 500 from the proxy erase a live league table; the next 15-minute
+        # run might not be the one that restores it. Keep the last good group
+        # and record the error beside it, so the panel can show the table with
+        # a visible warning instead of a dead end.
+        previous = meta.get('cwl') or {}
+        if previous.get('standings'):
+            meta['cwl'] = {
+                **previous,
+                'stale': True,
+                'error': f"last refresh failed: HTTP {res.status_code}",
+            }
+            print(f"WARNING league group lookup failed: HTTP {res.status_code} "
+                  f"{res.text[:200]}; holding the last {len(previous['standings'])}-row table.")
+            return
         meta['cwl'] = {'state': 'unavailable', 'httpStatus': res.status_code}
         print(f"WARNING league group lookup failed: HTTP {res.status_code} "
               f"{res.text[:200]}")
