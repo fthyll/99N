@@ -1,5 +1,5 @@
 {
-    "fetchedAt": "2026-10-04T00:20:49.933459Z",
+    "fetchedAt": "2026-10-04T06:09:36.232939Z",
     "goldpass": {
         "startTime": "20261001T080000.000Z",
         "endTime": "20261101T080000.000Z"
@@ -217,8 +217,6 @@
                 "stars": 0,
                 "position": 8
             }
-        ],
-        "stale": true,
-        "error": "last refresh failed: HTTP 500"
+        ]
     }
 }
