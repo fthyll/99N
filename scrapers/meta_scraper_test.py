@@ -140,6 +140,37 @@ def main():
         check("a draw is recorded as a draw, not a win",
               by_tag["#AAA"]["wins"] + by_tag["#BBB"]["wins"] == 2, json.dumps(by_tag))
 
+    print("a 20-20 tie is recorded as exactly one draw, never win+draw")
+    # The previous bug double-counted a tie (wins+=1 AND draws+=1), inflating
+    # points via wins*3+draws. Pin both clans at 0 wins / 1 draw / 0 losses so
+    # any regression to the old accounting fails these checks.
+    tied_war = war_payload("#AAA", "#BBB", 20, 20)
+    tied_war["clan"]["destructionPercentage"] = 50.0
+    tied_war["opponent"]["destructionPercentage"] = 50.0
+    original, _ = install_fake_http({
+        "/currentwar/leaguegroup": FakeResponse(200, GROUP),
+        "/clanwarleagues/wars/W1": FakeResponse(200, tied_war),
+    })
+    try:
+        meta = {}
+        meta_scraper.fetch_cwl(meta)
+    finally:
+        meta_scraper.http_client.get = original
+    rows = (meta.get("cwl") or {}).get("standings") or []
+    by_tag = {r["tag"]: r for r in rows} if rows else {}
+    if rows:
+        alpha = by_tag.get("#AAA") or {}
+        beta = by_tag.get("#BBB") or {}
+        check("a 20-20 tie counts as 0 wins / 1 draw / 0 losses for the clan",
+              (alpha.get("wins"), alpha.get("draws"), alpha.get("losses")) == (0, 1, 0),
+              json.dumps(alpha))
+        check("and the opponent gets 0 wins / 1 draw / 0 losses too",
+              (beta.get("wins"), beta.get("draws"), beta.get("losses")) == (0, 1, 0),
+              json.dumps(beta))
+        check("the loss counter is never silently bumped",
+              alpha.get("losses") == 0 and beta.get("losses") == 0,
+              json.dumps(by_tag))
+
     print("star tie goes to destruction, then a draw")
     original, _ = install_fake_http({
         "/currentwar/leaguegroup": FakeResponse(200, GROUP),

@@ -57,6 +57,33 @@ console.log('wars with no snapshot');
     check('pseudo-war filename is unique', extra[0].filename === 'warlog_20260929T054454.000Z', extra[0].filename);
 }
 
+console.log('a warlog draw promotes a frozen snapshot');
+{
+    // The API can return result: "draw" for a finished war with equal stars
+    // and destruction. mergeWarLog must copy those numbers through so the
+    // promoted snapshot stays consistent with the authoritative verdict.
+    const wars = [snapshot('20260921T073745.000Z', 'inWar', 24, 89.9)];
+    const extra = mergeWarLog(wars, [logged('20260921T073747.000Z', 'draw', 20, 100.0)]);
+    check('snapshot is promoted to warEnded on a draw', wars[0].state === 'warEnded');
+    check('warlog stars overwrite the partial score on a draw',
+        wars[0].clan.stars === 20 && wars[0].clan.destructionPercentage === 100.0,
+        `got ${wars[0].clan.stars}s/${wars[0].clan.destructionPercentage}%`);
+    check('the warlog draw does not double up as a summary-only entry', extra.length === 0);
+}
+
+console.log('a warlog-only draw surfaces as a summary-only pseudo-war');
+{
+    // Same draw verdict with no live snapshot to pair against — must still
+    // appear in the list, dated and decided.
+    const extra = mergeWarLog([], [logged('20260929T054454.000Z', 'draw', 30, 100.0)]);
+    check('a draw with no snapshot is surfaced', extra.length === 1);
+    if (extra.length) {
+        check('the pseudo-war carries the draw verdict', extra[0].state === 'warEnded');
+        check('the pseudo-war has stars and destruction in sync',
+            extra[0].clan.stars === 30 && extra[0].clan.destructionPercentage === 100.0);
+    }
+}
+
 console.log('a snapshot the archive already decided');
 {
     const wars = [snapshot('20260917T041524.000Z', 'warEnded', 29, 99.2)];

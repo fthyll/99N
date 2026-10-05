@@ -184,7 +184,7 @@ node js/syncbtn.test.mjs        # every tab in the nav has a working refresh but
 node js/importsmoke.test.mjs    # all modules parse without a DOM
 node js/notifier.test.mjs       # embed shapes + state transitions
 python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer
-python3 scrapers/watchdog_test.py      # 15 checks: thresholds, independent age checks, alerting
+python3 scrapers/watchdog_test.py      # 14 checks: thresholds, independent age checks, alerting
 python3 scrapers/clan_scraper_test.py   # a failed fetch exits non-zero and writes nothing
 python3 scrapers/cwl_scraper_test.py    # the 15m writer touches only the cwl key
 python3 scrapers/meta_scraper_test.py   # CWL endpoint, league-table arithmetic, failure states
