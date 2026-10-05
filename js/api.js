@@ -60,12 +60,28 @@ export async function fetchWarLog() {
     catch (e) { console.warn('No war log available.', e); return null; }
 }
 
-export async function fetchPlayerCareers() {
+// Fetch a specific dated player snapshot (players_YYYYMMDD.json). Falls back
+// to the newest snapshot when `filename` is omitted, or returns null when no
+// player snapshot exists at all — an older archive predating player_stats.
+export async function fetchPlayerCareers(filename) {
     try {
         const index = await fetchData('data/player_stats_index.json');
         if (!index || index.length === 0) return null;
-        return await fetchData(`data/player_stats/${index[0]}`);
+        const target = filename && index.includes(filename)
+            ? filename
+            : index[0];
+        return await fetchData(`data/player_stats/${target}`);
     } catch (e) { console.warn('No player career data.', e); return null; }
+}
+
+// Map a clan roster date (YYYY-MM-DD) to its matching player snapshot, if one
+// exists. Returns null for dates that predate player_stats — the Members UI
+// then hides career-only fields for the historical view rather than silently
+// using today's career values.
+export async function fetchPlayerCareersForDate(dateYmd) {
+    if (!dateYmd) return null;
+    const snapshot = `players_${dateYmd.replace(/-/g, '')}.json`;
+    return await fetchPlayerCareers(snapshot);
 }
 
 export async function fetchSync(name) {

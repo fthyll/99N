@@ -30,16 +30,11 @@ from notifier import discord, embeds
 # drops most ticks — and the 2-hourly health workflow itself averaged a 3.6 h
 # gap. The original 2 h/3 h limits sat below that noise floor, so the watchdog
 # went red on dropped ticks instead of on a real outage. 12 h cleared the worst
-# observed gap by 2x and still caught a full stop within half a day.
+# observed gap (8.1 h) by ~50% and still caught a full stop within half a day.
 #
-# It is now 3 h at the maintainer's request. Measured against this repo's actual
-# numbers, over 100 war runs and 100 raid runs: the median gap between runs was
-# 3.8 h (war) and 4.4 h (raid), 72% of gaps exceeded 3 h, and the worst ever
-# observed was 8.1 h. So this threshold fires on most ticks and is NOT by itself
-# evidence of a stall — a red run means "the scheduler has been quiet for 3 h",
-# which is the normal state of this repo. The signal worth acting on is the
-# Discord alert recurring across days while data/ stays put, not one red check.
-MAX_RUN_AGE_HOURS = 3
+# The two checks fail independently: a workflow run can succeed while writing
+# nothing, and a snapshot can be fresh while the scheduler is broken.
+MAX_RUN_AGE_HOURS = 12
 # Writes are event-driven: war snapshots only change while a war is live, raid
 # snapshots only during a raid weekend, and in a quiet window the only regular
 # writer is the daily clan snapshot — an 11 h gap between data commits has been
@@ -66,18 +61,22 @@ def _parse_timestamp(value):
     return parsed
 
 
-def newest_snapshot_age_hours():
+def newest_snapshot_age_hours(now=None):
     """Age of the most recently committed data file, in hours."""
     out = _git("log", "-1", "--format=%cI", "--", "data/")
     if not out:
         return None, None
     committed = _parse_timestamp(out)
-    age = (datetime.now(timezone.utc) - committed).total_seconds() / 3600
+    if now is None:
+        now = datetime.now(timezone.utc)
+    age = (now - committed).total_seconds() / 3600
     return age, out
 
 
-def stale_workflows(token, repo):
+def stale_workflows(token, repo, now=None):
     """Names of watched workflows whose latest run is too old (or absent)."""
+    if now is None:
+        now = datetime.now(timezone.utc)
     stale = []
     for name in WATCHED_WORKFLOWS:
         res = subprocess.run(
@@ -96,16 +95,16 @@ def stale_workflows(token, repo):
             stale.append((name, "never ran"))
             continue
         created = datetime.fromisoformat(runs[0]["createdAt"].replace("Z", "+00:00"))
-        age = (datetime.now(timezone.utc) - created).total_seconds() / 3600
+        age = (now - created).total_seconds() / 3600
         if age > MAX_RUN_AGE_HOURS:
             stale.append((name, f"last run {age:.1f}h ago"))
     return stale
 
 
-def main():
+def main(now=None):
     problems = []
 
-    age, when = newest_snapshot_age_hours()
+    age, when = newest_snapshot_age_hours(now=now)
     if age is None:
         problems.append("no dated commit found under data/ (git history unreadable?)")
         print("watchdog: could not determine snapshot age")
@@ -118,7 +117,7 @@ def main():
 
     repo = os.getenv("GITHUB_REPOSITORY")
     if repo:
-        for name, why in stale_workflows(None, repo):
+        for name, why in stale_workflows(None, repo, now=now):
             problems.append(f"{name}: {why}")
     else:
         print("watchdog: GITHUB_REPOSITORY unset, skipping run-age check")

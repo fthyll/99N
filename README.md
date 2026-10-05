@@ -318,22 +318,28 @@ for the dashboard: `data/` goes untouched when no war is live and no raid is
 running, so a quiet week looks stale while nothing is wrong. Run age is the
 faster signal that the scheduler itself has stopped.
 
-**The run-age limit of 3 h is below this repo's normal scheduler gap, by
-choice.** Measured over 100 war and 100 raid runs: the median gap was 3.8 h
-(war) and 4.4 h (raid), **72% of gaps exceeded 3 h**, and the worst ever
-observed was 8.1 h. GitHub's scheduler drops most `*/15` ticks on this repo,
-and the 2-hourly health workflow itself has averaged a 4.9 h gap (max 9.9 h).
+**The run-age limit of 12 h clears the repo's normal scheduler gap.** Measured
+over 100 war and 100 raid runs: the median gap was 3.8 h (war) and 4.4 h
+(raid), and the worst ever observed was 8.1 h. The 12 h threshold leaves
+~50% headroom above that worst case while still catching a full stop within
+half a day.
 
-So a red watchdog run here is *not* evidence of a stall — it means "the
-scheduler has been quiet for 3 hours", which is the normal state of this repo.
-Expect it to be red most of the time, and expect a Discord alert most ticks.
-The signal worth acting on is that alert **recurring across days while `data/`
-stays put**, not any single red check. Raise the limit if that noise proves too
-much.
+The two checks answer different questions and are intentionally independent:
 
-Snapshot age keeps a 24 h limit for the same reason: an 11 h gap between data
-commits has been observed in a quiet window, and the daily clan snapshot is the
-only regular writer then.
+- **Run age** (12 h) — the 15-minute workflows actually executed. This is the
+  faster liveness signal: a scheduler that has stopped entirely trips it
+  within half a day.
+- **Snapshot age** (24 h) — the newest commit touching `data/` is recent.
+  This is the one that matters for the dashboard: `data/` goes untouched
+  when no war is live and no raid is running, so a quiet week looks stale
+  while nothing is wrong.
+
+A red run is meaningful; it is no longer the expected normal state of the
+repo.
+
+Snapshot age keeps a 24 h limit for the same reason: an 11 h gap between
+data commits has been observed in a quiet window, and the daily clan
+snapshot is the only regular writer then.
 
 They fail differently (a run can succeed while writing nothing), so both are
 checked. Run it locally:

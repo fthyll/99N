@@ -131,16 +131,23 @@ def _league_standings(group):
         war = war.json() or {}
         if war.get('state') != 'warEnded':
             continue  # partial score, not a result
-        for side in ('clan', 'opponent'):
+        # A war resolves to exactly one outcome for each side: a true tie is
+        # counted as a draw only, never win+draw together (which would
+        # inflate points via wins*3 + draws).
+        clan_stars, clan_dest = _tally(war, 'clan')
+        opp_stars, opp_dest = _tally(war, 'opponent')
+        clan_outcome = _outcome(clan_stars, clan_dest, opp_stars, opp_dest)
+        opp_outcome = {'win': 'loss', 'loss': 'win', 'draw': 'draw'}[clan_outcome]
+        sides = (
+            ('clan', clan_outcome, clan_stars, clan_dest),
+            ('opponent', opp_outcome, opp_stars, opp_dest),
+        )
+        for side, outcome, stars, _dest in sides:
             row = rows.get((war.get(side) or {}).get('tag'))
             if row is None:
                 continue
-            stars = (war.get(side) or {}).get('stars') or 0
-            dest = (war.get(side) or {}).get('destructionPercentage') or 0
             row['stars'] += stars
-            row['losses' if _lost(side, war) else 'wins'] += 1
-            if _drawn(war):
-                row['draws'] += 1
+            row[{'win': 'wins', 'loss': 'losses', 'draw': 'draws'}[outcome]] += 1
     return _ranked(rows)
 
 

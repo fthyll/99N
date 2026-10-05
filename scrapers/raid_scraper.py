@@ -14,8 +14,10 @@ def update_raid_data():
     # Ensure the data directory exists (assumes running from project root)
     os.makedirs('data/raid_stats', exist_ok=True)
     
-    # Endpoint for capital raid seasons (limit to 1 to ensure full detailed data)
-    url = f"{BASE_URL}/clans/{CLAN_TAG}/capitalraidseasons?limit=1"
+    # Endpoint for capital raid seasons. limit=10 gives a small rolling backfill
+    # window so a missed scheduled run can recover recent history without
+    # turning every run into an unbounded historical crawl.
+    url = f"{BASE_URL}/clans/{CLAN_TAG}/capitalraidseasons?limit=10"
     print(f"Fetching latest raid data from {url}...")
     res = http_client.get(url, HEADERS)
     

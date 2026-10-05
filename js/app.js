@@ -4,18 +4,19 @@
  */
 import { roleWeight, parseCoCDate, esc } from './constants.js';
 import { mergeWarLog } from './warmerge.js';
-import { 
-    fetchClanData, 
-    fetchMembersIndex, 
-    fetchHistoricalMembers, 
-    fetchWarIndex, 
+import {
+    fetchClanData,
+    fetchMembersIndex,
+    fetchHistoricalMembers,
+    fetchWarIndex,
     fetchWarData,
     fetchRaidIndex,
     fetchRaidData,
     fetchWarLog,
     fetchPlayerCareers,
-    fetchMeta,
+    fetchPlayerCareersForDate,
     fetchSync,
+    fetchMeta,
 } from './api.js';
 import { 
     renderMembers, 
@@ -476,6 +477,11 @@ async function handleMemberDateChange(dateValue, shouldFetch = true) {
     try {
         let data = await fetchHistoricalMembers(snapshotName);
         allMembers = data.memberList || data.members || [];
+        // Pin career data to the same date as the roster, so the historical
+        // view never silently mixes "Roster: Sept 16, Careers: Oct 5". A
+        // missing player snapshot hides career-only fields instead.
+        const careers = await fetchPlayerCareersForDate(dateValue);
+        playerCareers = (careers && careers.players) || {};
         updateDisplay();
     } catch (e) {
         const fb = await fetchClanData(); allMembers = fb.memberList || fb.members || []; updateDisplay();
