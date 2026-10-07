@@ -1,22 +1,23 @@
 {
     "clan": {
         "donations": {
-            "received": 4375,
-            "total": 4375,
-            "week": "20261006"
+            "lastSeen": "20261007",
+            "received": 7967,
+            "total": 8122
         },
-        "lastSnapshot": "members_20261006.json",
+        "lastSnapshot": "members_20261007.json",
         "memberTags": [
             "#88GLRP9LQ",
             "#9090VYJLJ",
+            "#99C2U8QUP",
             "#G0GCCPGUR",
             "#G0V8LUY98",
             "#G8YQ9PVCR",
             "#GG0PPPC9L",
-            "#GG0RY8YVR",
             "#GG0V0JUG2",
             "#GG2PL2P9V",
             "#GG2PY22CR",
+            "#GGV8U92J2",
             "#GJ08CPY2U",
             "#GJ08LYC82",
             "#GJ08YQJR9",
@@ -35,7 +36,6 @@
             "#GQCQRGRJU",
             "#GQCYYGRC0",
             "#GQJC9J2Q2",
-            "#GQJJ80U2C",
             "#GQJULVGV2",
             "#GQLU8J2J8",
             "#GQP90VRUV",
