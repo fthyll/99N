@@ -61,16 +61,19 @@ export async function fetchWarLog() {
 }
 
 // Fetch a specific dated player snapshot (players_YYYYMMDD.json). Falls back
-// to the newest snapshot when `filename` is omitted, or returns null when no
-// player snapshot exists at all — an older archive predating player_stats.
+// to the newest snapshot only when `filename` is omitted; a named snapshot
+// that is not in the index returns null so the Members UI hides career-only
+// fields rather than silently using today's career values for a historical
+// roster.
 export async function fetchPlayerCareers(filename) {
     try {
         const index = await fetchData('data/player_stats_index.json');
         if (!index || index.length === 0) return null;
-        const target = filename && index.includes(filename)
-            ? filename
-            : index[0];
-        return await fetchData(`data/player_stats/${target}`);
+        if (filename) {
+            if (!index.includes(filename)) return null;
+            return await fetchData(`data/player_stats/${filename}`);
+        }
+        return await fetchData(`data/player_stats/${index[0]}`);
     } catch (e) { console.warn('No player career data.', e); return null; }
 }
 

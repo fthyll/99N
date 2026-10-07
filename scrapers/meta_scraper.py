@@ -172,17 +172,6 @@ def _tally(war, side):
     return entry.get('stars') or 0, entry.get('destructionPercentage') or 0
 
 
-def _lost(side, war):
-    """A side lost unless it also won: a war resolved on stars, else on destruction."""
-    my_stars, my_dest = _tally(war, side)
-    opp_stars, opp_dest = _tally(war, 'opponent' if side == 'clan' else 'clan')
-    return _outcome(my_stars, my_dest, opp_stars, opp_dest) == 'loss'
-
-
-def _drawn(war):
-    return _outcome(*_tally(war, 'clan'), *_tally(war, 'opponent')) == 'draw'
-
-
 def _outcome(clan_stars, clan_dest, opp_stars, opp_dest):
     if clan_stars != opp_stars:
         return 'win' if clan_stars > opp_stars else 'loss'
