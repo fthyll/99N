@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS, RAW_TAG
 
@@ -191,7 +191,7 @@ def _ranked(rows):
 
 def update_meta():
     os.makedirs('data', exist_ok=True)
-    meta = {'fetchedAt': datetime.utcnow().isoformat() + 'Z'}
+    meta = {'fetchedAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')}
     fetch_goldpass(meta)
     fetch_country_rank(meta)
     fetch_cwl(meta)

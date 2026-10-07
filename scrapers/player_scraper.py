@@ -1,11 +1,11 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS, RAW_TAG
 
 # Career stats per member. The clan payload only has current trophies and
-# weekly donations; /players/{tag} adds lifetime warStars, best trophies,
+# season donations; /players/{tag} adds lifetime warStars, best trophies,
 # capital contributions, attack/defense wins. 50 requests, once a day.
 
 CAREER_FIELDS = (
@@ -56,9 +56,11 @@ def update_player_careers():
     if not players:
         raise SystemExit("No player data fetched; aborting so we do not overwrite a good file with an empty one.")
 
-    today = datetime.now().strftime('%Y%m%d')
+    # UTC filename keeps daily players_YYYYMMDD aligned with clan_stats and
+    # the GitHub Actions cron regardless of runner tz.
+    today = datetime.now(timezone.utc).strftime('%Y%m%d')
     filename = f"players_{today}.json"
-    payload = json.dumps({'fetchedAt': datetime.utcnow().isoformat() + 'Z', 'players': players}, indent=4)
+    payload = json.dumps({'fetchedAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'), 'players': players}, indent=4)
     path = os.path.join('data/player_stats', filename)
     if os.path.exists(path):
         with open(path, 'r') as f:
