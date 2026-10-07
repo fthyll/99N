@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS
 
@@ -19,8 +19,10 @@ def update_clan_data():
 
     clan_data = res.json()
 
-    # 1. Save daily snapshot
-    today = datetime.now().strftime('%Y%m%d')
+    # 1. Save daily snapshot. Use UTC so the filename matches notify.py and
+    # the daily cron — a local-time filename at 23:30 local in a UTC-7 zone
+    # would land on the next calendar day in GitHub Actions.
+    today = datetime.now(timezone.utc).strftime('%Y%m%d')
     filename = f"members_{today}.json"
     snapshot_path = os.path.join('data/clan_stats', filename)
 

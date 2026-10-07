@@ -32,7 +32,7 @@ def update_raid_data():
             with open(index_path, 'r') as f:
                 try:
                     index = json.load(f)
-                except:
+                except json.JSONDecodeError:
                     index = []
 
         new_count = 0

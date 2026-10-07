@@ -159,8 +159,9 @@ function isWarDecided(w) {
 /*
  * KPI strip on Overview — the dashboard's focal numbers. Every value is
  * derived from data already fetched by init(); nothing here hits the network.
- * ponytail: donations are the API's weekly-reset totals; upgrade path is a
- * diff against the 7-day-old snapshot for a real delta.
+ * ponytail: donations are the API's per-season totals, reset on each new
+ * League season (~28-day cycle); upgrade path is a diff against an older
+ * snapshot for a real delta.
  */
 function renderKpis(clan) {
     const host = document.getElementById('aboutContent');
@@ -202,11 +203,11 @@ function renderKpis(clan) {
         ['Members', `${members.length} / 50`, clan.clanLevel ? `Clan level ${clan.clanLevel}` : ''],
         ['War Win Rate', winRate === null ? '—' : `${winRate}%`, decided.length ? `${wins}W of ${decided.length} decided wars` : 'no decided wars yet'],
         ['Total Trophies', totalTrophies.toLocaleString(), `avg ${avgTrophy.toLocaleString()}`],
-        ['Donations', donations.toLocaleString(), 'this week (API reset weekly)'],
+        ['Donations', donations.toLocaleString(), 'this season (resets per League season)'],
         ['Last Raid', destroyed ? `${destroyed} districts` : (raid?.raidsCompleted ?? '—'), raid ? `${(raid.capitalTotalLoot ?? 0).toLocaleString()} gold looted` : 'no raids logged'],
         ['Raid Efficiency', dpa === null ? '—' : `${dpa} d/a`, best ? `top: ${best.name} (${best.stars}★)` : 'attack log empty'],
     ];
-    // Career totals from /players — lifetime, unlike the weekly donation reset.
+    // Career totals from /players — lifetime, unlike the season donations total.
     const careers = Object.values(playerCareers);
     if (careers.length) {
         const stars = careers.reduce((s, p) => s + (p.warStars || 0), 0);

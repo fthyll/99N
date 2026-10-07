@@ -117,7 +117,7 @@ def notify_raid(dry_run=False):
 
 
 def notify_clan(dry_run=False):
-    """Membership changes and the weekly donation/reset report."""
+    """Membership changes and the donation-season reset report."""
     state = _load_state()
     seen = state.setdefault('clan', {})
     index_path = 'data/clan_stats_index.json'

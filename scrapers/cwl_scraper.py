@@ -15,7 +15,7 @@ from minting an empty commit every tick.
 
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 import http_client
 from config import BASE_URL, CLAN_TAG, HEADERS
@@ -47,7 +47,7 @@ def update_cwl():
         print("No change to league group; leaving meta.json untouched.")
         return
 
-    meta['fetchedAt'] = datetime.utcnow().isoformat() + 'Z'
+    meta['fetchedAt'] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
     os.makedirs('data', exist_ok=True)
     with open(META_PATH, 'w') as f:
         json.dump(meta, f, indent=4)
