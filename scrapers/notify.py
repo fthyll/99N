@@ -145,20 +145,23 @@ def notify_clan(dry_run=False):
         if joined or left:
             posts.append(embeds.membership_change(joined, left, len(current_tags)))
 
-    # Weekly donations reset: the API zeroes the counters, so a snapshot whose
-    # total is a fraction of the previous one marks the new week.
+    # Donation season reset: CoC zeroes the donation counters when a new
+    # League season opens (~28-day cycle, aligned to Monday 05:00 UTC), so a
+    # snapshot whose total is a fraction of the previous one marks the boundary.
+    # Not weekly — the cycle ran uninterrupted from 16 Sept to 04 Oct 2026 in
+    # this clan's archive before the next reset on 05 Oct.
     today = datetime.now(timezone.utc).strftime('%Y%m%d')
     totals = {
         'donations': sum((m.get('donations') or 0) for m in current_tags.values()),
         'received': sum((m.get('donationsReceived') or 0) for m in current_tags.values()),
     }
     prev_totals = seen.get('donations')
-    if prev_totals and prev_totals.get('week') != today:
+    if prev_totals and prev_totals.get('lastSeen') != today:
         before = prev_totals.get('total') or 1
         if totals['donations'] < before * 0.5:
             top = sorted(current_tags.values(), key=lambda m: m.get('donations') or 0, reverse=True)[:3]
-            posts.append(embeds.donation_week(prev_totals, totals, top))
-    seen['donations'] = {'week': today, 'total': totals['donations'], 'received': totals['received']}
+            posts.append(embeds.donation_reset(prev_totals, totals, top))
+    seen['donations'] = {'lastSeen': today, 'total': totals['donations'], 'received': totals['received']}
     seen['memberTags'] = sorted(current_tags)
     seen['lastSnapshot'] = index[0] if index else None
 

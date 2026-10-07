@@ -35,7 +35,7 @@ out = {
  "raid_start": embeds.raid_start(raid),
  "raid_summary": embeds.raid_summary(raid),
  "membership": embeds.membership_change(["Newbie"], ["Quitter"], 49),
- "donations": embeds.donation_week({"total": 20000, "received": 18000}, {"donations": 300, "received": 200},
+ "donations": embeds.donation_reset({"total": 20000, "received": 18000}, {"donations": 300, "received": 200},
                                    [{"name": "A", "donations": 100}]),
 }
 print(json.dumps(out))

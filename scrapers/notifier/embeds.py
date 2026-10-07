@@ -106,16 +106,16 @@ def membership_change(joined, left, total):
     }
 
 
-def donation_week(prev_totals, totals, top):
+def donation_reset(prev_totals, totals, top):
     delta = totals['donations'] - (prev_totals.get('total') or 0)
     top_txt = '\n'.join(
         f"{i + 1}. **{m.get('name', '?')}** — {m.get('donations', 0):,}"
         for i, m in enumerate(top)) or '—'
     return {
-        'title': '🎁 Weekly donations reset',
-        'description': f"Last week the clan donated **{prev_totals.get('total', 0):,}** "
+        'title': '🎁 Donation season reset',
+        'description': f"Last season the clan donated **{prev_totals.get('total', 0):,}** "
                        f"(received {prev_totals.get('received', 0):,}).\n"
-                       f"The counters have reset — a new week starts now "
+                       f"The counters have reset — a new season starts now "
                        f"({delta:+,} vs last close).",
         'color': GREEN,
         'fields': [{'name': 'Early leaders', 'value': top_txt, 'inline': False}],
