@@ -1,5 +1,5 @@
 {
-    "fetchedAt": "2026-10-10T07:29:01.514908Z",
+    "fetchedAt": "2026-10-10T15:07:58.257603Z",
     "goldpass": {
         "startTime": "20261001T080000.000Z",
         "endTime": "20261101T080000.000Z"
@@ -11,8 +11,8 @@
         "scanned": 200,
         "trophies": 0,
         "warLeague": {
-            "id": 48000005,
-            "name": "Silver League II"
+            "id": 48000006,
+            "name": "Silver League I"
         },
         "capitalLeague": {
             "id": 85000007,
