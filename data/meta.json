@@ -1,5 +1,5 @@
 {
-    "fetchedAt": "2026-10-09T15:58:00.292664Z",
+    "fetchedAt": "2026-10-10T07:29:01.514908Z",
     "goldpass": {
         "startTime": "20261001T080000.000Z",
         "endTime": "20261101T080000.000Z"
@@ -20,7 +20,7 @@
         }
     },
     "cwl": {
-        "state": "inWar",
+        "state": "ended",
         "season": "2026-10-02",
         "standings": [
             {
