@@ -149,7 +149,15 @@
                 "name": "JOYx99N",
                 "townhallLevel": 10,
                 "mapPosition": 9,
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#GL2YYGC2Q",
+                    "defenderTag": "#GYLPLPVC2",
+                    "stars": 1,
+                    "destructionPercentage": 77,
+                    "order": 10,
+                    "duration": 180
+                }
             },
             {
                 "tag": "#99C2U8QUP",
@@ -186,9 +194,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/1zYA2gRSiBWBu9MYqmwMqriXybawsmXjat2WG6Hxoac.png"
         },
         "clanLevel": 2,
-        "attacks": 0,
-        "stars": 0,
-        "destructionPercentage": 0.0,
+        "attacks": 1,
+        "stars": 1,
+        "destructionPercentage": 7.7,
         "members": [
             {
                 "tag": "#GJRV9RGCL",
@@ -277,6 +285,16 @@
                 "name": "arvin",
                 "townhallLevel": 9,
                 "mapPosition": 9,
+                "attacks": [
+                    {
+                        "attackerTag": "#GL2YYGC2Q",
+                        "defenderTag": "#GYLPLPVC2",
+                        "stars": 1,
+                        "destructionPercentage": 77,
+                        "order": 10,
+                        "duration": 180
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GQRLCCUYC",
