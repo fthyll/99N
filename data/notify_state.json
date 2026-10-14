@@ -1,13 +1,12 @@
 {
     "clan": {
         "donations": {
-            "lastSeen": "20261013",
-            "received": 13228,
-            "total": 1157
+            "lastSeen": "20261014",
+            "received": 12753,
+            "total": 775
         },
-        "lastSnapshot": "members_20261013.json",
+        "lastSnapshot": "members_20261014.json",
         "memberTags": [
-            "#88GLRP9LQ",
             "#99C2U8QUP",
             "#G0GCCPGUR",
             "#G0V8LUY98",
