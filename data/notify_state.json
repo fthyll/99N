@@ -110,6 +110,11 @@
             "clanStars": 30,
             "opponentStars": 14,
             "state": "inWar"
+        },
+        "20261014T164859.000Z": {
+            "clanStars": 26,
+            "opponentStars": 0,
+            "state": "inWar"
         }
     }
 }
