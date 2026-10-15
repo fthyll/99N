@@ -1,6 +1,39 @@
 {
     "items": [
         {
+            "result": "lose",
+            "endTime": "20261015T170912.000Z",
+            "teamSize": 10,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png"
+                },
+                "clanLevel": 4,
+                "attacks": 9,
+                "stars": 26,
+                "destructionPercentage": 87.2,
+                "expEarned": 97
+            },
+            "opponent": {
+                "tag": "#2JPPCG029",
+                "name": "Baran_CiTI46",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/1zYA2gRSiBWBu9MYqmwMqriXybawsmXjat2WG6Hxoac.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/1zYA2gRSiBWBu9MYqmwMqriXybawsmXjat2WG6Hxoac.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/1zYA2gRSiBWBu9MYqmwMqriXybawsmXjat2WG6Hxoac.png"
+                },
+                "clanLevel": 2,
+                "stars": 29,
+                "destructionPercentage": 96.1
+            }
+        },
+        {
             "result": "win",
             "endTime": "20261010T034055.000Z",
             "teamSize": 30,

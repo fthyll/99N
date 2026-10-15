@@ -1,5 +1,5 @@
 {
-    "state": "inWar",
+    "state": "warEnded",
     "teamSize": 10,
     "attacksPerMember": 2,
     "battleModifier": "none",
@@ -67,7 +67,15 @@
                         "duration": 103
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#GUGGULJG8",
+                    "defenderTag": "#GQRLCCUYC",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 18,
+                    "duration": 75
+                }
             },
             {
                 "tag": "#Q0RP9LCR8",
@@ -84,7 +92,15 @@
                         "duration": 123
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#GL2YYGC2Q",
+                    "defenderTag": "#Q0RP9LCR8",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 19,
+                    "duration": 108
+                }
             },
             {
                 "tag": "#GQCYYGRC0",
@@ -134,7 +150,15 @@
                         "duration": 138
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#QVGGP89V8",
+                    "defenderTag": "#PU9C0L2VY",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 20,
+                    "duration": 167
+                }
             },
             {
                 "tag": "#GG0V0JUG2",
@@ -221,7 +245,15 @@
                         "duration": 97
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#GUGGULJG8",
+                    "defenderTag": "#GYYRQPPLQ",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 17,
+                    "duration": 79
+                }
             }
         ]
     },
@@ -234,9 +266,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/1zYA2gRSiBWBu9MYqmwMqriXybawsmXjat2WG6Hxoac.png"
         },
         "clanLevel": 2,
-        "attacks": 7,
-        "stars": 17,
-        "destructionPercentage": 56.1,
+        "attacks": 11,
+        "stars": 29,
+        "destructionPercentage": 96.1,
         "members": [
             {
                 "tag": "#GJRV9RGCL",
@@ -331,6 +363,24 @@
                 "name": "\u2606poori\u2606",
                 "townhallLevel": 12,
                 "mapPosition": 3,
+                "attacks": [
+                    {
+                        "attackerTag": "#GUGGULJG8",
+                        "defenderTag": "#GYYRQPPLQ",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 17,
+                        "duration": 79
+                    },
+                    {
+                        "attackerTag": "#GUGGULJG8",
+                        "defenderTag": "#GQRLCCUYC",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 18,
+                        "duration": 75
+                    }
+                ],
                 "opponentAttacks": 0
             },
             {
@@ -361,6 +411,14 @@
                         "destructionPercentage": 77,
                         "order": 10,
                         "duration": 180
+                    },
+                    {
+                        "attackerTag": "#GL2YYGC2Q",
+                        "defenderTag": "#Q0RP9LCR8",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 19,
+                        "duration": 108
                     }
                 ],
                 "opponentAttacks": 1,
@@ -386,6 +444,14 @@
                         "destructionPercentage": 100,
                         "order": 14,
                         "duration": 163
+                    },
+                    {
+                        "attackerTag": "#QVGGP89V8",
+                        "defenderTag": "#PU9C0L2VY",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 20,
+                        "duration": 167
                     }
                 ],
                 "opponentAttacks": 1,
