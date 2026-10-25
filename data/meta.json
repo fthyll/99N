@@ -1,5 +1,5 @@
 {
-    "fetchedAt": "2026-10-24T13:11:52.858447Z",
+    "fetchedAt": "2026-10-25T13:35:45.824934Z",
     "goldpass": {
         "startTime": "20261001T080000.000Z",
         "endTime": "20261101T080000.000Z"
@@ -20,6 +20,7 @@
         }
     },
     "cwl": {
-        "state": "notInSeason"
+        "state": "unavailable",
+        "httpStatus": 520
     }
 }
