@@ -1,5 +1,5 @@
 {
-    "fetchedAt": "2026-10-25T17:13:33.791902Z",
+    "fetchedAt": "2026-10-26T15:58:47.054657Z",
     "goldpass": {
         "startTime": "20261001T080000.000Z",
         "endTime": "20261101T080000.000Z"
@@ -15,8 +15,8 @@
             "name": "Silver League I"
         },
         "capitalLeague": {
-            "id": 85000006,
-            "name": "Silver League I"
+            "id": 85000005,
+            "name": "Silver League II"
         }
     },
     "cwl": {
