@@ -1,12 +1,14 @@
 {
     "clan": {
         "donations": {
-            "lastSeen": "20261108",
+            "lastSeen": "20261109",
             "received": 30,
             "total": 0
         },
-        "lastSnapshot": "members_20261108.json",
+        "lastSnapshot": "members_20261109.json",
         "memberTags": [
+            "#88GLRP9LQ",
+            "#9090VYJLJ",
             "#99C2U8QUP",
             "#G0GCCPGUR",
             "#G0V8LUY98",
@@ -54,8 +56,7 @@
             "#LRL09G0QJ",
             "#LVCJJ2QGC",
             "#PU9C0L2VY",
-            "#Q0RP9LCR8",
-            "#R8PLQ0VGP"
+            "#Q0RP9LCR8"
         ]
     },
     "raid": {
