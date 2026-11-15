@@ -2,10 +2,10 @@
     "state": "ongoing",
     "startTime": "20261113T070000.000Z",
     "endTime": "20261116T070000.000Z",
-    "capitalTotalLoot": 247967,
+    "capitalTotalLoot": 250497,
     "raidsCompleted": 9,
-    "totalAttacks": 144,
-    "enemyDistrictsDestroyed": 45,
+    "totalAttacks": 146,
+    "enemyDistrictsDestroyed": 46,
     "offensiveReward": 0,
     "defensiveReward": 0,
     "members": [
@@ -176,6 +176,14 @@
             "attackLimit": 5,
             "bonusAttackLimit": 1,
             "capitalResourcesLooted": 12151
+        },
+        {
+            "tag": "#GYLYL9VG0",
+            "name": "LIBREx99N",
+            "attacks": 2,
+            "attackLimit": 5,
+            "bonusAttackLimit": 1,
+            "capitalResourcesLooted": 2530
         },
         {
             "tag": "#GYLPLPVC2",
@@ -1998,9 +2006,9 @@
                     "medium": "https://api-assets.clashofclans.com/badges/200/cQ-Ho3wkwUCC5eYKjHrCzkMq7XxyfTfUQNxOoL3bOVA.png"
                 }
             },
-            "attackCount": 2,
+            "attackCount": 4,
             "districtCount": 5,
-            "districtsDestroyed": 0,
+            "districtsDestroyed": 1,
             "districts": [
                 {
                     "id": 70000000,
@@ -2033,20 +2041,38 @@
                     "id": 70000003,
                     "name": "Balloon Lagoon",
                     "districtHallLevel": 2,
-                    "destructionPercent": 0,
+                    "destructionPercent": 26,
                     "stars": 0,
-                    "attackCount": 0,
-                    "totalLooted": 0
+                    "attackCount": 1,
+                    "totalLooted": 1400,
+                    "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GYLYL9VG0",
+                                "name": "LIBREx99N"
+                            },
+                            "destructionPercent": 26,
+                            "stars": 0
+                        }
+                    ]
                 },
                 {
                     "id": 70000004,
                     "name": "Builder's Workshop",
                     "districtHallLevel": 1,
-                    "destructionPercent": 84,
-                    "stars": 2,
-                    "attackCount": 2,
-                    "totalLooted": 4265,
+                    "destructionPercent": 100,
+                    "stars": 3,
+                    "attackCount": 3,
+                    "totalLooted": 5395,
                     "attacks": [
+                        {
+                            "attacker": {
+                                "tag": "#GYLYL9VG0",
+                                "name": "LIBREx99N"
+                            },
+                            "destructionPercent": 100,
+                            "stars": 3
+                        },
                         {
                             "attacker": {
                                 "tag": "#GG2PY22CR",
