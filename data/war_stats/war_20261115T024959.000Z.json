@@ -104,7 +104,15 @@
                 "name": "LUCIAx99N",
                 "townhallLevel": 8,
                 "mapPosition": 14,
-                "opponentAttacks": 0
+                "opponentAttacks": 2,
+                "bestOpponentAttack": {
+                    "attackerTag": "#GU0Q99ULC",
+                    "defenderTag": "#GQQLY8Y0P",
+                    "stars": 2,
+                    "destructionPercentage": 97,
+                    "order": 24,
+                    "duration": 180
+                }
             },
             {
                 "tag": "#GQRLCCUYC",
@@ -129,7 +137,15 @@
                         "duration": 73
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#RPJLVYQVC",
+                    "defenderTag": "#GQRLCCUYC",
+                    "stars": 1,
+                    "destructionPercentage": 68,
+                    "order": 25,
+                    "duration": 106
+                }
             },
             {
                 "tag": "#GQC2R8QCY",
@@ -181,7 +197,15 @@
                 "name": "LATTAFAx99N",
                 "townhallLevel": 8,
                 "mapPosition": 15,
-                "opponentAttacks": 0
+                "opponentAttacks": 2,
+                "bestOpponentAttack": {
+                    "attackerTag": "#GU0Q99ULC",
+                    "defenderTag": "#GG2PY22CR",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 23,
+                    "duration": 143
+                }
             },
             {
                 "tag": "#GG0V0JUG2",
@@ -307,9 +331,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/lLFMXgASv30majdJWOtuw4bfvmHZq8mDexXKPF9KRkc.png"
         },
         "clanLevel": 3,
-        "attacks": 8,
-        "stars": 24,
-        "destructionPercentage": 53.333332,
+        "attacks": 13,
+        "stars": 30,
+        "destructionPercentage": 71.0,
         "members": [
             {
                 "tag": "#GRRJ8U0VC",
@@ -331,6 +355,24 @@
                 "name": "Klein",
                 "townhallLevel": 8,
                 "mapPosition": 13,
+                "attacks": [
+                    {
+                        "attackerTag": "#GJLRPRJPJ",
+                        "defenderTag": "#GQQLY8Y0P",
+                        "stars": 2,
+                        "destructionPercentage": 60,
+                        "order": 21,
+                        "duration": 95
+                    },
+                    {
+                        "attackerTag": "#GJLRPRJPJ",
+                        "defenderTag": "#GG2PY22CR",
+                        "stars": 1,
+                        "destructionPercentage": 92,
+                        "order": 22,
+                        "duration": 156
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GYLPLPVC2",
@@ -371,6 +413,24 @@
                 "name": "alex",
                 "townhallLevel": 8,
                 "mapPosition": 12,
+                "attacks": [
+                    {
+                        "attackerTag": "#GU0Q99ULC",
+                        "defenderTag": "#GG2PY22CR",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 23,
+                        "duration": 143
+                    },
+                    {
+                        "attackerTag": "#GU0Q99ULC",
+                        "defenderTag": "#GQQLY8Y0P",
+                        "stars": 2,
+                        "destructionPercentage": 97,
+                        "order": 24,
+                        "duration": 180
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GYLPLPVC2",
@@ -559,6 +619,16 @@
                 "name": "@POOH",
                 "townhallLevel": 10,
                 "mapPosition": 8,
+                "attacks": [
+                    {
+                        "attackerTag": "#RPJLVYQVC",
+                        "defenderTag": "#GQRLCCUYC",
+                        "stars": 1,
+                        "destructionPercentage": 68,
+                        "order": 25,
+                        "duration": 106
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#GYYRQPPLQ",
