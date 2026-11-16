@@ -35,12 +35,15 @@ export const getTHImage = (lv) => `assets/Town_Hall${lv}.webp`;
  * @returns {Date|null}
  */
 export function parseCoCDate(dateStr) {
-    if (!dateStr) return null;
+    if (!dateStr || typeof dateStr !== 'string') return null;
+    if (!/^[0-9]{8}T[0-9]{6}/.test(dateStr)) return null;
     const year = dateStr.substring(0, 4);
     const month = parseInt(dateStr.substring(4, 6)) - 1; // JS months are 0-indexed
     const day = dateStr.substring(6, 8);
     const hour = dateStr.substring(9, 11);
     const min = dateStr.substring(11, 13);
     const sec = dateStr.substring(13, 15);
+    if (![year, month, day, hour, min, sec].every(n => !Number.isNaN(Number(n)))) return null;
+    if (month < 0 || month > 11 || day < 1 || day > 31 || hour > 23 || min > 59 || sec > 59) return null;
     return new Date(Date.UTC(year, month, day, hour, min, sec));
 }

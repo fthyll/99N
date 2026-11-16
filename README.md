@@ -19,9 +19,25 @@ Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on
 | ![Overview](demo-images/warroom_overview.png) | ![Members](demo-images/warroom_members.png) |
 | **Wars — history & results** | **Stats — trend & conversion** |
 | ![Wars](demo-images/warroom_wars.png) | ![Stats](demo-images/warroom_stats.png) |
+| **Raids — participant attacks, loot & damage** | |
+| ![Raids](demo-images/warroom_raids.png) | |
 
-> War screenshots use a synthetic war-history fixture (the archive was empty
-> when they were captured) — the real site fills from actual 99N wars.
+Captured on 2026-11-16 from the local dashboard at 1440×1080, using the
+repository's actual archived JSON snapshots. The Stats screenshot selects
+**This Month**, which falls back to **Previous War** when the month has no wars.
+The stale-data indicator reflects the age of these snapshots;
+no live API data or synthetic TH19 members were added for the screenshots.
+
+## Town Hall assets
+
+Town Hall levels **1–19** use `assets/Town_Hall<level>.webp`, resolved by
+`getTHImage()` in `js/constants.js`. TH19 is a 527×534 WebP (52,030 bytes),
+converted from the supplied PNG with its aspect ratio preserved. Asset dimensions
+vary across levels; the frontend controls their display size.
+
+Members, war attacks/defenses, raid participants, and raid absentees share this
+path convention. TH19 rendering is tested even though the current roster archive
+only reaches TH18. See [CHANGELOG.md](CHANGELOG.md) for the latest changes.
 
 ## How it works
 
@@ -170,9 +186,14 @@ Files land in `scrapers/data/` when run from that directory — run them from th
 
 ## Tests
 
-No dependencies beyond Node and Python; run from the repo root:
+Run from the repo root. The frontend tests use Node built-ins; Python scraper
+tests also need the scraper dependencies (`requests` and `python-dotenv`).
 
 ```bash
+npm test                       # all frontend test files, run in parallel
+npm run check                  # syntax checks for frontend modules
+node js/assets.test.mjs        # TH1–TH19 asset paths and WebP headers
+node js/render-regression.test.mjs # real TH19 renders, dates, war-card click handler
 node js/xss.test.mjs            # 27 checks: weaponised names render inert in every view
 node js/warmerge.test.mjs       # 16 checks: warlog pairing, in-place promotion, no duplicates
 node js/statsrange.test.mjs     # 17 checks: empty-range fallback (clock is pinned)
@@ -196,10 +217,10 @@ python3 scripts/check_html.py            # index.html <div> balance + section ne
 The Python tests need `COC_API_TOKEN` and `CLAN_TAG` set to *any* value —
 `config.py` refuses to import without them. No request is ever made.
 
-Two suites that reason about the calendar (`statsrange`, and the unarchived-war
-branch of `warstate`) pin their own clock. Without a pinned `now` they start
-failing on the 1st of a month, which is exactly when the behaviour they cover
-matters.
+`statsrange` pins its clock and generates valid CoC timestamps with the `T`
+separator. `warstate` checks the archive against the current time. Render tests
+import the real modules rather than injecting dependencies into a combined
+probe, so missing imports fail and parallel runs share no temporary probe file.
 
 All of the above run in CI on every push and PR (`.github/workflows/tests.yml`),
 plus a check that `index.html` has balanced `<div>`s and keeps every

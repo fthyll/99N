@@ -19,11 +19,7 @@ t('esc survives quotes/amp', esc(`A & "b" 'c'`) === 'A &amp; &quot;b&quot; &#39;
 t('esc passes numbers/undefined', esc(0) === '0' && esc(undefined) === '' && esc(null) === '');
 
 // Run every export of render.js against data whose names are payloads.
-const src = fs.readFileSync(path.join(dir, 'render.js'), 'utf8')
-  + '\nexport { getWarSummaryHtml };\n';
-const tmp = path.join(dir, '.render.probe.mjs');
-fs.writeFileSync(tmp, src);
-const R = await import(pathToFileURL(tmp).href);
+const R = await import('./render.js');
 
 const poison = (o) => {
   for (const k of Object.keys(o)) {
@@ -52,12 +48,6 @@ const war = poison({
           members: [{ tag: '#B1', name: 'n', townhallLevel: 15, mapPosition: 1, attacks: [atk], opponentAttacks: [atk], bestOpponentAttack: atk }] },
 });
 war.filename = 'x.json';
-
-const bodies = [
-  ['getWarSummaryHtml', R.getWarSummaryHtml ? R.getWarSummaryHtml(war, new Date()) : ''],
-  ['renderWarHistory', (() => { R.renderWarHistory([war]); return document.__warHistoryList || ''; })()],
-  ['renderMembers', (() => { R.renderMembers(clan.memberList.slice(0, 3)); return ''; })()],
-];
 
 // render* write into fake containers: capture innerHTML instead of trusting stdout.
 const captured = {};
@@ -102,5 +92,4 @@ if (rawTag.length) console.log('  raw onerror-tag matches:', rawTag.slice(0, 3))
 // an attribute value is inert text, so match only raw-angle occurrences.
 t('payload never appears with a raw angle bracket', !allHtml.includes('<img src=x'));
 
-fs.unlinkSync(tmp);
 process.exit(fail);

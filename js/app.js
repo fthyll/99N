@@ -608,6 +608,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('raid-subtab-defenses')?.addEventListener('click', () => switchRaidSubView('defenses'));
     
     document.addEventListener('click', (e) => {
+        const card = e.target.closest('.war-card[data-war-file]');
+        if (card) loadWarDetail(card.getAttribute('data-war-file'));
         const btn = e.target.closest('.raid-sort-btn');
         if (btn) {
             const table = btn.getAttribute('data-table');

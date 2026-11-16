@@ -16,7 +16,7 @@ const check = (name, cond, detail = '') => {
 };
 
 const html = read('index.html');
-const render = read('js/render.js');
+const render = ['js/render-about.js','js/render.js'].map(f => read(f)).join('\n');
 
 // The nav is the source of truth for which tabs exist, so a new tab that is
 // added to the nav without a button fails here rather than in someone's browser.

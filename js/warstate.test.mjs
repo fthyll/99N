@@ -9,15 +9,11 @@ import { fileURLToPath, pathToFileURL } from 'url';
 import { mergeWarLog } from './warmerge.js';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
-const src = fs.readFileSync(path.join(dir, 'render.js'), 'utf8')
-  + '\nexport { getWarSummaryHtml };\n';
-const tmp = path.join(dir, '.render.probe.mjs');
-fs.writeFileSync(tmp, src);
+import { getWarSummaryHtml } from './render-war.js';
 
 global.document = { getElementById: () => null, querySelectorAll: () => [] };
 global.window = {};
 
-const { getWarSummaryHtml } = await import(pathToFileURL(tmp).href);
 const base = path.join(dir, '..', 'data', 'war_stats');
 const index = JSON.parse(fs.readFileSync(path.join(dir, '..', 'data', 'war_stats_index.json'), 'utf8'));
 const now = new Date();
@@ -83,4 +79,3 @@ console.log('label distribution     :', labels);
 console.log(unarchived.length === 0
   ? 'PASS: every finished war is decided; no stale snapshot is scored.'
   : `PASS: no stale snapshot is scored. ${unarchived.length} finished war(s) await API archival and correctly stay Incomplete.`);
-fs.unlinkSync(tmp);

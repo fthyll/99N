@@ -11,7 +11,7 @@ const check = (name, cond, detail = '') => {
     else { console.log('FAIL  ' + name + (detail ? '   [' + detail + ']' : '')); process.exitCode = 1; }
 };
 
-const cocStamp = (d) => d.toISOString().replace(/[-:T]/g, '').substring(0, 15) + '000Z';
+const cocStamp = (d) => d.toISOString().replace(/[-:]/g, '');
 
 // A fixed "now" so the calendar-month rules below cannot drift: the suite must
 // assert the same thing on the 1st of a month as on the 28th.
