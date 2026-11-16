@@ -2,6 +2,39 @@
     "items": [
         {
             "result": "lose",
+            "endTime": "20261116T024959.000Z",
+            "teamSize": 15,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png"
+                },
+                "clanLevel": 4,
+                "attacks": 17,
+                "stars": 44,
+                "destructionPercentage": 98.73333,
+                "expEarned": 126
+            },
+            "opponent": {
+                "tag": "#2RJGJVGPU",
+                "name": "PGD Clashers",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/lLFMXgASv30majdJWOtuw4bfvmHZq8mDexXKPF9KRkc.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/lLFMXgASv30majdJWOtuw4bfvmHZq8mDexXKPF9KRkc.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/lLFMXgASv30majdJWOtuw4bfvmHZq8mDexXKPF9KRkc.png"
+                },
+                "clanLevel": 3,
+                "stars": 45,
+                "destructionPercentage": 100.0
+            }
+        },
+        {
+            "result": "lose",
             "endTime": "20261015T170912.000Z",
             "teamSize": 10,
             "attacksPerMember": 2,
