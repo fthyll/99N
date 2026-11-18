@@ -1,6 +1,39 @@
 {
     "items": [
         {
+            "result": "win",
+            "endTime": "20261118T111059.000Z",
+            "teamSize": 20,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png"
+                },
+                "clanLevel": 4,
+                "attacks": 21,
+                "stars": 60,
+                "destructionPercentage": 100.0,
+                "expEarned": 218
+            },
+            "opponent": {
+                "tag": "#2GR8LJ0JP",
+                "name": "Angker Tanete",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/9wf8ZS4U3zVLVZLBglFp7f3OaaYPBPCcMJVCoOaZxLw.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/9wf8ZS4U3zVLVZLBglFp7f3OaaYPBPCcMJVCoOaZxLw.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/9wf8ZS4U3zVLVZLBglFp7f3OaaYPBPCcMJVCoOaZxLw.png"
+                },
+                "clanLevel": 6,
+                "stars": 57,
+                "destructionPercentage": 97.8
+            }
+        },
+        {
             "result": "lose",
             "endTime": "20261116T024959.000Z",
             "teamSize": 15,
