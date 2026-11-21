@@ -87,6 +87,23 @@ export async function fetchPlayerCareersForDate(dateYmd) {
     return await fetchPlayerCareers(snapshot);
 }
 
+export async function fetchPlayerProfiles() {
+    try { return await fetchData('data/player_profiles.json'); }
+    catch (e) { console.warn('No detailed player profiles.', e); return null; }
+}
+
+export async function fetchPlayerTrend(tag) {
+    try {
+        const snapshot = await fetchData('data/player_trends.json');
+        return snapshot?.players?.[tag] || [];
+    } catch (e) { console.warn('No player trend data.', e); return []; }
+}
+
+export async function fetchRankings() {
+    try { return await fetchData('data/rankings.json'); }
+    catch (e) { console.warn('No ranking snapshots.', e); return null; }
+}
+
 export async function fetchSync(name) {
     // Heartbeat files written by the 15m war/raid jobs (spec §10). Absent until
     // the first data-changing run, so a miss is normal, not an error.

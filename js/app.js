@@ -15,6 +15,9 @@ import {
     fetchWarLog,
     fetchPlayerCareers,
     fetchPlayerCareersForDate,
+    fetchPlayerProfiles,
+    fetchPlayerTrend,
+    fetchRankings,
     fetchSync,
     fetchMeta,
 } from './api.js';
@@ -34,6 +37,9 @@ import { renderCharts } from './charts.js';
 import { raidParticipation, raidAbsentees, raidAttendanceSummary } from './raidstats.js';
 import { freshness, newestTimestamp } from './freshness.js';
 import { refreshOutcome, refreshMessage } from './refresh.js';
+import { filterMembers, memberProfileFallback, renderPlayerProfile, renderPlayerTrend } from './player-profile.js';
+import { renderRankings } from './render-rankings.js';
+import { renderWarRaidAnalytics } from './warraid-analytics.js';
 
 // Data-freshness indicator (spec §10): the chip tracks whichever pipeline
 // synced last — the daily clan job (meta.fetchedAt) or the 15m war/raid
@@ -94,6 +100,15 @@ async function syncReport(previous) {
 // Global state variables
 let allMembers = [];
 let playerCareers = {};        // tag -> career fields from /players
+let playerCareerSnapshotAt = '';
+let playerProfiles = {};       // tag -> rich profile plus current-only battle/ranked logs
+let playerProfileSnapshotAt = '';
+let playerTrendCache = new Map();
+let rankingSnapshots = null;   // cached leaderboard snapshot from data/rankings.json
+let currentRankingType = 'players';
+let currentRankingScope = 'global';
+let rankingShowAll = false;
+let rankingsControlBound = false;
 let clanMeta = null;           // goldpass / country rank / CWL group
 let warLogHistory = [];        // summary-only pseudo-wars from /warlog           
 let latestClanData = null;     
@@ -238,6 +253,7 @@ function renderKpis(clan) {
             <p class="kpi-sub">avg ${(members.length ? members.reduce((s, m) => s + (m.townHallLevel || 0), 0) / members.length : 0).toFixed(1)} · max TH${Math.max(0, ...members.map(m => m.townHallLevel || 0))}</p>
         </div>`;
     host.insertBefore(grid, host.firstChild);
+    host.classList.add('about-with-kpis');
 }
 
 function updateHeader(name, badgeUrl) {
@@ -278,12 +294,14 @@ function preRoute() {
     const tabWar = document.getElementById('tab-war');
     const tabStats = document.getElementById('tab-stats');
     const tabRaids = document.getElementById('tab-raids');
+    const tabRankings = document.getElementById('tab-rankings');
     if (!tabAbout || !tabMembers || !tabWar || !tabStats || !tabRaids) return;
-    [tabAbout, tabMembers, tabWar, tabStats, tabRaids].forEach(t => t?.classList.remove('active'));
+    [tabAbout, tabMembers, tabWar, tabStats, tabRaids, tabRankings].forEach(t => t?.classList.remove('active'));
     if (!hash || hash === 'about') tabAbout.classList.add('active');
     else if (hash === 'members') tabMembers.classList.add('active');
     else if (hash.startsWith('war')) tabWar.classList.add('active');
     else if (hash === 'stats') tabStats.classList.add('active');
+    else if (hash === 'rankings') tabRankings?.classList.add('active');
     else if (hash.startsWith('raids')) tabRaids.classList.add('active');
 }
 
@@ -292,6 +310,7 @@ async function init() {
         const clanData = await fetchClanData();
         latestClanData = clanData;
         allMembers = clanData.memberList || clanData.members || [];
+        populateMemberTownHallFilter();
         updateDisplay();
         renderAbout(latestClanData, clanMeta);
         bindAboutPageEvents();
@@ -324,13 +343,21 @@ async function init() {
             } catch (e) { return null; }
         });
         fullWarHistory = (await Promise.all(warDataPromises)).filter(w => w !== null);
+        renderWarRaidAnalytics(fullWarHistory, fullRaidHistory);
 
-        // Optional enrichments — every one tolerates a missing file.
-        const [careers, meta, warlog] = await Promise.all([
-            fetchPlayerCareers(), fetchMeta(), fetchWarLog()]);
+        // Optional enrichments; missing snapshots never block the dashboard.
+        const [careers, profiles, meta, warlog] = await Promise.all([
+            fetchPlayerCareers(), fetchPlayerProfiles(), fetchMeta(), fetchWarLog()]);
         playerCareers = careers?.players || {};
+        playerCareerSnapshotAt = careers?.fetchedAt || '';
+        playerProfiles = profiles?.players || {};
+        playerProfileSnapshotAt = profiles?.fetchedAt || '';
         clanMeta = meta;
         initFreshness(meta);
+        rankingSnapshots = await fetchRankings();
+        renderRankings(rankingSnapshots,
+            document.getElementById('rankingType')?.value || 'players',
+            document.getElementById('rankingScope')?.value || 'global', rankingShowAll ? 200 : 50);
         // The About page renders before meta arrives, so repaint it now that the
         // CWL group and league table are known.
         if (latestClanData) renderAbout(latestClanData, clanMeta);
@@ -359,6 +386,7 @@ async function init() {
         });
         const raidResults = await Promise.all(raidDataPromises);
         fullRaidHistory = raidResults.flat().filter(r => r !== null);
+        renderWarRaidAnalytics(fullWarHistory, fullRaidHistory);
         setupRaidCalendar();
         handleInitialRoute();
     } catch (e) { console.error("Could not load raid history.", e); handleInitialRoute(); }
@@ -483,6 +511,10 @@ async function handleMemberDateChange(dateValue, shouldFetch = true) {
         // missing player snapshot hides career-only fields instead.
         const careers = await fetchPlayerCareersForDate(dateValue);
         playerCareers = (careers && careers.players) || {};
+        playerCareerSnapshotAt = careers?.fetchedAt || '';
+        playerProfiles = {};
+        playerProfileSnapshotAt = '';
+        populateMemberTownHallFilter();
         updateDisplay();
     } catch (e) {
         const fb = await fetchClanData(); allMembers = fb.memberList || fb.members || []; updateDisplay();
@@ -523,23 +555,43 @@ function filterWarHistory() {
     renderWarHistory(filtered);
 }
 
+function populateMemberTownHallFilter() {
+    const select = document.getElementById('memberTownHallFilter');
+    if (!select) return;
+    const selected = select.value;
+    const levels = [...new Set(allMembers.map(m => Number(m.townHallLevel)).filter(Number.isFinite))].sort((a, b) => b - a);
+    select.innerHTML = '<option value="">All Town Halls</option>' + levels.map(level => `<option value="${level}">TH${level}</option>`).join('');
+    if (levels.includes(Number(selected))) select.value = selected;
+}
+
 function updateDisplay() {
     const sortKey = document.getElementById('sortBy')?.value || 'league';
+    const shownPlayers = new Set(allMembers.map(member => member.tag));
+    const activeProfiles = Object.fromEntries(Object.entries(playerProfiles).filter(([tag]) => shownPlayers.has(tag)));
+    const careersMatchRoster = playerCareerSnapshotAt.slice(0, 10) === document.getElementById('memberDate')?.value;
+    const profilesMatchRoster = playerProfileSnapshotAt.slice(0, 10) === document.getElementById('memberDate')?.value;
     let filtered = allMembers.filter(m => currentRoleFilter === 'all' || m.role === currentRoleFilter);
+    filtered = filterMembers(filtered, {
+        query: document.getElementById('memberSearch')?.value || '',
+        townHall: document.getElementById('memberTownHallFilter')?.value || '',
+        warPreference: document.getElementById('memberWarPreferenceFilter')?.value || '',
+        profiles: profilesMatchRoster ? activeProfiles : {},
+    });
     updateMemberCount(filtered.length);
+    const careersForRoster = careersMatchRoster ? playerCareers : {};
     filtered.sort((a, b) => {
         if (sortKey === 'role') return (roleWeight[b.role] || 0) - (roleWeight[a.role] || 0);
         if (sortKey === 'net') return ((b.donations||0)-(b.donationsReceived||0)) - ((a.donations||0)-(a.donationsReceived||0));
         // /players fields live outside the clan snapshot; join via careers map.
-        if (sortKey === 'warStars') return (playerCareers[b.tag]?.warStars || 0) - (playerCareers[a.tag]?.warStars || 0);
-        if (sortKey === 'bestTrophies') return (playerCareers[b.tag]?.bestTrophies || 0) - (playerCareers[a.tag]?.bestTrophies || 0);
+        if (sortKey === 'warStars') return (careersForRoster[b.tag]?.warStars || 0) - (careersForRoster[a.tag]?.warStars || 0);
+        if (sortKey === 'bestTrophies') return (careersForRoster[b.tag]?.bestTrophies || 0) - (careersForRoster[a.tag]?.bestTrophies || 0);
         if (sortKey === 'league') {
             const lA = a.leagueTier?.id || a.league?.id || 0; const lB = b.leagueTier?.id || b.league?.id || 0;
             return lA !== lB ? lB - lA : (b.trophies || 0) - (a.trophies || 0);
         }
         return (b[sortKey] || 0) - (a[sortKey] || 0);
     });
-    renderMembers(filtered, playerCareers);
+    renderMembers(filtered, careersForRoster);
 }
 
 function setRoleFilter(role, btn) {
@@ -603,13 +655,38 @@ document.addEventListener('DOMContentLoaded', () => {
         renderRaidAttendance(fullRaidHistory, allMembers);
     });
     document.getElementById('tab-raids')?.addEventListener('click', () => { switchView('raids'); switchRaidSubView('summary'); });
+    document.getElementById('tab-rankings')?.addEventListener('click', () => {
+        switchView('rankings');
+        currentRankingType = document.getElementById('rankingType')?.value || 'players';
+        currentRankingScope = document.getElementById('rankingScope')?.value || 'global';
+        renderRankings(rankingSnapshots, currentRankingType, currentRankingScope, rankingShowAll ? 200 : 50);
+    });
+    if (!rankingsControlBound) {
+        const redrawRankings = () => {
+            currentRankingType = document.getElementById('rankingType')?.value || 'players';
+            currentRankingScope = document.getElementById('rankingScope')?.value || 'global';
+            renderRankings(rankingSnapshots, currentRankingType, currentRankingScope, rankingShowAll ? 200 : 50);
+        };
+        document.getElementById('rankingType')?.addEventListener('change', redrawRankings);
+        document.getElementById('rankingScope')?.addEventListener('change', redrawRankings);
+        document.getElementById('rankingWindowToggle')?.addEventListener('click', event => {
+            rankingShowAll = !rankingShowAll;
+            event.currentTarget.setAttribute('aria-expanded', String(rankingShowAll));
+            event.currentTarget.textContent = rankingShowAll ? 'Show top 50' : 'See 200-entry preview';
+            redrawRankings();
+        });
+        rankingsControlBound = true;
+    }
     document.getElementById('raid-subtab-summary')?.addEventListener('click', () => switchRaidSubView('summary'));
     document.getElementById('raid-subtab-attacks')?.addEventListener('click', () => switchRaidSubView('attacks'));
     document.getElementById('raid-subtab-defenses')?.addEventListener('click', () => switchRaidSubView('defenses'));
     
     document.addEventListener('click', (e) => {
-        const card = e.target.closest('.war-card[data-war-file]');
-        if (card) loadWarDetail(card.getAttribute('data-war-file'));
+        const card = e.target.closest('a.war-card[data-war-file]');
+        if (card && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey && e.button === 0) {
+            e.preventDefault();
+            loadWarDetail(card.getAttribute('data-war-file'));
+        }
         const btn = e.target.closest('.raid-sort-btn');
         if (btn) {
             const table = btn.getAttribute('data-table');
@@ -627,6 +704,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('statsTimeRange')?.addEventListener('change', (e) => { renderCharts(fullWarHistory, e.target.value); });
     document.getElementById('sortBy')?.addEventListener('change', updateDisplay);
+    document.getElementById('memberSearch')?.addEventListener('input', updateDisplay);
+    document.getElementById('memberTownHallFilter')?.addEventListener('change', updateDisplay);
+    document.getElementById('memberWarPreferenceFilter')?.addEventListener('change', updateDisplay);
+    document.getElementById('playerProfileDialog')?.addEventListener('click', event => {
+        if (event.target === event.currentTarget || event.target.closest('[data-profile-close]')) event.currentTarget.close();
+    });
+    document.getElementById('playerProfileDialog')?.addEventListener('change', event => {
+        if (event.target.matches('[data-trend-metric]')) {
+            const points = playerTrendCache.get(document.getElementById('playerProfileDialog').dataset.playerTag) || [];
+            document.querySelector('[data-profile-trend]').innerHTML = renderPlayerTrend(points, event.target.value);
+        }
+    });
+    document.getElementById('memberList')?.addEventListener('click', async event => {
+        const button = event.target.closest('[data-player-tag]');
+        if (!button) return;
+        const tag = button.dataset.playerTag;
+        const matchingProfile = playerProfileSnapshotAt.slice(0, 10) === document.getElementById('memberDate')?.value
+            ? playerProfiles[tag] : null;
+        const profile = matchingProfile || memberProfileFallback(
+            allMembers.find(member => member.tag === tag), playerCareers[tag]);
+        const dialog = document.getElementById('playerProfileDialog');
+        const content = document.getElementById('playerProfileContent');
+        if (!dialog || !content) return;
+        button.disabled = true;
+        dialog.dataset.playerTag = tag;
+        content.innerHTML = renderPlayerProfile(profile, {fetchedAt: playerProfileSnapshotAt});
+        dialog.showModal();
+        if (!profile) {
+            button.disabled = false;
+            return;
+        }
+        try {
+            const trend = await fetchPlayerTrend(tag);
+            playerTrendCache.set(tag, trend);
+            const trendHost = content.querySelector('[data-profile-trend]');
+            if (trendHost) trendHost.innerHTML = renderPlayerTrend(trend);
+        } catch (error) {
+            console.error('Could not load member trend.', error);
+        } finally {
+            button.disabled = false;
+        }
+    });
     document.getElementById('backToWarList')?.addEventListener('click', showWarList);
     document.getElementById('resetMembersFilters')?.addEventListener('click', () => {
         currentRoleFilter = 'all'; 

@@ -1,12 +1,10 @@
 import json
 import os
+import time
 from datetime import datetime, timezone
-import http_client
-from config import BASE_URL, CLAN_TAG, HEADERS, RAW_TAG
 
-# Career stats per member. The clan payload only has current trophies and
-# season donations; /players/{tag} adds lifetime warStars, best trophies,
-# capital contributions, attack/defense wins. 50 requests, once a day.
+import http_client
+from config import BASE_URL, CLAN_TAG, HEADERS
 
 CAREER_FIELDS = (
     "tag", "name", "townHallLevel", "expLevel", "trophies", "bestTrophies",
@@ -14,18 +12,80 @@ CAREER_FIELDS = (
     "bestBuilderBaseTrophies", "donations", "donationsReceived",
     "clanCapitalContributions", "role", "currentLeagueGroupTag",
 )
+PROFILE_FIELDS = (
+    "tag", "name", "clan", "league", "leagueTier", "builderBaseLeague",
+    "role", "warPreference", "expLevel", "townHallLevel", "townHallWeaponLevel",
+    "legendStatistics", "troops", "heroes", "heroEquipment", "spells",
+    "labels", "achievements", "playerHouse", "currentLeagueGroupTag",
+    "currentLeagueSeasonId", "previousLeagueGroupTag", "previousLeagueSeasonId",
+    "attackWins", "defenseWins", "trophies", "bestTrophies", "warStars",
+    "builderHallLevel", "builderBaseTrophies", "bestBuilderBaseTrophies",
+    "donations", "donationsReceived", "clanCapitalContributions",
+)
+TREND_FIELDS = (
+    "trophies", "donations", "warStars", "clanCapitalContributions",
+    "builderBaseTrophies", "townHallLevel",
+)
 
 
 def _get(url):
-    # 50 sequential requests a day: without retries one transient 429 in the
-    # middle would discard the whole roster fetch.
     return http_client.get(url, HEADERS)
+
+
+def _read_json(path, fallback):
+    try:
+        with open(path, 'r') as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return fallback
+
+
+def _atomic_json(path, payload, indent=None):
+    temp_path = path + '.tmp'
+    with open(temp_path, 'w') as f:
+        json.dump(payload, f, indent=indent, separators=None if indent else (',', ':'))
+    os.replace(temp_path, path)
+
+
+def _atomic_text(path, payload):
+    temp_path = path + '.tmp'
+    with open(temp_path, 'w') as f:
+        f.write(payload)
+    os.replace(temp_path, path)
+
+
+def _items(payload):
+    if isinstance(payload, list):
+        return payload
+    return payload.get('items', []) if isinstance(payload, dict) else []
+
+
+def _load_previous():
+    index = _read_json('data/player_stats_index.json', [])
+    previous_careers = {}
+    if index:
+        newest = _read_json(os.path.join('data/player_stats', index[0]), {})
+        previous_careers = newest.get('players', {}) if isinstance(newest, dict) else {}
+    old_profiles = _read_json('data/player_profiles.json', {})
+    return index, previous_careers, old_profiles.get('players', {}) if isinstance(old_profiles, dict) else {}
+
+
+def build_player_trends(index, root='data/player_stats'):
+    trends = {}
+    for filename in sorted(index):
+        snapshot = _read_json(os.path.join(root, filename), {})
+        date = filename.removeprefix('players_').removesuffix('.json')
+        for tag, player in (snapshot.get('players') or {}).items():
+            point = {'date': f"{date[:4]}-{date[4:6]}-{date[6:8]}"}
+            point.update({field: player.get(field) for field in TREND_FIELDS})
+            trends.setdefault(tag, []).append(point)
+    return trends
 
 
 def update_player_careers():
     os.makedirs('data/player_stats', exist_ok=True)
+    os.makedirs('data', exist_ok=True)
 
-    # Roster via members endpoint (paginated, lighter than full clan payload).
     tags = []
     after = None
     while True:
@@ -36,54 +96,79 @@ def update_player_careers():
         if res.status_code != 200:
             raise SystemExit(f"Failed to fetch members: HTTP {res.status_code} {res.text[:200]}")
         data = res.json()
-        tags += [m['tag'] for m in data.get('items', [])]
+        tags.extend(m['tag'] for m in data.get('items', []))
         after = data.get('paging', {}).get('after')
         if not after:
             break
 
-    players = {}
-    for i, tag in enumerate(tags):
-        res = _get(f"{BASE_URL}/players/{tag.replace('#', '%23')}")
-        if res.status_code != 200:
-            print(f"WARN {tag}: HTTP {res.status_code}, skipping")
+    index, previous_careers, previous_profiles = _load_previous()
+    requests_made = 0
+
+    def paced_get(url):
+        nonlocal requests_made
+        response = _get(url)
+        requests_made += 1
+        if requests_made % 8 == 0:
+            time.sleep(1)
+        return response
+
+    players, profiles = {}, {}
+    held_profiles = optional_failures = 0
+    for tag in tags:
+        encoded_tag = tag.replace('#', '%23')
+        player_response = paced_get(f"{BASE_URL}/players/{encoded_tag}")
+        old_career = previous_careers.get(tag)
+        old_profile = previous_profiles.get(tag)
+        if player_response.status_code != 200:
+            if not old_career or not old_profile:
+                raise SystemExit(f"Required profile request failed for {tag}: HTTP {player_response.status_code}; no complete last-known snapshot. Nothing published.")
+            players[tag] = old_career
+            profiles[tag] = {**old_profile, 'stale': True}
+            held_profiles += 1
             continue
-        p = res.json()
-        players[tag] = {k: p.get(k) for k in CAREER_FIELDS}
-        # Be polite to the 10 req/s limit even though we are far under it.
-        if i % 8 == 7:
-            import time; time.sleep(1)
+        player = player_response.json()
+        career = {field: player.get(field) for field in CAREER_FIELDS}
+        profile = {field: player.get(field) for field in PROFILE_FIELDS}
+        profile['profileArchiveAvailable'] = True
+        battle_response = paced_get(f"{BASE_URL}/players/{encoded_tag}/battlelog")
+        league_response = paced_get(f"{BASE_URL}/players/{encoded_tag}/leaguehistory")
+        for key, response in [('battleLog', battle_response), ('leagueHistory', league_response)]:
+            available_key = key + 'Available'
+            stale_key = key + 'Stale'
+            if response.status_code == 200:
+                profile[key] = _items(response.json())
+                profile[available_key], profile[stale_key] = True, False
+            else:
+                profile[key] = old_profile.get(key)
+                profile[available_key] = old_profile.get(available_key, False)
+                profile[stale_key] = bool(old_profile.get(available_key, False))
+                optional_failures += 1
+        players[tag], profiles[tag] = career, profile
 
     if not players:
-        raise SystemExit("No player data fetched; aborting so we do not overwrite a good file with an empty one.")
+        raise SystemExit("No player data fetched; preserving existing snapshots.")
 
-    # UTC filename keeps daily players_YYYYMMDD aligned with clan_stats and
-    # the GitHub Actions cron regardless of runner tz.
-    today = datetime.now(timezone.utc).strftime('%Y%m%d')
-    filename = f"players_{today}.json"
-    payload = json.dumps({'fetchedAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'), 'players': players}, indent=4)
-    path = os.path.join('data/player_stats', filename)
-    if os.path.exists(path):
-        with open(path, 'r') as f:
-            if f.read() == payload:
-                print("No change to player careers; leaving data untouched.")
-                return
-    with open(path, 'w') as f:
-        f.write(payload)
-
-    index_path = 'data/player_stats_index.json'
-    index = []
-    if os.path.exists(index_path):
-        with open(index_path, 'r') as f:
-            try:
-                index = json.load(f)
-            except json.JSONDecodeError:
-                index = []
+    now = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+    filename = f"players_{datetime.now(timezone.utc).strftime('%Y%m%d')}.json"
+    payload = json.dumps({'fetchedAt': now, 'players': players}, indent=4)
+    snapshot_path = os.path.join('data/player_stats', filename)
+    _atomic_text(snapshot_path, payload)
     if filename not in index:
         index.append(filename)
-        index.sort(reverse=True)  # newest first, like clan_stats_index
-        with open(index_path, 'w') as f:
-            json.dump(index, f, indent=4)
+        index.sort(reverse=True)
+        _atomic_json('data/player_stats_index.json', index, indent=4)
+
+    # Publish auxiliary snapshots only after every required player has a good
+    # response or a last-known complete snapshot.
+    _atomic_json('data/player_profiles.json', {'fetchedAt': now, 'players': profiles}, indent=4)
+    trends = build_player_trends(index)
+    _atomic_json('data/player_trends.json', {'fetchedAt': now, 'players': trends})
     print(f"Saved career stats for {len(players)} players -> {filename}")
+    print(f"Saved {sum(map(len, trends.values()))} archived trend points.")
+    if held_profiles:
+        print(f"WARN: held last-known profiles for {held_profiles} player(s).")
+    if optional_failures:
+        print(f"WARN: optional battle-log or league-history request failed {optional_failures} time(s).")
 
 
 if __name__ == "__main__":

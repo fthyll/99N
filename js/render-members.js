@@ -39,6 +39,7 @@ export function renderMembers(list, careers = {}) {
                 <p class="text-[11px] md:text-xs font-bold text-gray-300">${(m.builderBaseTrophies || 0).toLocaleString()}</p>
                 <p class="text-[7px] md:text-[8px] text-gray-600 uppercase font-bold tracking-tighter">BB</p>
             </div>
+            <button type="button" class="member-profile-trigger" data-player-tag="${esc(m.tag)}" aria-haspopup="dialog" aria-label="Open profile for ${esc(m.name)}">Profile</button>
         </div>`;
     }).join('');
 }

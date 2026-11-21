@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import vm from 'node:vm';
 import { parseCoCDate } from './constants.js';
 import * as R from './render.js';
 
@@ -35,23 +34,12 @@ try {
     assert.match(els.warHistoryList.innerHTML, /data-war-file="war_test.json"/);
     R.renderWarHistory([{ ...war, summaryOnly: true }]);
     assert.doesNotMatch(els.warHistoryList.innerHTML, /data-war-file=/);
+    assert.doesNotMatch(els.warHistoryList.innerHTML, /<a\b/);
+    R.renderWarHistory([war]);
+    assert.match(els.warHistoryList.innerHTML, /<a href="#war\/details\/war_test"/);
+    assert.match(els.warHistoryList.innerHTML, /aria-label="View war:/);
+    assert.match(els.warHistoryList.innerHTML, /focus-visible:outline/);
 } finally {
     global.setInterval = interval;
 }
-
-// Execute the production delegated listener, including clicks on card children.
-const app = readFileSync(new URL('./app.js', import.meta.url), 'utf8');
-const listener = app.match(/    document.addEventListener\('click', \(e\) => \{[\s\S]*?\n    \}\);/);
-assert.ok(listener, 'delegated click listener exists');
-let click;
-const opened = [];
-vm.runInNewContext(listener[0], {
-    document: { addEventListener: (_, handler) => { click = handler; } },
-    loadWarDetail: filename => opened.push(filename),
-});
-click({ target: { closest: selector => selector === '.war-card[data-war-file]' ? {
-    getAttribute: name => name === 'data-war-file' ? war.filename : null,
-} : null } });
-click({ target: { closest: () => null } });
-assert.deepEqual(opened, ['war_test.json']);
-console.log('PASS: real TH19 render modules, date parsing, and delegated war-card navigation');
+console.log('PASS: real TH19 render modules, date parsing, and native war-card links');

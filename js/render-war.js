@@ -175,11 +175,12 @@ export function renderWarHistory(warHistory) {
     });
     if (countdownInterval) clearInterval(countdownInterval);
     
-    container.innerHTML = sorted.map(war => `
-        <div ${war.summaryOnly ? '' : `data-war-file="${esc(war.filename)}"`} class="${war.summaryOnly ? 'opacity-80' : 'cursor-pointer hover:border-gold war-card'} group">
+    container.innerHTML = sorted.map(war => war.summaryOnly
+        ? `<div class="opacity-80 group">${getWarSummaryHtml(war, now)}</div>`
+        : `<a href="#war/details/${esc(encodeURIComponent(war.filename.replace(/\.json$/, '')))}" data-war-file="${esc(war.filename)}" class="block rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-500 war-card group" aria-label="View war: ${esc(war.clan.name)} vs ${esc(war.opponent.name)}, ${esc(war.startTime.substring(0, 8))}">
             ${getWarSummaryHtml(war, now)}
-        </div>
-    `).join('');
+        </a>`
+    ).join('');
     
     countdownInterval = setInterval(() => {
         document.querySelectorAll('[id^="cd-"]').forEach(el => {

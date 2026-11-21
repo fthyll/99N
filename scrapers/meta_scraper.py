@@ -189,12 +189,77 @@ def _ranked(rows):
     return ordered
 
 
+RANKING_TYPES = {
+    'players': 'players',
+    'builderBasePlayers': 'players-builder-base',
+    'clans': 'clans',
+    'builderBaseClans': 'clans-builder-base',
+    'capitalClans': 'capitals',
+}
+
+
+def fetch_rankings(meta):
+    """Cache global and clan-location leaderboards once per daily run."""
+    old = {}
+    old_fetched_at = None
+    path = 'data/rankings.json'
+    try:
+        with open(path, 'r') as f:
+            old_payload = json.load(f)
+        old = old_payload.get('rankings', {})
+        old_fetched_at = old_payload.get('fetchedAt')
+    except (OSError, json.JSONDecodeError, AttributeError):
+        pass
+
+    location_id = (meta.get('countryRank') or {}).get('locationId')
+    locations = {'global': 'global'}
+    if location_id:
+        locations['clanLocation'] = str(location_id)
+    now = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+    rankings = {}
+    successes = 0
+    for category, endpoint in RANKING_TYPES.items():
+        rankings[category] = {}
+        for scope, location in locations.items():
+            url = f"{BASE_URL}/locations/{location}/rankings/{endpoint}?limit=200"
+            res = _get(url)
+            if res.status_code == 200:
+                rankings[category][scope] = {
+                    'items': res.json().get('items', []), 'fetchedAt': now,
+                    'locationId': location,
+                    'locationName': 'Global' if scope == 'global' else (meta.get('countryRank') or {}).get('locationName'),
+                    'stale': False,
+                }
+                successes += 1
+            elif scope in (old.get(category) or {}):
+                rankings[category][scope] = {**old[category][scope], 'stale': True}
+                print(f"WARN ranking {category}/{scope}: HTTP {res.status_code}; holding last good data")
+            else:
+                print(f"WARN ranking {category}/{scope}: HTTP {res.status_code}")
+        for scope, old_snapshot in (old.get(category) or {}).items():
+            if scope not in rankings.get(category, {}):
+                rankings.setdefault(category, {})[scope] = {**old_snapshot, 'stale': True}
+        if not rankings[category]:
+            rankings.pop(category)
+
+    if successes == 0:
+        print('WARN no leaderboard source succeeded; preserving previous rankings.json')
+        meta['rankings'] = {'fetchedAt': old_fetched_at, 'available': bool(old)}
+        return
+    meta['rankings'] = {'fetchedAt': now, 'available': True}
+    tmp = path + '.tmp'
+    with open(tmp, 'w') as f:
+        json.dump({'fetchedAt': now, 'rankings': rankings}, f, separators=(',', ':'))
+    os.replace(tmp, path)
+
+
 def update_meta():
     os.makedirs('data', exist_ok=True)
     meta = {'fetchedAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')}
     fetch_goldpass(meta)
     fetch_country_rank(meta)
     fetch_cwl(meta)
+    fetch_rankings(meta)
 
     path = 'data/meta.json'
     new_payload = json.dumps(meta, indent=4)
