@@ -2,6 +2,39 @@
     "items": [
         {
             "result": "win",
+            "endTime": "20261121T194507.000Z",
+            "teamSize": 35,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png"
+                },
+                "clanLevel": 4,
+                "attacks": 39,
+                "stars": 104,
+                "destructionPercentage": 99.11429,
+                "expEarned": 300
+            },
+            "opponent": {
+                "tag": "#2U9JUP8GR",
+                "name": "\u2022Soul Hunter\u00b4Z",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/1Pd-huhZl7FMT9QEGOmKkkB8SNHTLVxmchRuD49lgCE.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/1Pd-huhZl7FMT9QEGOmKkkB8SNHTLVxmchRuD49lgCE.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/1Pd-huhZl7FMT9QEGOmKkkB8SNHTLVxmchRuD49lgCE.png"
+                },
+                "clanLevel": 3,
+                "stars": 103,
+                "destructionPercentage": 99.02857
+            }
+        },
+        {
+            "result": "win",
             "endTime": "20261118T111059.000Z",
             "teamSize": 20,
             "attacksPerMember": 2,

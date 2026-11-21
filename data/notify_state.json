@@ -137,8 +137,8 @@
         },
         "20261120T194506.000Z": {
             "clanStars": 104,
-            "opponentStars": 88,
-            "state": "inWar"
+            "opponentStars": 103,
+            "state": "warEnded"
         }
     }
 }
