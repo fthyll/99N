@@ -74,6 +74,7 @@
             <button id="tab-war" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.12 5.07l5.66 5.66-2.83 2.83-5.66-5.66m-1.41 1.41L4.22 4.22m0 0l2.83-2.83 2.12 2.12M4.22 4.22l2.12 2.12m9.9 9.9l5.66 5.66m0 0l-2.83 2.83-2.12-2.12m4.95-.71l-2.12-2.12M9.88 18.93l-5.66-5.66 2.83-2.83 5.66 5.66"/></svg>Wars</button>
             <button id="tab-raids" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Raids</button>
             <button id="tab-stats" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 20V10m5.5 10V4m5.5 16v-8m5 8l.01-12"/></svg>Stats</button>
+            <button id="tab-rankings" class="tab-btn uppercase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8m-4-4v4m-7-7h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v7a2 2 0 002 2zm2-6l3 3 3-4 3 2"/></svg>Rankings</button>
         </nav>
 
         <!-- Sits after nav on desktop; absolute top-right on mobile (see .theme-toggle) -->
@@ -113,7 +114,7 @@
                         </div>                    
                         <!-- Sub-tabs Row (Mobile: 2nd, Desktop: bottom) -->
                         <div class="w-full order-2 lg:order-3 lg:mt-2">
-                            <div class="flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
+                            <div class="member-role-filters flex items-center gap-2 p-1 bg-inset rounded-lg border border-gray-800 w-fit">
                                 <button data-role="all" class="sub-tab-btn active">All</button>
                                 <button data-role="leader" class="sub-tab-btn uppercase">Leader</button>
                                 <button data-role="coLeader" class="sub-tab-btn uppercase">Co-Leader</button>
@@ -147,7 +148,20 @@
                             <button id="resetMembersFilters" class="btn-reset h-8">Reset</button>
                         </div>
                     </div>
-                    <div id="memberList" class="space-y-2"></div>
+                    <div class="member-explorer-controls" aria-label="Member search and filters">
+                        <label class="member-search-label">Search members
+                            <input id="memberSearch" class="control-base" type="search" autocomplete="off" placeholder="Name or player tag">
+                        </label>
+                        <label>Town Hall
+                            <select id="memberTownHallFilter" class="control-base"><option value="">All Town Halls</option></select>
+                        </label>
+                        <label>Current war preference
+                            <select id="memberWarPreferenceFilter" class="control-base">
+                                <option value="">Any preference</option><option value="in">Opted in</option><option value="out">Opted out</option><option value="unknown">Not reported</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div id="memberList" class="space-y-2" aria-live="polite"></div>
                 </div>
             </div>
 
@@ -226,6 +240,32 @@
                         <!-- Attacks/Map container -->
                         <div id="warResults" class="space-y-4 mt-8"></div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Section: Rankings -->
+            <div id="section-rankings" class="hidden-section">
+                <div class="panel p-3 md:p-6">
+                    <div class="flex flex-wrap items-end justify-between gap-3 mb-5">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-3">
+                                <h2 class="display text-base md:text-lg font-semibold uppercase">Leaderboards</h2>
+                                <button onclick="window.syncData()" class="sync-btn text-gray-600 hover:text-gold transition-all" title="Reload data (refreshed every 15 min by GitHub Actions)" aria-label="Reload dashboard data">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                                </button>
+                            </div>
+                            <p id="rankingFreshness" class="text-xs text-gray-500 mt-1">Cached from the daily API sync.</p>
+                            <button type="button" id="rankingWindowToggle" class="text-xs text-gray-500 underline underline-offset-2 hover:text-gold" aria-expanded="false" aria-controls="rankingsTable">See 200-entry preview</button>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <label class="stat-label">Ranking<select id="rankingType" class="control-base mt-1">
+                                <option value="players">Home Village Players</option><option value="builderBasePlayers">Builder Base Players</option>
+                                <option value="clans">Clans</option><option value="builderBaseClans">Builder Base Clans</option><option value="capitalClans">Clan Capital</option>
+                            </select></label>
+                            <label class="stat-label">Location<select id="rankingScope" class="control-base mt-1"><option value="global">Global</option><option value="clanLocation">Clan location</option></select></label>
+                        </div>
+                    </div>
+                    <div id="rankingsTable" class="overflow-x-auto" aria-live="polite"></div>
                 </div>
             </div>
 
@@ -312,6 +352,16 @@
                             <p id="raidAttendanceNote" class="text-[10px] text-gray-600 italic mt-4"></p>
                         </div>
                     </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <section class="bg-inset p-4 rounded-xl border border-gray-800">
+                            <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">War archive analytics</h3>
+                            <div id="warAnalytics" aria-live="polite"></div>
+                        </section>
+                        <section class="bg-inset p-4 rounded-xl border border-gray-800">
+                            <h3 class="text-[10px] font-bold text-gray-500 uppercase mb-4 tracking-widest">Raid archive analytics</h3>
+                            <div id="raidAnalytics" aria-live="polite"></div>
+                        </section>
+                    </div>
                 </div>
             </div>
 
@@ -394,6 +444,15 @@
                         </div>
                     </div>
 
+                    <section class="panel p-3 md:p-6 mb-4" aria-labelledby="warAnalyticsTitle">
+                        <h3 id="warAnalyticsTitle" class="display text-sm font-semibold uppercase mb-3">War archive analytics</h3>
+                        <div id="warAnalytics" aria-live="polite"></div>
+                    </section>
+                    <section class="panel p-3 md:p-6 mb-4" aria-labelledby="raidAnalyticsTitle">
+                        <h3 id="raidAnalyticsTitle" class="display text-sm font-semibold uppercase mb-3">Raid archive analytics</h3>
+                        <div id="raidAnalytics" aria-live="polite"></div>
+                    </section>
+
                     <!-- View: Raid Attacks -->
                     <div id="raidAttacksView" class="hidden">
                         <div class="overflow-x-auto">
@@ -456,6 +515,10 @@
         </div>
     </main>
 </div>
+
+<dialog id="playerProfileDialog" aria-labelledby="playerProfileTitle">
+    <div id="playerProfileContent" class="player-profile-content"></div>
+</dialog>
 
     <!-- Main Entry Point -->
     <script type="module" src="js/app.js"></script>

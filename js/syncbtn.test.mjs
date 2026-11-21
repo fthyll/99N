@@ -22,7 +22,9 @@ const render = ['js/render-about.js','js/render.js'].map(f => read(f)).join('\n'
 // added to the nav without a button fails here rather than in someone's browser.
 const nav = html.slice(html.indexOf('<nav'), html.indexOf('</nav>'));
 const TABS = [...nav.matchAll(/id="tab-([a-z]+)"/g)].map(m => m[1]);
-check('nav tabs are discoverable', TABS.length === 5, TABS.join(','));
+// Derive the counts from the nav, never hardcode them: the per-tab loop below is
+// the real invariant, and a magic number here would fail on the next legit tab.
+check('nav tabs are discoverable', TABS.length >= 5, TABS.join(','));
 
 const BTN = /<button[^>]*onclick="window\.syncData\(\)"[^>]*class="[^"]*sync-btn/;
 console.log('a refresh button on every tab');
