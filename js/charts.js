@@ -16,6 +16,11 @@ const chartTheme = () => ({
     bar3: tok('--bar3'), bar2: tok('--bar2'), bar1: tok('--bar1'), bar0: tok('--bar0'),
 });
 
+// Chart.js does not inherit the page font, so name it per canvas. Without
+// this the charts keep rendering in Helvetica while the rest of the dashboard
+// moves to Clash.
+const CHART_FONT = 'Clash, system-ui, sans-serif';
+
 let starsChart = null;      
 let efficiencyChart = null; 
 
@@ -106,8 +111,8 @@ function renderStarsTrend(warHistory) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: { beginAtZero: true, max: 100, grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9 } } },
-                x: { grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9 } } }
+                y: { beginAtZero: true, max: 100, grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9, family: CHART_FONT } } },
+                x: { grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9, family: CHART_FONT } } }
             },
             plugins: { legend: { display: false } }
         }
@@ -205,11 +210,11 @@ function renderEfficiencyChart(warHistory) {
         options: {
             indexAxis: 'y', responsive: true, maintainAspectRatio: false,
             scales: {
-                x: { stacked: true, beginAtZero: true, max: 100, grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9 }, callback: (v) => v + '%' } },
-                y: { stacked: true, grid: { display: false }, ticks: { color: th.name, font: { size: 10, weight: 'bold' } } }
+                x: { stacked: true, beginAtZero: true, max: 100, grid: { color: th.line }, ticks: { color: th.tick, font: { size: 9, family: CHART_FONT }, callback: (v) => v + '%' } },
+                y: { stacked: true, grid: { display: false }, ticks: { color: th.name, font: { size: 10, weight: 'bold', family: CHART_FONT } } }
             },
             plugins: {
-                legend: { position: 'bottom', labels: { color: th.tick, font: { size: 9 }, boxWidth: 10, padding: 15 } },
+                legend: { position: 'bottom', labels: { color: th.tick, font: { size: 9, family: CHART_FONT }, boxWidth: 10, padding: 15 } },
                 tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}%` } }
             }
         }

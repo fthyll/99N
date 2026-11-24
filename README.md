@@ -39,6 +39,19 @@ Members, war attacks/defenses, raid participants, and raid absentees share this
 path convention. TH19 rendering is tested even though the current roster archive
 only reaches TH18. See [CHANGELOG.md](CHANGELOG.md) for the latest changes.
 
+## Typography
+
+The dashboard uses the **Clash** face, self-hosted as WOFF2 in `assets/fonts/`
+(`Clash-Regular.woff2`, `Clash-Bold.woff2`). Nothing is fetched from Google
+Fonts, so the UI renders the same offline and in CI screenshots. Regular
+covers weight `400 500`, Bold covers `600 900`; `font-display: swap` keeps
+text visible while the files load. Chart.js text gets the family set
+explicitly in `js/charts.js`, because canvas text does not inherit it.
+
+Clash is a wide display face. The profile item tiles are therefore 250px
+minimum with 13px names — at the old 155px/16px sizing the names wrapped
+mid-word.
+
 ## Player profile item icons
 
 Troops, spells, heroes and hero equipment in the player profile show a small
@@ -209,6 +222,7 @@ npm test                       # all frontend test files, run in parallel
 npm run check                  # syntax checks for frontend modules
 node js/assets.test.mjs        # TH1–TH19 asset paths and WebP headers
 node js/item-icons.test.mjs    # profile item icons: pack coverage, WebP headers, escaping
+node js/fonts.test.mjs         # Clash WOFF2 faces, glyph coverage, profile tile sizing
 node js/render-regression.test.mjs # real TH19 renders, dates, war-card click handler
 node js/xss.test.mjs            # 27 checks: weaponised names render inert in every view
 node js/warmerge.test.mjs       # 16 checks: warlog pairing, in-place promotion, no duplicates
