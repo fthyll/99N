@@ -39,6 +39,21 @@ Members, war attacks/defenses, raid participants, and raid absentees share this
 path convention. TH19 rendering is tested even though the current roster archive
 only reaches TH18. See [CHANGELOG.md](CHANGELOG.md) for the latest changes.
 
+## Player profile item icons
+
+Troops, spells, heroes and hero equipment in the player profile show a small
+icon (22×22 CSS pixels) next to their name. The images live in `assets/coc/`
+as WebP, and `js/coc-assets.js` maps an item name to its file.
+
+`scripts/fetch_coc_assets.py` regenerates the pack: it reads coc.guide's game
+data, resolves each display name to an image path the site serves (HTTP 200),
+and falls back to the Clash of Clans wiki for the newest items coc.guide has
+not published yet. Re-run it after the clan data changes to pick up new items:
+
+```bash
+python3 scripts/fetch_coc_assets.py
+```
+
 ## How it works
 
 ```
@@ -193,6 +208,7 @@ tests also need the scraper dependencies (`requests` and `python-dotenv`).
 npm test                       # all frontend test files, run in parallel
 npm run check                  # syntax checks for frontend modules
 node js/assets.test.mjs        # TH1–TH19 asset paths and WebP headers
+node js/item-icons.test.mjs    # profile item icons: pack coverage, WebP headers, escaping
 node js/render-regression.test.mjs # real TH19 renders, dates, war-card click handler
 node js/xss.test.mjs            # 27 checks: weaponised names render inert in every view
 node js/warmerge.test.mjs       # 16 checks: warlog pairing, in-place promotion, no duplicates

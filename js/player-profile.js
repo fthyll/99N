@@ -1,4 +1,5 @@
 import { esc, getTHImage } from './constants.js';
+import { COC_ITEM_IMAGES } from './coc-assets.js';
 
 const number = value => value == null || value === '' || !Number.isFinite(Number(value))
     ? '—' : Number(value).toLocaleString();
@@ -60,12 +61,20 @@ function metrics(profile) {
     return `<dl class="grid grid-cols-2 gap-3">${rows.map(([label, value]) => `<div><dt class="stat-label">${esc(label)}</dt><dd class="stat-value text-xs">${esc(typeof value === 'number' ? number(value) : value ?? '—')}</dd></div>`).join('')}</dl><p class="text-[10px] text-gray-500 mt-3">Donation totals reset each League season.</p>`;
 }
 
+// Small icon for an item, when the asset pack has one. Falls back to nothing
+// rather than a broken <img>, so unknown items stay readable.
+const itemIcon = (name) => {
+    const src = COC_ITEM_IMAGES[name];
+    return src ? `<img class="item-icon" src="${esc(src)}" alt="" loading="lazy">` : '';
+};
+
 function listContent(items) {
     if (!Array.isArray(items) || !items.length) return '<p class="text-xs text-gray-500">Not present in this snapshot.</p>';
     return `<div class="profile-items">${items.map(item => {
         const level = Number(item.level) || 0, max = Number(item.maxLevel) || 0;
-        const label = esc(nameOf(item.name) || 'Unknown item');
-        return `<div class="profile-item"><span>${label}${item.superTroopIsActive ? ' · Super active' : ''}</span><span class="font-mono">${number(level)}${max ? ` / ${number(max)}` : ''}</span>${max ? `<span class="profile-progress" aria-label="${label} level ${level} of ${max}"><span style="width:${percent(level, max).toFixed(1)}%"></span></span>` : ''}</div>`;
+        const name = nameOf(item.name);
+        const label = esc(name || 'Unknown item');
+        return `<div class="profile-item"><span class="profile-item-name">${itemIcon(name)}<span>${label}${item.superTroopIsActive ? ' · Super active' : ''}</span></span><span class="font-mono">${number(level)}${max ? ` / ${number(max)}` : ''}</span>${max ? `<span class="profile-progress" aria-label="${label} level ${level} of ${max}"><span style="width:${percent(level, max).toFixed(1)}%"></span></span>` : ''}</div>`;
     }).join('')}</div>`;
 }
 
