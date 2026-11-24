@@ -264,7 +264,8 @@ def wiki_images(names):
             "action": "query",
             "titles": "|".join("File:" + title for title in titles),
             "prop": "imageinfo",
-            "iiprop": "url|size",
+            "iiprop": "url|size|mime",
+            "iilimit": "5",
             "format": "json",
         })
         try:
@@ -276,7 +277,9 @@ def wiki_images(names):
         for page in pages.values():
             info = page.get("imageinfo")
             if info and "missing" not in page:
-                found[page["title"][len("File:"):]] = info[0]["url"]
+                # Newest revision first; fetch_preferred() falls back to older
+                # ones when the newest was flattened to opaque RGB.
+                found[page["title"][len("File:"):]] = [rev["url"] for rev in info]
         return found
 
     found = {}
@@ -291,6 +294,40 @@ def wiki_images(names):
                 resolved[name] = found[candidate]
                 break
     return resolved
+
+
+def has_alpha(data):
+    """True when the image carries a real alpha channel.
+
+    Handles both PNG (IHDR colour type 4/6) and WebP (VP8X alpha flag or an
+    ALPH chunk), because the wiki CDN content-negotiates WebP even for .png
+    URLs."""
+    if data.startswith(b"\x89PNG\r\n\x1a\n") and len(data) > 26:
+        return data[25] in (4, 6)
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        if data[12:16] == b"VP8X" and len(data) > 20:
+            return bool(data[20] & 0x10)
+        return b"ALPH" in data[:4096]
+    return True  # unknown format: keep the newest revision
+
+
+def fetch_preferred(targets):
+    """Download the first target that yields an icon with a clean alpha cut-out.
+
+    The newest revision of a wiki render is sometimes a flattened re-export,
+    which paints an opaque grey box behind the unit and looks wrong beside the
+    transparent coc.guide icons. Older revisions usually keep the alpha
+    channel, so fall through to them."""
+    if isinstance(targets, str):
+        return fetch(targets)
+    first = None
+    for url in targets:
+        data = fetch(url)
+        if first is None:
+            first = data
+        if has_alpha(data):
+            return data
+    return first
 
 
 def to_webp(image_bytes, dest):
@@ -338,14 +375,14 @@ def main():
     if missing:
         print(f"Falling back to the wiki for {len(missing)} item(s) ...")
         resolved.update(
-            (name, ("wiki", url)) for name, url in wiki_images(missing).items()
+            (name, ("wiki", urls)) for name, urls in wiki_images(missing).items()
         )
 
     ASSETS.mkdir(parents=True, exist_ok=True)
     print(f"Downloading {len(resolved)} icons ...")
     manifest = {}
     with concurrent.futures.ThreadPoolExecutor(12) as pool:
-        jobs = {name: pool.submit(fetch, url) for name, (_, url) in resolved.items()}
+        jobs = {name: pool.submit(fetch_preferred, urls) for name, (_, urls) in resolved.items()}
         for name, job in jobs.items():
             data = job.result()
             filename = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") + ".webp"
