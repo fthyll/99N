@@ -6,6 +6,6 @@
   "description": "CoC-Stats War Room dashboard",
   "scripts": {
     "test": "node --test js/*.test.mjs",
-    "check": "node --check js/api.js && node --check js/app.js && node --check js/charts.js && node --check js/constants.js && node --check js/cwl.js && node --check js/freshness.js && node --check js/raidstats.js && node --check js/refresh.js && node --check js/render.js && node --check js/render-members.js && node --check js/render-war.js && node --check js/render-about.js && node --check js/render-raid.js && node --check js/statsrange.js && node --check js/warmerge.js"
+    "check": "node --check js/api.js && node --check js/app.js && node --check js/charts.js && node --check js/constants.js && node --check js/cwl.js && node --check js/freshness.js && node --check js/raidstats.js && node --check js/refresh.js && node --check js/render.js && node --check js/render-members.js && node --check js/render-war.js && node --check js/render-about.js && node --check js/render-raid.js && node --check js/statsrange.js && node --check js/warmerge.js && node --check js/coc-assets.js && node --check js/player-profile.js && node --check js/player-trends.js && node --check js/render-rankings.js && node --check js/warraid-analytics.js"
   }
 }

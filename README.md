@@ -11,6 +11,7 @@ Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on
 | Wars | War list + per-player attack/defense breakdown, win probability, cleanup needed | war snapshots |
 | Raids | Capital raid weekends: attacks, defenses, loot per player | raid logs |
 | Stats | Stars-trend line, top-25 star breakdown, conversion-rate bars (finished wars only), **raid attendance** | war + raid snapshots |
+| Rankings | Leaderboards: Home Village and Builder Base players, clans and Clan Capital, global or your clan's location | daily API sync |
 
 ## Screenshots (War Room, night theme)
 
@@ -19,14 +20,18 @@ Clash of Clans clan dashboard for **99N (#2J0YP2LQL)**. A Python scraper runs on
 | ![Overview](demo-images/warroom_overview.png) | ![Members](demo-images/warroom_members.png) |
 | **Wars — history & results** | **Stats — trend & conversion** |
 | ![Wars](demo-images/warroom_wars.png) | ![Stats](demo-images/warroom_stats.png) |
-| **Raids — participant attacks, loot & damage** | |
-| ![Raids](demo-images/warroom_raids.png) | |
+| **Raids — participant attacks, loot & damage** | **Rankings — leaderboards** |
+| ![Raids](demo-images/warroom_raids.png) | ![Rankings](demo-images/warroom_rankings.png) |
+| **Player profile — items with icons** | |
+| ![Profile](demo-images/warroom_profile.png) | |
 
-Captured on 2026-11-16 from the local dashboard at 1440×1080, using the
+Captured on 2026-11-24 from the local dashboard at 1440×1080, using the
 repository's actual archived JSON snapshots. The Stats screenshot selects
 **This Month**, which falls back to **Previous War** when the month has no wars.
-The stale-data indicator reflects the age of these snapshots;
-no live API data or synthetic TH19 members were added for the screenshots.
+The profile screenshot opens a roster member and shows the item icons beside
+troop, spell, hero and hero-equipment names. The stale-data indicator reflects
+the age of these snapshots; no live API data or synthetic TH19 members were
+added for the screenshots.
 
 ## Town Hall assets
 
@@ -56,7 +61,9 @@ mid-word.
 
 Troops, spells, heroes and hero equipment in the player profile show a small
 icon (22×22 CSS pixels) next to their name. The images live in `assets/coc/`
-as WebP, and `js/coc-assets.js` maps an item name to its file.
+as WebP, and `js/coc-assets.js` maps an item name to its file — 160 entries,
+which covers every item the current roster snapshot carries, including the
+Miner Squad and Healer Squad pets.
 
 `scripts/fetch_coc_assets.py` regenerates the pack: it reads coc.guide's game
 data, resolves each display name to an image path the site serves (HTTP 200),
@@ -66,6 +73,15 @@ not published yet. Re-run it after the clan data changes to pick up new items:
 ```bash
 python3 scripts/fetch_coc_assets.py
 ```
+
+Not every image on the wiki is usable. Its newest revision of a file is
+sometimes a flattened re-export with an opaque backdrop, which paints a grey
+box on the night theme beside the transparent coc.guide art. The script
+therefore collects every revision of a file and keeps the newest one that
+still carries an alpha channel, and it checks PNG *and* WebP: the wiki CDN
+content-negotiates WebP even for `.png` URLs, so sniffing the file extension
+is wrong. An item with no usable image degrades to plain text rather than an
+`<img src="">`.
 
 ## How it works
 
@@ -232,6 +248,12 @@ node js/cwl.test.mjs            # league table, out-of-season vs failed-lookup w
 node js/chartdata.test.mjs      # chart text twins are labelled, sr-only, and actually filled
 node js/refresh.test.mjs        # what a refresh reports: changed, unchanged, no stamp, failure
 node js/syncbtn.test.mjs        # every tab in the nav has a working refresh button
+node js/freshness.test.mjs      # live/stale thresholds and the "3h ago" sub-label
+node js/player-trends.test.mjs  # trend series order; zero and missing values stay distinct
+node js/player-snapshots.test.mjs # archived snapshot dirs parse into dated trends
+node js/profiles.test.mjs       # member filters, trend wording, rankings cap and escaping
+node js/warraid-analytics.test.mjs # war/raid aggregates exclude partial wars
+node js/raidstats.test.mjs      # raid participation, absentees, attendance, dormancy; empty states
 node js/importsmoke.test.mjs    # all modules parse without a DOM
 node js/notifier.test.mjs       # embed shapes + state transitions
 python3 scrapers/war_scraper_test.py    # 9 scenarios against a stubbed HTTP layer

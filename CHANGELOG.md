@@ -1,6 +1,51 @@
 # Changelog
 
-## Unreleased — 2026-11-16
+## Unreleased — 2026-11-24
+
+### Added
+
+- Small item icons in the player profile: 22×22 WebP art beside every troop,
+  spell, hero and hero-equipment name. `js/coc-assets.js` maps 160 display
+  names to files in `assets/coc/`, covering the whole current roster snapshot
+  including the Miner Squad and Healer Squad pets.
+- `scripts/fetch_coc_assets.py` generates the pack from coc.guide's game data
+  and falls back to the Clash of Clans wiki for items coc.guide has not
+  published. `js/item-icons.test.mjs` checks pack coverage, WebP headers and
+  escaping.
+- Rankings screenshot (`demo-images/warroom_rankings.png`) and a player-profile
+  screenshot (`demo-images/warroom_profile.png`) showing the item icons, both
+  refreshed alongside the five existing views.
+- README lines for the five frontend test files that were on disk but missing
+  from the test block: `freshness`, `player-trends`, `player-snapshots`,
+  `profiles`, `warraid-analytics`.
+
+### Fixed
+
+- The Healer Squad icon painted an opaque grey box beside the transparent ones.
+  The wiki's newest revision of that file is a flattened RGB re-export, so the
+  downloader now walks every revision and keeps the newest that still has an
+  alpha channel. The check covers PNG *and* WebP, because the wiki CDN
+  content-negotiates WebP even for `.png` URLs.
+- `npm run check` skipped five shipped modules (`coc-assets`, `player-profile`,
+  `player-trends`, `render-rankings`, `warraid-analytics`). They are in the
+  syntax-check list now, so they no longer ship unchecked.
+- Regenerated the icon pack for 160 entries; the rebased snapshot added the
+  Miner Squad and Healer Squad, which the previous 158-entry pack did not cover.
+
+### Validation
+
+- `npm test`: 20 test files passed, 0 failed.
+- `npm run check`: 20 modules syntax-checked, including the five added above.
+- `python3 scripts/check_html.py`: 6 sections, balanced nesting.
+- Screenshots captured at 1440×1080 against the archived snapshots and audited
+  in the browser: no broken visible images, no tofu glyphs, no horizontal
+  overflow on any of the six tabs. The profile dialog reported 158 sized icons
+  with none zero-width or clipped.
+
+Screenshots show archived data, including its stale-data indicator. They do not
+represent a live data refresh or a production deployment.
+
+## 2026-11-16
 
 ### Added
 
