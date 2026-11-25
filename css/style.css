@@ -7,6 +7,25 @@
  * Values are "R G B" triplets so Tailwind /opacity modifiers keep working.
  */
 
+/* Clash — the in-game face, self-hosted so the dashboard never waits on a
+   font CDN. Two static cuts: regular carries 400–500, bold 600–900. Weight
+   ranges on a static face pick the closest cut instead of synthesising one,
+   so 600 renders as the real bold rather than a smeared regular. */
+@font-face {
+    font-family: 'Clash';
+    src: url('../assets/fonts/Clash-Regular.woff2') format('woff2');
+    font-weight: 400 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Clash';
+    src: url('../assets/fonts/Clash-Bold.woff2') format('woff2');
+    font-weight: 600 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 html[data-theme="night"] {
     --s-base: 13 18 28;
     --s-nav: 16 22 34;
@@ -94,7 +113,7 @@ body {
     background-image: var(--aura-1), var(--aura-2);
     background-attachment: fixed;
     color: var(--ink);
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Clash', system-ui, sans-serif;
     -webkit-tap-highlight-color: transparent;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
@@ -207,9 +226,9 @@ html[data-theme="day"] .icon-moon { display: none; }
     .tab-btn.active { box-shadow: 0 6px 18px -6px rgb(var(--gold) / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.3); }
 }
 
-/* Typography */.display { font-family: 'Fredoka', sans-serif; font-weight: 600; letter-spacing: 0.01em; }
+/* Typography */.display { font-family: 'Clash', system-ui, sans-serif; font-weight: 700; letter-spacing: 0.01em; }
 /* legacy hook from render.js markup — now maps to the display face */
-.medieval { font-family: 'Fredoka', sans-serif; letter-spacing: 0.02em; }
+.medieval { font-family: 'Clash', system-ui, sans-serif; font-weight: 700; letter-spacing: 0.02em; }
 
 /* Section titles (used with .display) */
 .content h2 { color: var(--ink); }
@@ -286,10 +305,17 @@ html[data-theme="day"] .icon-moon { display: none; }
 .player-profile-content { padding: clamp(14px, 3vw, 26px); }
 .profile-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
 .profile-panel { min-width: 0; padding: 14px; border-radius: 10px; background: rgb(var(--s-inset)); border: 1px solid rgb(var(--s-line-dim)); }
-.profile-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 8px; }
+.profile-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 8px; }
 .profile-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; padding: 8px; border-radius: 7px; background: rgb(var(--s-card)); }
 .profile-progress { height: 5px; grid-column: 1 / -1; overflow: hidden; border-radius: 4px; background: rgb(var(--s-hover)); }
 .profile-progress > span { display: block; height: 100%; background: rgb(var(--gold)); }
+.profile-item-name { display: flex; align-items: center; gap: 6px; min-width: 0; }
+/* Clash is a wide display face: at the inherited 16px a name no longer fits the
+   tile, and the global `.profile-item { overflow-wrap: anywhere }` then split it
+   mid-word ("Barbarian" -> "Barbaria/n"). A 250px tile plus a 13px name keeps
+   every name on one line; break-word only splits words that cannot fit at all. */
+.profile-item-name > span { font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
+.item-icon { width: 22px; height: 22px; flex: 0 0 22px; object-fit: contain; }
 .profile-history-chart { display: block; width: 100%; height: 110px; overflow: visible; }
 .profile-achievements { max-height: 300px; overflow-y: auto; }
 .profile-table-wrap { overflow-x: auto; }
@@ -328,7 +354,7 @@ html[data-theme="day"] .icon-moon { display: none; }
 #playerProfileDialog select, #section-rankings select { min-height: 40px; }
 .warraid-stat small { line-height: 1.35; }
 #playerProfileDialog .profile-panel { max-width: 100%; }
-#playerProfileDialog .profile-items { grid-template-columns: repeat(auto-fit, minmax(min(155px, 100%), 1fr)); }
+#playerProfileDialog .profile-items { grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); }
 @media (max-width: 360px) { #playerProfileDialog { width: calc(100vw - 12px); } }
 .profile-panel .profile-table-wrap { overscroll-behavior-inline: contain; }
 .profile-panel :focus-visible { outline-offset: 3px; }
@@ -397,7 +423,7 @@ html[data-theme="day"] .icon-moon { display: none; }
 }
 .kpi-ic svg { width: 15px; height: 15px; }
 .kpi-value {
-    font-family: 'Fredoka', sans-serif; font-weight: 600;
+    font-family: 'Clash', system-ui, sans-serif; font-weight: 700;
     font-size: 26px; line-height: 1.1; color: var(--ink);
     font-variant-numeric: tabular-nums;
 }
