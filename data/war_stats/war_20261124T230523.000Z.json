@@ -1,0 +1,285 @@
+{
+    "state": "inWar",
+    "teamSize": 15,
+    "attacksPerMember": 2,
+    "battleModifier": "none",
+    "preparationStartTime": "20261124T000523.000Z",
+    "startTime": "20261124T230523.000Z",
+    "endTime": "20261125T230523.000Z",
+    "clan": {
+        "tag": "#2J0YP2LQL",
+        "name": "99N",
+        "badgeUrls": {
+            "small": "https://api-assets.clashofclans.com/badges/70/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+            "large": "https://api-assets.clashofclans.com/badges/512/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+            "medium": "https://api-assets.clashofclans.com/badges/200/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png"
+        },
+        "clanLevel": 4,
+        "attacks": 0,
+        "stars": 0,
+        "destructionPercentage": 0.0,
+        "members": [
+            {
+                "tag": "#G0V8LUY98",
+                "name": "AQUAx99N",
+                "townhallLevel": 9,
+                "mapPosition": 15,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQRCUR98U",
+                "name": "VICTORIAx99N",
+                "townhallLevel": 11,
+                "mapPosition": 7,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQJULVGV2",
+                "name": "HERMESx99N",
+                "townhallLevel": 10,
+                "mapPosition": 10,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQRLCCUYC",
+                "name": "DIORx99N",
+                "townhallLevel": 11,
+                "mapPosition": 8,
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#LGVCQVQYL",
+                    "defenderTag": "#GQRLCCUYC",
+                    "stars": 1,
+                    "destructionPercentage": 88,
+                    "order": 1,
+                    "duration": 133
+                }
+            },
+            {
+                "tag": "#Q0RP9LCR8",
+                "name": "Bitt",
+                "townhallLevel": 10,
+                "mapPosition": 14,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQCQRGRJU",
+                "name": "CEYx99N",
+                "townhallLevel": 10,
+                "mapPosition": 13,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQCYYGRC0",
+                "name": "YSLx99N",
+                "townhallLevel": 10,
+                "mapPosition": 11,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#PU9C0L2VY",
+                "name": "R I P C U R L",
+                "townhallLevel": 13,
+                "mapPosition": 3,
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#88QJG92YC",
+                    "defenderTag": "#PU9C0L2VY",
+                    "stars": 1,
+                    "destructionPercentage": 81,
+                    "order": 2,
+                    "duration": 124
+                }
+            },
+            {
+                "tag": "#LVCJJ2QGC",
+                "name": "Pikiii",
+                "townhallLevel": 15,
+                "mapPosition": 1,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GG0V0JUG2",
+                "name": "OBITx99N",
+                "townhallLevel": 11,
+                "mapPosition": 6,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GGV8U92J2",
+                "name": "KAFALx99N",
+                "townhallLevel": 13,
+                "mapPosition": 5,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GYLPLPVC2",
+                "name": "JOYx99N",
+                "townhallLevel": 10,
+                "mapPosition": 12,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#99C2U8QUP",
+                "name": "lexus",
+                "townhallLevel": 13,
+                "mapPosition": 4,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GYYRQPPLQ",
+                "name": "MOYx99N",
+                "townhallLevel": 11,
+                "mapPosition": 9,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#LRL09G0QJ",
+                "name": "Ridoy",
+                "townhallLevel": 15,
+                "mapPosition": 2,
+                "opponentAttacks": 0
+            }
+        ]
+    },
+    "opponent": {
+        "tag": "#2JLL29LRY",
+        "name": "ngawur clan",
+        "badgeUrls": {
+            "small": "https://api-assets.clashofclans.com/badges/70/t9tlgxJ5NPOb6sTsXiQbzS41KQ5EjhUnkOf5UKm6Gqs.png",
+            "large": "https://api-assets.clashofclans.com/badges/512/t9tlgxJ5NPOb6sTsXiQbzS41KQ5EjhUnkOf5UKm6Gqs.png",
+            "medium": "https://api-assets.clashofclans.com/badges/200/t9tlgxJ5NPOb6sTsXiQbzS41KQ5EjhUnkOf5UKm6Gqs.png"
+        },
+        "clanLevel": 3,
+        "attacks": 2,
+        "stars": 2,
+        "destructionPercentage": 11.266666,
+        "members": [
+            {
+                "tag": "#GJJC8Q9G8",
+                "name": "Puckay",
+                "townhallLevel": 11,
+                "mapPosition": 9,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#QCG2CQ8QY",
+                "name": "JAKIK JACK 4",
+                "townhallLevel": 10,
+                "mapPosition": 11,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#G2V9GRQLU",
+                "name": "JAKIK JACK 2",
+                "townhallLevel": 13,
+                "mapPosition": 4,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#2U99JG90C",
+                "name": "kaka'k",
+                "townhallLevel": 11,
+                "mapPosition": 10,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GJ9U29GRY",
+                "name": "JAKIK JACK KE 5",
+                "townhallLevel": 10,
+                "mapPosition": 12,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#R9QU89JQR",
+                "name": "zaidan",
+                "townhallLevel": 7,
+                "mapPosition": 15,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#QVYGGPR2U",
+                "name": "Cyclone",
+                "townhallLevel": 11,
+                "mapPosition": 7,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#R9L2YUJUL",
+                "name": "JACK KE 7",
+                "townhallLevel": 8,
+                "mapPosition": 14,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#2PC0292L",
+                "name": "kakao",
+                "townhallLevel": 15,
+                "mapPosition": 1,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#QCJLR2GJP",
+                "name": "GOTESZZ",
+                "townhallLevel": 15,
+                "mapPosition": 2,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#88QJG92YC",
+                "name": "indra",
+                "townhallLevel": 13,
+                "mapPosition": 3,
+                "attacks": [
+                    {
+                        "attackerTag": "#88QJG92YC",
+                        "defenderTag": "#PU9C0L2VY",
+                        "stars": 1,
+                        "destructionPercentage": 81,
+                        "order": 2,
+                        "duration": 124
+                    }
+                ],
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#VQRGGY2Q",
+                "name": "mas kep",
+                "townhallLevel": 12,
+                "mapPosition": 6,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#LGVCQVQYL",
+                "name": "azzam",
+                "townhallLevel": 11,
+                "mapPosition": 8,
+                "attacks": [
+                    {
+                        "attackerTag": "#LGVCQVQYL",
+                        "defenderTag": "#GQRLCCUYC",
+                        "stars": 1,
+                        "destructionPercentage": 88,
+                        "order": 1,
+                        "duration": 133
+                    }
+                ],
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#G2GLJ2U0G",
+                "name": "JAKIK JACK 3",
+                "townhallLevel": 13,
+                "mapPosition": 5,
+                "opponentAttacks": 0
+            },
+            {
+                "tag": "#GQUPV29RQ",
+                "name": "JACK KE 6",
+                "townhallLevel": 10,
+                "mapPosition": 13,
+                "opponentAttacks": 0
+            }
+        ]
+    }
+}
