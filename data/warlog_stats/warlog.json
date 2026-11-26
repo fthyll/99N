@@ -2,6 +2,39 @@
     "items": [
         {
             "result": "win",
+            "endTime": "20261125T230524.000Z",
+            "teamSize": 15,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png"
+                },
+                "clanLevel": 4,
+                "attacks": 17,
+                "stars": 45,
+                "destructionPercentage": 100.0,
+                "expEarned": 203
+            },
+            "opponent": {
+                "tag": "#2JLL29LRY",
+                "name": "ngawur clan",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/t9tlgxJ5NPOb6sTsXiQbzS41KQ5EjhUnkOf5UKm6Gqs.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/t9tlgxJ5NPOb6sTsXiQbzS41KQ5EjhUnkOf5UKm6Gqs.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/t9tlgxJ5NPOb6sTsXiQbzS41KQ5EjhUnkOf5UKm6Gqs.png"
+                },
+                "clanLevel": 3,
+                "stars": 44,
+                "destructionPercentage": 99.0
+            }
+        },
+        {
+            "result": "win",
             "endTime": "20261121T194507.000Z",
             "teamSize": 35,
             "attacksPerMember": 2,
