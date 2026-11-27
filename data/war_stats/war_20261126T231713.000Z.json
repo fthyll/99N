@@ -146,7 +146,15 @@
                         "duration": 121
                     }
                 ],
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#QPJ998GPY",
+                    "defenderTag": "#PU9C0L2VY",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 24,
+                    "duration": 133
+                }
             },
             {
                 "tag": "#LVCJJ2QGC",
@@ -258,7 +266,15 @@
                 "name": "lexus",
                 "townhallLevel": 13,
                 "mapPosition": 4,
-                "opponentAttacks": 0
+                "opponentAttacks": 1,
+                "bestOpponentAttack": {
+                    "attackerTag": "#QPJ998GPY",
+                    "defenderTag": "#99C2U8QUP",
+                    "stars": 3,
+                    "destructionPercentage": 100,
+                    "order": 25,
+                    "duration": 121
+                }
             },
             {
                 "tag": "#GYYRQPPLQ",
@@ -337,9 +353,9 @@
             "medium": "https://api-assets.clashofclans.com/badges/200/U3cfL9RayYC2QQVjLy7A1jm7Q5HBWNWdaKO5mc8TzJg.png"
         },
         "clanLevel": 5,
-        "attacks": 5,
-        "stars": 11,
-        "destructionPercentage": 31.2,
+        "attacks": 7,
+        "stars": 17,
+        "destructionPercentage": 44.533333,
         "members": [
             {
                 "tag": "#GGYQGUYV0",
@@ -361,6 +377,24 @@
                 "name": "A\u0336r\u0336e\u0336j\u0336i\u0336m\u0336\u30b7\ufe0e\u2605",
                 "townhallLevel": 13,
                 "mapPosition": 3,
+                "attacks": [
+                    {
+                        "attackerTag": "#QPJ998GPY",
+                        "defenderTag": "#PU9C0L2VY",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 24,
+                        "duration": 133
+                    },
+                    {
+                        "attackerTag": "#QPJ998GPY",
+                        "defenderTag": "#99C2U8QUP",
+                        "stars": 3,
+                        "destructionPercentage": 100,
+                        "order": 25,
+                        "duration": 121
+                    }
+                ],
                 "opponentAttacks": 1,
                 "bestOpponentAttack": {
                     "attackerTag": "#LVCJJ2QGC",
