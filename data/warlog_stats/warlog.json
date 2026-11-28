@@ -2,6 +2,39 @@
     "items": [
         {
             "result": "win",
+            "endTime": "20261127T231714.000Z",
+            "teamSize": 15,
+            "attacksPerMember": 2,
+            "battleModifier": "none",
+            "clan": {
+                "tag": "#2J0YP2LQL",
+                "name": "99N",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/TmW0w0n-zLrniskCbtfIMhCdqC8gfo_sLMvU6wiljzM.png"
+                },
+                "clanLevel": 4,
+                "attacks": 18,
+                "stars": 44,
+                "destructionPercentage": 99.666664,
+                "expEarned": 206
+            },
+            "opponent": {
+                "tag": "#2J2CJCR0G",
+                "name": "Manchester",
+                "badgeUrls": {
+                    "small": "https://api-assets.clashofclans.com/badges/70/U3cfL9RayYC2QQVjLy7A1jm7Q5HBWNWdaKO5mc8TzJg.png",
+                    "large": "https://api-assets.clashofclans.com/badges/512/U3cfL9RayYC2QQVjLy7A1jm7Q5HBWNWdaKO5mc8TzJg.png",
+                    "medium": "https://api-assets.clashofclans.com/badges/200/U3cfL9RayYC2QQVjLy7A1jm7Q5HBWNWdaKO5mc8TzJg.png"
+                },
+                "clanLevel": 5,
+                "stars": 17,
+                "destructionPercentage": 44.533333
+            }
+        },
+        {
+            "result": "win",
             "endTime": "20261125T230524.000Z",
             "teamSize": 15,
             "attacksPerMember": 2,
